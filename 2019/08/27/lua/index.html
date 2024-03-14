@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="lua【为了解决高并发秒杀商品冗余问题】lua运行的形式 lua -i 交互式编程 12345$ lua -i $ Lua 5.3.0  Copyright (C) 1994-2015 Lua.org, PUC-Rio&gt; print(&quot;Hello World！&quot;)Hello World！&gt;    脚本式编程  hello.lua 12print(&quot;Hell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua">
+<meta property="og:url" content="http://example.com/2019/08/27/lua/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="lua【为了解决高并发秒杀商品冗余问题】lua运行的形式 lua -i 交互式编程 12345$ lua -i $ Lua 5.3.0  Copyright (C) 1994-2015 Lua.org, PUC-Rio&gt; print(&quot;Hello World！&quot;)Hello World！&gt;    脚本式编程  hello.lua 12print(&quot;Hell">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-27T03:41:03.000Z">
+<meta property="article:modified_time" content="2024-03-14T07:29:13.916Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="lua">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/08/27/lua/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/08/27/lua/","path":"2019/08/27/lua/","title":"Lua"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Lua | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lua%E3%80%90%E4%B8%BA%E4%BA%86%E8%A7%A3%E5%86%B3%E9%AB%98%E5%B9%B6%E5%8F%91%E7%A7%92%E6%9D%80%E5%95%86%E5%93%81%E5%86%97%E4%BD%99%E9%97%AE%E9%A2%98%E3%80%91"><span class="nav-number">1.</span> <span class="nav-text">lua【为了解决高并发秒杀商品冗余问题】</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lua%E8%BF%90%E8%A1%8C%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">lua运行的形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">注释方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.3.</span> <span class="nav-text">保留关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">1.4.</span> <span class="nav-text">基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.1.</span> <span class="nav-text">全局变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lua-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">Lua 数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nil%EF%BC%88%E7%A9%BA%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">nil（空）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nil-%E4%BD%9C%E4%B8%BA%E6%AF%94%E8%BE%83%E6%97%B6%E5%BA%94%E8%AF%A5%E5%8A%A0%E4%B8%8A%E5%8F%8C%E5%BC%95%E5%8F%B7-%E2%80%9C"><span class="nav-number">1.5.2.</span> <span class="nav-text">nil 作为比较时应该加上双引号 “ </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#boolean%EF%BC%88%E5%B8%83%E5%B0%94%EF%BC%89"><span class="nav-number">1.5.3.</span> <span class="nav-text">boolean（布尔）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#number%EF%BC%88%E6%95%B0%E5%AD%97%EF%BC%89"><span class="nav-number">1.5.4.</span> <span class="nav-text">number（数字）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%89"><span class="nav-number">1.5.5.</span> <span class="nav-text">String （字符串）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#table%EF%BC%88%E8%A1%A8%EF%BC%89"><span class="nav-number">1.5.6.</span> <span class="nav-text">table（表）</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/08/27/lua/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatar/avatar.png">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Lua | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lua
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-08-27 11:41:03" itemprop="dateCreated datePublished" datetime="2019-08-27T11:41:03+08:00">2019-08-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 15:29:13" itemprop="dateModified" datetime="2024-03-14T15:29:13+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/lua/" itemprop="url" rel="index"><span itemprop="name">lua</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="lua【为了解决高并发秒杀商品冗余问题】"><a href="#lua【为了解决高并发秒杀商品冗余问题】" class="headerlink" title="lua【为了解决高并发秒杀商品冗余问题】"></a>lua【为了解决高并发秒杀商品冗余问题】</h1><h2 id="lua运行的形式"><a href="#lua运行的形式" class="headerlink" title="lua运行的形式"></a>lua运行的形式</h2><ul>
+<li><p>lua -i 交互式编程</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ lua -i </span><br><span class="line">$ Lua <span class="number">5.3</span><span class="number">.0</span>  Copyright (C) <span class="number">1994</span><span class="number">-2015</span> Lua.org, PUC-Rio</span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;Hello World！&quot;</span>)</span><br><span class="line">Hello World！</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>脚本式编程</p>
+<ul>
+<li><p>hello.lua</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello World！&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;www.runoob.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lua hello.lua</span><br><span class="line">Hello World！</span><br><span class="line">www.runoob.com</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>也可以修改为一下脚本实现（在开头添加：#!&#x2F;usr&#x2F;local&#x2F;bin&#x2F;lua）</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/<span class="keyword">local</span>/bin/lua</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello World！&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;www.runoob.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上代码中，我们指定了 Lua 的解释器 &#x2F;usr&#x2F;local&#x2F;bin directory。加上 # 号标记解释器会忽略它。接下来我们为脚本添加可执行权限，并执行：chmod +x hello.lua</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./hello.lua </span><br><span class="line">Hello World！</span><br><span class="line">www.runoob.com</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="注释方式"><a href="#注释方式" class="headerlink" title="注释方式"></a>注释方式</h2><ul>
+<li><p>单行注释</p>
+<blockquote>
+<p><strong>–</strong></p>
+</blockquote>
+</li>
+<li><p>多行注释</p>
+<blockquote>
+<p>–[[</p>
+<p>​	 多行注释</p>
+<p>–]]</p>
+</blockquote>
+</li>
+<li><p>Lua 是一个区分大小写的编程语言</p>
+</li>
+<li><p>变量命名规则和C语言的命名规则一致</p>
+</li>
+</ul>
+<h2 id="保留关键字"><a href="#保留关键字" class="headerlink" title="保留关键字"></a>保留关键字</h2><ul>
+<li>以下列出了 Lua 的保留关键词。保留关键字不能作为常量或变量或其他用户自定义标示符：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>and</td>
+<td>break</td>
+<td>do</td>
+<td>else</td>
+</tr>
+<tr>
+<td>elseif</td>
+<td>end</td>
+<td>false</td>
+<td>for</td>
+</tr>
+<tr>
+<td>function</td>
+<td>if</td>
+<td>in</td>
+<td>local</td>
+</tr>
+<tr>
+<td>nil</td>
+<td>not</td>
+<td>or</td>
+<td>repeat</td>
+</tr>
+<tr>
+<td>return</td>
+<td>then</td>
+<td>true</td>
+<td>until</td>
+</tr>
+<tr>
+<td>while</td>
+<td>goto</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>一般约定，以下划线开头连接一串大写字母的名字（比如 _VERSION）被保留用于 Lua 内部全局变量。</li>
+</ul>
+<h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><ul>
+<li><p>在默认情况下，变量总是认为是全局的。</p>
+</li>
+<li><p>全局变量不需要声明，给一个变量赋值后即创建了这个全局变量，访问一个没有初始化的全局变量也不会出错，只不过得到的结果是：nil</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">print</span>(b)</span><br><span class="line"><span class="literal">nil</span></span><br><span class="line">&gt; b=<span class="number">10</span></span><br><span class="line">&gt; <span class="built_in">print</span>(b)</span><br><span class="line"><span class="number">10</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果你想删除一个全局变量，只需要将变量赋值为nil。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="literal">nil</span></span><br><span class="line"><span class="built_in">print</span>(b)      <span class="comment">--&gt; nil</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样变量b就好像从没被使用过一样。换句话说, 当且仅当一个变量不等于nil时，这个变量即存在。</p>
+</li>
+</ul>
+<h2 id="Lua-数据类型"><a href="#Lua-数据类型" class="headerlink" title="Lua 数据类型"></a>Lua 数据类型</h2><ul>
+<li><p>Lua 是动态类型语言，变量不要类型定义,只需要为变量赋值。 值可以存储在变量中，作为参数传递或结果返回。</p>
+</li>
+<li><p>Lua 中有 8 个基本类型分别为：nil、boolean、number、string、userdata、function、thread 和 table。</p>
+<table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">nil</td>
+<td align="left">这个最简单，只有值nil属于该类，表示一个无效值（在条件表达式中相当于false）。</td>
+</tr>
+<tr>
+<td align="left">boolean</td>
+<td align="left">包含两个值：false和true。</td>
+</tr>
+<tr>
+<td align="left">number</td>
+<td align="left">表示双精度类型的实浮点数</td>
+</tr>
+<tr>
+<td align="left">string</td>
+<td align="left">字符串由一对双引号或单引号来表示</td>
+</tr>
+<tr>
+<td align="left">function</td>
+<td align="left">由 C 或 Lua 编写的函数</td>
+</tr>
+<tr>
+<td align="left">userdata</td>
+<td align="left">表示任意存储在变量中的C数据结构</td>
+</tr>
+<tr>
+<td align="left">thread</td>
+<td align="left">表示执行的独立线路，用于执行协同程序</td>
+</tr>
+<tr>
+<td align="left">table</td>
+<td align="left">Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字、字符串或表类型。在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>我们可以使用 type 函数测试给定变量或者值的类型：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="string">&quot;Hello world&quot;</span>))      <span class="comment">--&gt; string</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">10.4</span>*<span class="number">3</span>))             <span class="comment">--&gt; number</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="built_in">print</span>))              <span class="comment">--&gt; function</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="built_in">type</span>))               <span class="comment">--&gt; function</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="literal">true</span>))               <span class="comment">--&gt; boolean</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="literal">nil</span>))                <span class="comment">--&gt; nil</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="built_in">type</span>(X)))            <span class="comment">--&gt; string</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="nil（空）"><a href="#nil（空）" class="headerlink" title="nil（空）"></a>nil（空）</h3><ul>
+<li><p>nil 类型表示一种没有任何有效值，它只有一个值 – nil，例如打印一个没有赋值的变量，便会输出一个 nil 值：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">print</span>(<span class="built_in">type</span>(a))</span><br><span class="line"><span class="literal">nil</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>对于全局变量和 table，nil 还有一个”删除”作用，给全局变量或者 table 表里的变量赋一个 nil 值，等同于把它们删掉，执行下面代码就知：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">tab1 = &#123; key1 = <span class="string">&quot;val1&quot;</span>, key2 = <span class="string">&quot;val2&quot;</span>, <span class="string">&quot;val3&quot;</span> &#125;</span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(tab1) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k .. <span class="string">&quot; - &quot;</span> .. v)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">-------------结果---------------</span></span><br><span class="line">&gt;</span><br><span class="line"><span class="number">1</span> - val3</span><br><span class="line">key1 - val1</span><br><span class="line">key2 - val2</span><br><span class="line">&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 用 nil 删除 table 的第一个元素</span></span><br><span class="line">tab1.key1 = <span class="literal">nil</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(tab1) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k .. <span class="string">&quot; - &quot;</span> .. v)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-------------结果-----------------</span></span><br><span class="line">&gt;</span><br><span class="line"><span class="number">1</span> - val3</span><br><span class="line">key2 - val2</span><br><span class="line">&gt; </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="nil-作为比较时应该加上双引号-“"><a href="#nil-作为比较时应该加上双引号-“" class="headerlink" title="nil 作为比较时应该加上双引号 “ "></a>nil 作为比较时应该加上双引号 <code>“ </code></h3><p>* </p>
+  <figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">type</span>(X)</span><br><span class="line"><span class="literal">nil</span></span><br><span class="line">&gt; <span class="built_in">type</span>(X)==<span class="literal">nil</span></span><br><span class="line"><span class="literal">false</span></span><br><span class="line">&gt; <span class="built_in">type</span>(X)==<span class="string">&quot;nil&quot;</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>type(X)&#x3D;&#x3D;nil</strong> 结果为 <strong>false</strong> 的原因是 type(X) 实质是返回的 <strong>“nil”</strong> 字符串，是一个 string 类型</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">type</span>(<span class="built_in">type</span>(X))==<span class="built_in">string</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="boolean（布尔）"><a href="#boolean（布尔）" class="headerlink" title="boolean（布尔）"></a>boolean（布尔）</h3><ul>
+<li><p>boolean 类型只有两个可选值：true（真） 和 false（假），Lua 把 false 和 nil 看作是 false，其他的都为 true，数字 0 也是 true:</p>
+</li>
+<li><p>实例  <code>test.lua</code></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="literal">true</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="literal">false</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="literal">nil</span>))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> <span class="literal">false</span> <span class="keyword">or</span> <span class="literal">nil</span> <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;至少有一个是 true&quot;</span>)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;false 和 nil 都为 false&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="number">0</span> <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;数字 0 是 true&quot;</span>)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;数字 0 为 false&quot;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>代码执行结果</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ lua test.lua </span><br><span class="line">boolean</span><br><span class="line">boolean</span><br><span class="line"><span class="literal">nil</span></span><br><span class="line"><span class="literal">false</span> 和 <span class="literal">nil</span> 都为 <span class="literal">false</span></span><br><span class="line">数字 <span class="number">0</span> 是 <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="number（数字）"><a href="#number（数字）" class="headerlink" title="number（数字）"></a>number（数字）</h3><ul>
+<li><p>Lua 默认只有一种 number 类型 – double（双精度）类型（默认类型可以修改 luaconf.h 里的定义），以下几种写法都被看作是 number 类型</p>
+</li>
+<li><p>实例</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">2.2</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">0.2</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">2e+1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">0.2e-1</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="number">7.8263692594256e-06</span>))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上代码执行结果</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">number</span><br><span class="line">number</span><br><span class="line">number</span><br><span class="line">number</span><br><span class="line">number</span><br><span class="line">number</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="String-（字符串）"><a href="#String-（字符串）" class="headerlink" title="String （字符串）"></a>String （字符串）</h3><ul>
+<li><p>字符串由一对双引号或者单引号表示</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string1 = <span class="string">&quot;this is string1&quot;</span></span><br><span class="line">string2 = <span class="string">&#x27;this is string2&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>也可以用 2 个方括号 “[[]]” 来表示 “一块” 字符串</p>
+</li>
+<li><p>实例：<code>test.lua</code></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">html = <span class="string">[[</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;a href=&quot;http://www.wflin.ltd/&quot;&gt;wflin&lt;/a&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">]]</span></span><br><span class="line"><span class="built_in">print</span>(html)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以下代码执行结果为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;http://www.wflin.ltd/&quot;</span>&gt;</span>wflin<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在对一个数字字符串上进行算术操作时，Lua 会尝试将这个数字字符串转成一个数字:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;2&quot;</span> + <span class="number">6</span>)</span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;2&quot;</span> + <span class="string">&quot;6&quot;</span>)</span><br><span class="line"><span class="number">8.0</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;2 + 6&quot;</span>)</span><br><span class="line"><span class="number">2</span> + <span class="number">6</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;-2e2&quot;</span> * <span class="string">&quot;6&quot;</span>)</span><br><span class="line"><span class="number">-1200.0</span></span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;error&quot;</span> + <span class="number">1</span>)</span><br><span class="line"><span class="built_in">stdin</span>:<span class="number">1</span>: attempt to perform arithmetic on a <span class="built_in">string</span> value</span><br><span class="line">stack <span class="built_in">traceback</span>:</span><br><span class="line">        <span class="built_in">stdin</span>:<span class="number">1</span>: <span class="keyword">in</span> main chunk</span><br><span class="line">        [C]: <span class="keyword">in</span> ?</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>以上代码中”error” + 1执行报错了，字符串连接使用的是 <strong><code>..</code></strong> ，如</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">print</span>(<span class="string">&quot;a&quot;</span> .. <span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">ab</span><br><span class="line">&gt; <span class="built_in">print</span>(<span class="number">157</span> .. <span class="number">428</span>)</span><br><span class="line"><span class="number">157428</span></span><br><span class="line">&gt; </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 # 来计算字符串的长度，放在字符串前面，如下实例</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; <span class="built_in">len</span> = <span class="string">&quot;www.wflin.ltd&quot;</span></span><br><span class="line">&gt; <span class="built_in">print</span>(#<span class="built_in">len</span>)</span><br><span class="line"><span class="number">12</span></span><br><span class="line">&gt; <span class="built_in">print</span>(#<span class="string">&quot;www.wflin.ltd&quot;</span>)</span><br><span class="line"><span class="number">14</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="table（表）"><a href="#table（表）" class="headerlink" title="table（表）"></a>table（表）</h3><ul>
+<li><p>在 Lua 里，table 的创建是通过”构造表达式”来完成，最简单构造表达式是{}，用来创建一个空表。也可以在表里添加一些数据，直接初始化表</p>
+</li>
+<li><p>实例 <code>table_test.lua</code></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建一个空的 table</span></span><br><span class="line"><span class="keyword">local</span> tbl1 = &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">-- 直接初始表</span></span><br><span class="line"><span class="keyword">local</span> tbl2 = &#123;<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;pear&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;grape&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>Lua 中的表（table）其实是一个”关联数组”（associative arrays），数组的索引可以是数字或者是字符串。</p>
+</li>
+<li><p>实例</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- table_test.lua 脚本文件</span></span><br><span class="line">a = &#123;&#125;</span><br><span class="line">a[<span class="string">&quot;key&quot;</span>] = <span class="string">&quot;value&quot;</span></span><br><span class="line">key = <span class="number">10</span></span><br><span class="line">a[key] = <span class="number">22</span></span><br><span class="line">a[key] = a[key] + <span class="number">11</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> <span class="built_in">pairs</span>(a) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(k .. <span class="string">&quot; : &quot;</span> .. v)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>脚本执行结果为</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lua table_test.lua </span><br><span class="line">key : value</span><br><span class="line"><span class="number">10</span> : <span class="number">33</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不同于其他语言的数组把 0 作为数组的初始索引，在 Lua 里表的默认初始索引一般以 1 开始</p>
+</li>
+<li><p>实例</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- table_test2.lua 脚本文件</span></span><br><span class="line"><span class="keyword">local</span> tbl = &#123;<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;pear&quot;</span>, <span class="string">&quot;orange&quot;</span>, <span class="string">&quot;grape&quot;</span>&#125;</span><br><span class="line"><span class="keyword">for</span> key, val <span class="keyword">in</span> <span class="built_in">pairs</span>(tbl) <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Key&quot;</span>, key)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行结果为</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ lua table_test2.lua </span><br><span class="line">Key    <span class="number">1</span></span><br><span class="line">Key    <span class="number">2</span></span><br><span class="line">Key    <span class="number">3</span></span><br><span class="line">Key    <span class="number">4</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>table 不会固定长度大小，有新数据添加时 table 长度会自动增长，没初始的 table 都是 nil。</p>
+</li>
+<li><p>实例</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- table_test3.lua 脚本文件</span></span><br><span class="line">a3 = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>, <span class="number">10</span> <span class="keyword">do</span></span><br><span class="line">    a3[i] = i</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">a3[<span class="string">&quot;key&quot;</span>] = <span class="string">&quot;val&quot;</span></span><br><span class="line"><span class="built_in">print</span>(a3[<span class="string">&quot;key&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(a3[<span class="string">&quot;none&quot;</span>])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行结果为</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ lua table_test3.lua </span><br><span class="line">val</span><br><span class="line"><span class="literal">nil</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/lua/" rel="tag"><i class="fa fa-tag"></i> lua</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2019/08/27/springcloud/" rel="prev" title="Springcloud">
+                  <i class="fa fa-angle-left"></i> Springcloud
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2020/05/31/modbus/" rel="next" title="modbus">
+                  modbus <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

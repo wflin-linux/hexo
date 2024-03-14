@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="GitHub中拉取源码 git clone https:&#x2F;&#x2F;github.com&#x2F;stephane&#x2F;libmodbus.git   如果无法访问 GitHub 网站，自行百度魔法。进行访问  编译源码12cd libmodbus # 进入目录.&#x2F;autogen.sh # 生成 congfig 文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="modbus">
+<meta property="og:url" content="http://example.com/2020/05/31/modbus/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="GitHub中拉取源码 git clone https:&#x2F;&#x2F;github.com&#x2F;stephane&#x2F;libmodbus.git   如果无法访问 GitHub 网站，自行百度魔法。进行访问  编译源码12cd libmodbus # 进入目录.&#x2F;autogen.sh # 生成 congfig 文件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426150558525.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426151108754.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426161902783.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/c603849b8caf4e4ba164d1224446bf9a.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173732124.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173656515.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427141150127.png">
+<meta property="og:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427163655007.png">
+<meta property="article:published_time" content="2020-05-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-14T07:29:13.920Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="iot">
+<meta property="article:tag" content="modbus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426150558525.png">
+
+
+<link rel="canonical" href="http://example.com/2020/05/31/modbus/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2020/05/31/modbus/","path":"2020/05/31/modbus/","title":"modbus"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>modbus | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub%E4%B8%AD%E6%8B%89%E5%8F%96%E6%BA%90%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">GitHub中拉取源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">编译源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90modbus%E7%9A%84-makefile-%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">生成modbus的 makefile 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">make 编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#make-%E5%AE%89%E8%A3%85"><span class="nav-number">5.</span> <span class="nav-text">make 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modbus-%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="nav-number">6.</span> <span class="nav-text">modbus 报文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%A1%8C%E5%B8%A7"><span class="nav-number">6.1.</span> <span class="nav-text">下行帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E8%A1%8C%E5%B8%A7"><span class="nav-number">6.2.</span> <span class="nav-text">上行帧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ModBus-Poll"><span class="nav-number">7.</span> <span class="nav-text">ModBus Poll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Slave"><span class="nav-number">8.</span> <span class="nav-text">Slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%A5%E6%96%87"><span class="nav-number">9.</span> <span class="nav-text">报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tcp%E6%8A%A5%E6%96%87"><span class="nav-number">9.1.</span> <span class="nav-text">tcp报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E6%8A%A5%E6%96%87"><span class="nav-number">9.2.</span> <span class="nav-text">串口报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E6%96%87%E5%AF%B9%E6%AF%94"><span class="nav-number">9.3.</span> <span class="nav-text">报文对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E5%85%B6%E4%BB%96%E6%83%85%E5%86%B5"><span class="nav-number">10.</span> <span class="nav-text">测试其他情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%B8%B2%E5%8F%A3%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="nav-number">10.1.</span> <span class="nav-text">通过串口测试：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E7%AB%99%E5%92%8C%E4%BB%8E%E7%AB%99%E5%AF%84%E5%AD%98%E5%99%A8%E8%BF%9E%E7%BB%AD"><span class="nav-number">10.1.1.</span> <span class="nav-text">主站和从站寄存器连续</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E7%AB%99%E5%AF%84%E5%AD%98%E5%99%A8%E5%9C%B0%E5%9D%80%E8%B7%B3%E8%B7%83"><span class="nav-number">10.1.2.</span> <span class="nav-text">从站寄存器地址跳跃</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E5%AE%9E%E6%B5%8B%E8%AF%95%E8%AE%BE%E5%A4%87"><span class="nav-number">11.</span> <span class="nav-text">真实测试设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3"><span class="nav-number">11.1.</span> <span class="nav-text">串口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E4%BF%A1%E6%81%AF"><span class="nav-number">11.1.1.</span> <span class="nav-text">主要信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%8B%E5%86%8C%E8%A7%A3%E9%87%8A"><span class="nav-number">11.1.2.</span> <span class="nav-text">手册解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF"><span class="nav-number">11.1.3.</span> <span class="nav-text">信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E6%B5%8B%E8%AF%95"><span class="nav-number">11.1.4.</span> <span class="nav-text">异常测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E7%BD%91%E5%85%B3"><span class="nav-number">12.</span> <span class="nav-text">通过网关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A0%81"><span class="nav-number">13.</span> <span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E9%80%81%E6%8A%A5%E6%96%87%E6%80%9D%E8%B7%AF"><span class="nav-number">13.1.</span> <span class="nav-text">发送报文思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E8%A7%A3%E5%93%8D%E5%BA%94%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">13.2.</span> <span class="nav-text">分解响应思路：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/31/modbus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatar/avatar.png">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="modbus | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          modbus
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-01T00:00:00+08:00">2020-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 15:29:13" itemprop="dateModified" datetime="2024-03-14T15:29:13+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/iot/" itemprop="url" rel="index"><span itemprop="name">iot</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="GitHub中拉取源码"><a href="#GitHub中拉取源码" class="headerlink" title="GitHub中拉取源码"></a>GitHub中拉取源码</h2><blockquote>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/stephane/libmodbus.git">https://github.com/stephane/libmodbus.git</a></p>
+</blockquote>
+<ul>
+<li>如果无法访问 GitHub 网站，自行百度魔法。进行访问</li>
+</ul>
+<h2 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd libmodbus # 进入目录</span><br><span class="line">./autogen.sh # 生成 congfig 文件</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里可能会报错，<code>autoreconf</code> 找不到</li>
+</ul>
+<p>解决办法：</p>
+<ul>
+<li>centos 下载：</li>
+</ul>
+<blockquote>
+<p>sudo yum install -y autoconf automake libtool</p>
+</blockquote>
+<ul>
+<li>ubuntu 下载</li>
+</ul>
+<blockquote>
+<p>sudo apt-get install -y autoconf automake libtool</p>
+</blockquote>
+<p>下载完成再次运行脚本，控制台会生成,则表示生成 config文件成功</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">------------------------------------------------------</span><br><span class="line">Initialized build system. You can now run ./configure </span><br><span class="line">------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<h2 id="生成modbus的-makefile-文件"><a href="#生成modbus的-makefile-文件" class="headerlink" title="生成modbus的 makefile 文件"></a>生成modbus的 makefile 文件</h2><p>使用命令：</p>
+<ul>
+<li>个人喜欢将其安装在 usr 目录下，因为不是系统自带，是用户自己安装方便管理</li>
+</ul>
+<blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./configure --prefix=/usr/local/</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="make-编译"><a href="#make-编译" class="headerlink" title="make 编译"></a>make 编译</h2><ul>
+<li>make 指令，-j2 为采用2个核心去编译。编译更快</li>
+</ul>
+<blockquote>
+<p>make -j2 </p>
+</blockquote>
+<ul>
+<li>这里可能会报错 需要 gcc 为c99 标准，而gcc 编译器默认支持 c89 编译器，所有此时 makefile make时会报错</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">modbus.c: In function &#x27;read_io_status&#x27;:</span><br><span class="line">modbus.c:1202:9: error: &#x27;for&#x27; loop initial declarations are only allowed in C99 mode</span><br><span class="line">         for (unsigned int i = offset; i &lt; offset_end; i++) &#123;</span><br><span class="line">         ^</span><br><span class="line">modbus.c:1202:9: note: use option -std=c99 or -std=gnu99 to compile your code</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>更改命令可完成编译</li>
+</ul>
+<blockquote>
+<p>make -j2 CFLAGS&#x3D;-std&#x3D;c99</p>
+</blockquote>
+<h2 id="make-安装"><a href="#make-安装" class="headerlink" title="make 安装"></a>make 安装</h2><blockquote>
+<p>make install </p>
+</blockquote>
+<ul>
+<li>全程无报错则安装成功</li>
+</ul>
+<h2 id="modbus-报文结构"><a href="#modbus-报文结构" class="headerlink" title="modbus 报文结构"></a>modbus 报文结构</h2><h3 id="下行帧"><a href="#下行帧" class="headerlink" title="下行帧"></a>下行帧</h3><ul>
+<li><strong>11 01 00 13 00 25 F9 C8</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  01		01 		  0013     0025		F9C8</span><br><span class="line">从机地址	操作码		起始地址   数据数量	  CRC</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>11为从机地址（1byte），地址号17；</p>
+</li>
+<li><p>01为功能码（1bye），读线圈状态；</p>
+</li>
+<li><p>0013为寄存器起始地址（2byte），起始地址19；</p>
+<ul>
+<li><strong>备注：程序的起始地址为0。起始地址19实际上是第20号接触器。</strong></li>
+</ul>
+</li>
+<li><p>0025为数据数量（2byte），37个状态量，需要5个字节的空间；</p>
+</li>
+<li><p>F9C8为CRC码（2byte）。</p>
+<ul>
+<li><strong>释义：读取来自17号从机以20号接触器为起始的37个接触器状态。</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="上行帧"><a href="#上行帧" class="headerlink" title="上行帧"></a>上行帧</h3><ul>
+<li><p><strong>上行帧：11 01 05 CD 6B B2 0E 1B 18 8D</strong></p>
+</li>
+<li><p>11为从机地址（1byte），地址号17；</p>
+</li>
+<li><p>01为功能码（1byte），读线圈状态；</p>
+</li>
+<li><p>05为数据区字节数（1byte），5个字节；</p>
+</li>
+<li><p>CD 6B B2 0E 1B为数据（5byte），仅解析第一个数据（CD）,CD转为二进制序列为11001101，<strong>从低位到高位读</strong>，每一位对应一个接触器的状态，0为分，1为合。</p>
+</li>
+<li><p>综上数据段中的CD，表示20号接触器合位、21号分位、22号合位、23号合位、24号分位、25号分位、26号合位、27号合位；</p>
+</li>
+<li><p>18 8D为CRC码（2byte）。</p>
+<ul>
+<li><strong>释义：上送来自17号从机的接触器状态，其数据字节数为5，信息为20号接触器合位、21号分位、22号合位、23号合位、24号分位、25号分位、26号合位、27号合位……</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="ModBus-Poll"><a href="#ModBus-Poll" class="headerlink" title="ModBus Poll"></a>ModBus Poll</h2><ul>
+<li><p>Tx &#x3D; 0 ：发送帧数</p>
+</li>
+<li><p>Err &#x3D; 0：错误帧数</p>
+</li>
+<li><p>ID &#x3D; 1：从站ID</p>
+</li>
+<li><p>F &#x3D; 03 功能码</p>
+</li>
+<li><p>SR &#x3D; 1000ms：轮询周期</p>
+</li>
+<li><p>No connection 无连接</p>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426150558525.png" alt="image-20230426150558525"></p>
+</li>
+</ul>
+<h2 id="Slave"><a href="#Slave" class="headerlink" title="Slave"></a>Slave</h2><ul>
+<li><p>从机配置</p>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426151108754.png" alt="image-20230426151108754"></p>
+</li>
+<li><p>常用功能码及其地址对应表</p>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426161902783.png" alt="image-20230426161902783"></p>
+</li>
+<li><p>修改名字及其对应的值</p>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/c603849b8caf4e4ba164d1224446bf9a.png"></p>
+</li>
+</ul>
+<h2 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h2><h3 id="tcp报文"><a href="#tcp报文" class="headerlink" title="tcp报文"></a>tcp报文</h3><ul>
+<li><p>发送报文格式</p>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173732124.png" alt="image-20230427173732124"></p>
+</li>
+<li><p>响应报文格式</p>
+</li>
+</ul>
+<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173656515.png" alt="image-20230427173656515"></p>
+<ul>
+<li><p>结构、</p>
+<ul>
+<li><p>发送报文</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">事务处理标识 协议标识 报文长度 单元标识 功能码 起始地址 寄存器个数</span><br><span class="line"> 008B 		0000 	0006 	01 		03 	 0000 	000A</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line">* 响应的报文</span><br><span class="line"></span><br><span class="line">  ```txt</span><br><span class="line">  Tx:000000-00 8B 00 00 00 06 01 03 00 00 00 0A</span><br><span class="line">  Rx:000001-00 8B 00 00 00 17 01 03 14 00 00 00 01 00 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">  Tx:000002-00 8C 00 00 00 06 01 03 00 00 00 0A</span><br><span class="line">  Rx:000003-00 8C 00 00 00 17 01 03 14 00 00 00 01 00 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">  Tx:000004-00 8D 00 00 00 06 01 03 00 00 00 0A</span><br><span class="line">  Rx:000005-00 8D 00 00 00 17 01 03 14 00 00 00 01 00 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00</span><br><span class="line">  Tx:000006-00 8E 00 00 00 06 01 03 00 00 00 0A</span><br><span class="line">  Rx:000007-00 8E 00 00 00 17 01 03 14 00 00 00 01 00 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00</span><br></pre></td></tr></table></figure>
+
+<h3 id="串口报文"><a href="#串口报文" class="headerlink" title="串口报文"></a>串口报文</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Rx:000043-01 03 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A3 67</span><br><span class="line">Tx:000044-01 03 00 00 00 0A C5 CD</span><br><span class="line">Rx:000045-01 03 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A3 67</span><br><span class="line">Tx:000046-01 03 00 00 00 0A C5 CD</span><br><span class="line">Rx:000047-01 03 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A3 67</span><br><span class="line">Tx:000048-01 06 00 00 00 0A 09 CD</span><br><span class="line">Rx:000049-01 06 00 00 00 0A 09 CD</span><br><span class="line">Tx:000050-01 03 00 00 00 0A C5 CD</span><br><span class="line">Rx:000051-01 03 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 38 BE</span><br><span class="line">Tx:000052-01 03 00 00 00 0A C5 CD</span><br><span class="line">Rx:000053-01 03 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 38 BE</span><br><span class="line">Tx:000054-01 03 00 00 00 0A C5 CD</span><br><span class="line">Rx:000055-01 03 14 00 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 38 BE</span><br></pre></td></tr></table></figure>
+
+<h3 id="报文对比"><a href="#报文对比" class="headerlink" title="报文对比"></a>报文对比</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00 8C 00 00 00 06 01 03 00 00 00 0A #tcp报文</span><br><span class="line">01 03 00 00 00 0A C5 CD #RTU报文</span><br></pre></td></tr></table></figure>
+
+<p>* </p>
+<h2 id="测试其他情况"><a href="#测试其他情况" class="headerlink" title="测试其他情况"></a>测试其他情况</h2><h3 id="通过串口测试："><a href="#通过串口测试：" class="headerlink" title="通过串口测试："></a>通过串口测试：</h3><h4 id="主站和从站寄存器连续"><a href="#主站和从站寄存器连续" class="headerlink" title="主站和从站寄存器连续"></a>主站和从站寄存器连续</h4><table>
+<thead>
+<tr>
+<th align="center">主站读取寄存器个数</th>
+<th align="center">从站读取寄存器个数</th>
+<th align="center"></th>
+<th align="center">现象</th>
+<th align="center">响应报文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">6</td>
+<td align="center">4</td>
+<td align="center">&gt;</td>
+<td align="center">02 llegal Data（非法数据地址错误）</td>
+<td align="center">异常（01 83 02 C0 F1）</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">5</td>
+<td align="center">&gt;</td>
+<td align="center">02 llegal Data（非法数据地址错误）</td>
+<td align="center">异常（01 83 02 C0 F1）</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td align="center">6</td>
+<td align="center">&#x3D;</td>
+<td align="center">正常读取</td>
+<td align="center">正常</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">6</td>
+<td align="center">&lt;</td>
+<td align="center">读取正常</td>
+<td align="center">正常</td>
+</tr>
+</tbody></table>
+<h4 id="从站寄存器地址跳跃"><a href="#从站寄存器地址跳跃" class="headerlink" title="从站寄存器地址跳跃"></a>从站寄存器地址跳跃</h4><p><strong>寄存器跳号</strong>（好像那个模拟器搞不了跳号，只能看看有没有其他软件）</p>
+<h2 id="真实测试设备"><a href="#真实测试设备" class="headerlink" title="真实测试设备"></a>真实测试设备</h2><h3 id="串口"><a href="#串口" class="headerlink" title="串口"></a>串口</h3><h4 id="主要信息"><a href="#主要信息" class="headerlink" title="主要信息"></a>主要信息</h4><ul>
+<li><p><code>设备id：03，寄存器开始地址：0000，长度：2，波特率：2400，无校验位</code></p>
+</li>
+<li><p>测试报文发送报文:</p>
+<blockquote>
+<p>03 03 00 00 00 02 C5 E9</p>
+</blockquote>
+</li>
+<li><p>解析响应报文</p>
+<p><code>03 03 04 01 6B 01 03 E8 42</code></p>
+<blockquote>
+<p>03 设备id </p>
+<p>03 操作码</p>
+<p>04 数据长度</p>
+<p>016B 0103 数据 –&gt; 363 259</p>
+<p>E8 42 CRC</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="手册解释"><a href="#手册解释" class="headerlink" title="手册解释"></a>手册解释</h4><p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427141150127.png" alt="image-20230427141150127"></p>
+<h4 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h4><p><strong>湿度</strong>：363&#x2F;10 &#x3D; 36.3 RH</p>
+<p><strong>温度</strong>：259&#x2F;10 &#x3D; 25.9 摄氏度</p>
+<h4 id="异常测试"><a href="#异常测试" class="headerlink" title="异常测试"></a>异常测试</h4><ul>
+<li>这个设备只能读2个数据，但是现在要求测试读取 4个数据，5个数据，6个数据</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>读取数据个数</th>
+<th>发送报文</th>
+<th>响应报文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5</td>
+<td>0303 0000 0005 842B</td>
+<td>0303 0A 017B 00F7 0000 0000 0000 E20C</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0303 0000 0006 C42A</td>
+<td>0303 0C 0182 00F7 0000 0000 0000 0000 6CFC</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0303 0000 0001 85E8</td>
+<td>0303 02 018D 0071</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0303 0000 0002 C5E9</td>
+<td>0303 04 018A 00F8 F867</td>
+</tr>
+</tbody></table>
+<ul>
+<li>温湿度结论：读的寄存器大于设备本身寄存器，响应报文会填 0 补充。</li>
+</ul>
+<h2 id="通过网关"><a href="#通过网关" class="headerlink" title="通过网关"></a>通过网关</h2><p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427163655007.png" alt="image-20230427163655007"></p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="发送报文思路"><a href="#发送报文思路" class="headerlink" title="发送报文思路"></a>发送报文思路</h3><ul>
+<li><p>设备地址</p>
+</li>
+<li><p>操作码</p>
+</li>
+<li><p>寄存器地址</p>
+</li>
+<li><p>CRC (已完成)</p>
+</li>
+</ul>
+<h3 id="分解响应思路："><a href="#分解响应思路：" class="headerlink" title="分解响应思路："></a>分解响应思路：</h3><ul>
+<li>先把响应报文接收到</li>
+<li>分解（拆四部分）<ul>
+<li>机器地址和操作码</li>
+<li>数据长度</li>
+<li>数据</li>
+<li>CRC</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/iot/" rel="tag"><i class="fa fa-tag"></i> iot</a>
+              <a href="/hexo/tags/modbus/" rel="tag"><i class="fa fa-tag"></i> modbus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2019/08/27/lua/" rel="prev" title="Lua">
+                  <i class="fa fa-angle-left"></i> Lua
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2020/08/26/python-thread-pool/" rel="next" title="python thread-pool">
+                  python thread-pool <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

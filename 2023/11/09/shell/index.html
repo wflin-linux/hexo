@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="推荐阅读： IFif []12345#!&#x2F;bin&#x2F;bash if [ condition ] then  commandsfi  test命令的数值比较功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell">
+<meta property="og:url" content="http://example.com/2023/11/09/shell/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="推荐阅读： IFif []12345#!&#x2F;bin&#x2F;bash if [ condition ] then  commandsfi  test命令的数值比较功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-14T07:29:13.936Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/11/09/shell/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/11/09/shell/","path":"2023/11/09/shell/","title":"shell"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>shell | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#IF"><span class="nav-number">1.</span> <span class="nav-text">IF</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-number">1.1.</span> <span class="nav-text">if []</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#test%E5%91%BD%E4%BB%A4%E7%9A%84%E6%95%B0%E5%80%BC%E6%AF%94%E8%BE%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.2.</span> <span class="nav-text">test命令的数值比较功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%AF%94%E8%BE%83%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.</span> <span class="nav-text">字符串比较测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">1.5.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B-1"><span class="nav-number">1.6.</span> <span class="nav-text">案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%AF%94%E8%BE%83"><span class="nav-number">2.</span> <span class="nav-text">文件比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#test-%E5%91%BD%E4%BB%A4%E7%9A%84%E6%96%87%E4%BB%B6%E6%AF%94%E8%BE%83%E5%8A%9F%E8%83%BD"><span class="nav-number">2.1.</span> <span class="nav-text">test 命令的文件比较功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.2.</span> <span class="nav-text">案例模板</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%9B%AE%E5%BD%95"><span class="nav-number">2.2.1.</span> <span class="nav-text">检查目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8"><span class="nav-number">2.2.2.</span> <span class="nav-text">检查对象是否存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%8F%AF%E8%AF%BB"><span class="nav-number">2.2.4.</span> <span class="nav-text">检查是否可读</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%A9%BA%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.5.</span> <span class="nav-text">检查空文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%8F%AF%E5%86%99"><span class="nav-number">2.2.6.</span> <span class="nav-text">检查是否可写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E6%89%A7%E8%A1%8C"><span class="nav-number">2.2.7.</span> <span class="nav-text">检查文件是否可以执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%89%80%E5%B1%9E%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.8.</span> <span class="nav-text">检查所属关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E9%BB%98%E8%AE%A4%E5%B1%9E%E7%BB%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.2.9.</span> <span class="nav-text">检查默认属组关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#case-%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">case 命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B-2"><span class="nav-number">3.1.</span> <span class="nav-text">案例</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/11/09/shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatar/avatar.png">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="shell | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          shell
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-11-10T00:00:00+08:00">2023-11-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 15:29:13" itemprop="dateModified" datetime="2024-03-14T15:29:13+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/shell/" itemprop="url" rel="index"><span itemprop="name">shell</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>推荐阅读：</p>
+<h2 id="IF"><a href="#IF" class="headerlink" title="IF"></a>IF</h2><h3 id="if"><a href="#if" class="headerlink" title="if []"></a>if []</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line">if [ condition ] </span><br><span class="line">then </span><br><span class="line"> commands</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="test命令的数值比较功能"><a href="#test命令的数值比较功能" class="headerlink" title="test命令的数值比较功能"></a><strong>test</strong>命令的数值比较功能</h3><table>
+<thead>
+<tr>
+<th align="center">比较</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">n1 -eq n2</td>
+<td align="center">检查n1是否与n2相等</td>
+</tr>
+<tr>
+<td align="center">n1 -ge n2</td>
+<td align="center">检查n1是否大于或等于n2</td>
+</tr>
+<tr>
+<td align="center">n1 -gt n2</td>
+<td align="center">检查n1是否大于n2</td>
+</tr>
+<tr>
+<td align="center">n1 -le n2</td>
+<td align="center">检查n1是否小于或等于n2</td>
+</tr>
+<tr>
+<td align="center">n1 -lt n2</td>
+<td align="center">检查n1是否小于n2</td>
+</tr>
+<tr>
+<td align="center">n1 -ne n2</td>
+<td align="center">检查n1是否不等于n2</td>
+</tr>
+</tbody></table>
+<h3 id="字符串比较测试"><a href="#字符串比较测试" class="headerlink" title="字符串比较测试"></a>字符串比较测试</h3><table>
+<thead>
+<tr>
+<th>str1 &#x3D; str2</th>
+<th>检查str1是否和str2相同</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>str1 !&#x3D; str2</td>
+<td>检查str1是否和str2不同</td>
+</tr>
+<tr>
+<td>str1 &lt; str2</td>
+<td>检查str1是否比str2小</td>
+</tr>
+<tr>
+<td>str1 &gt; str2</td>
+<td>检查str1是否比str2大</td>
+</tr>
+<tr>
+<td>-n str1</td>
+<td>检查str1的长度是否非0</td>
+</tr>
+<tr>
+<td>-z str1</td>
+<td>检查str1的长度是否为</td>
+</tr>
+</tbody></table>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><ul>
+<li><p>test7.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testing string equality</span> </span><br><span class="line">testuser=rich </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ <span class="variable">$USER</span> = <span class="variable">$testuser</span> ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;Welcome $testuser&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test8.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testing string equality</span> </span><br><span class="line">testuser=baduser </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ <span class="variable">$USER</span> != <span class="variable">$testuser</span> ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;This is not $testuser&quot; </span><br><span class="line">else </span><br><span class="line"> echo &quot;Welcome $testuser&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>要测试一个字符串是否比另一个字符串大就是麻烦的开始。当要开始使用测试条件的大于或小于功能时，就会出现两个经常困扰shell程序员的问题： </li>
+<li>大于号和小于号必须转义，否则shell会把它们当作重定向符号，把字符串值当作文件名；</li>
+<li>大于和小于顺序和sort命令所采用的不同。</li>
+<li>在编写脚本时，第一条可能会导致一个不易察觉的严重问题。下面的例子展示了shell脚本编程初学者时常碰到的问题。</li>
+</ul>
+<h3 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h3><ul>
+<li><pre><code class="shell">#!/bin/bash 
+# mis-using string comparisons 
+# 
+val1=baseball 
+val2=hockey 
+# 
+if [ $val1 &gt; $val2 ] 
+then 
+ echo &quot;$val1 is greater than $val2&quot; 
+else 
+ echo &quot;$val1 is less than $val2&quot; 
+fi
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* test9.sh</span><br><span class="line"></span><br><span class="line">  ```shell</span><br><span class="line">  #!/bin/bash </span><br><span class="line">  # mis-using string comparisons </span><br><span class="line">  # </span><br><span class="line">  val1=baseball </span><br><span class="line">  val2=hockey </span><br><span class="line">  # </span><br><span class="line">  if [ $val1 \&gt; $val2 ]</span><br><span class="line">  then </span><br><span class="line">   echo &quot;$val1 is greater than $val2&quot; </span><br><span class="line">  else </span><br><span class="line">   echo &quot;$val1 is less than $val2&quot; </span><br><span class="line">  fi</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<h2 id="文件比较"><a href="#文件比较" class="headerlink" title="文件比较"></a>文件比较</h2><h3 id="test-命令的文件比较功能"><a href="#test-命令的文件比较功能" class="headerlink" title="test 命令的文件比较功能"></a>test 命令的文件比较功能</h3><table>
+<thead>
+<tr>
+<th>比较</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d file</td>
+<td>检查file是否存在并是一个目录</td>
+</tr>
+<tr>
+<td>-e file</td>
+<td>检查file是否存在</td>
+</tr>
+<tr>
+<td>-f file</td>
+<td>检查file是否存在并是一个文件</td>
+</tr>
+<tr>
+<td>-r file</td>
+<td>检查file是否存在并可读</td>
+</tr>
+<tr>
+<td>-s file</td>
+<td>检查file是否存在并非空</td>
+</tr>
+<tr>
+<td>-w file</td>
+<td>检查file是否存在并可写</td>
+</tr>
+<tr>
+<td>-x file</td>
+<td>检查file是否存在并可执行</td>
+</tr>
+<tr>
+<td>-O file</td>
+<td>检查file是否存在并属当前用户所有</td>
+</tr>
+<tr>
+<td>-G file</td>
+<td>检查file是否存在并且默认组与当前用户相同</td>
+</tr>
+<tr>
+<td>file1 -ot file2</td>
+<td>检查file1是否比file2旧</td>
+</tr>
+<tr>
+<td>file1 -nt file2</td>
+<td>检查file1是否比file2新</td>
+</tr>
+</tbody></table>
+<h3 id="案例模板"><a href="#案例模板" class="headerlink" title="案例模板"></a>案例模板</h3><h4 id="检查目录"><a href="#检查目录" class="headerlink" title="检查目录"></a>检查目录</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Look before you leap</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">jump_directory=/home/arthur</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -d <span class="variable">$jump_directory</span> ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;The $jump_directory directory exists&quot; </span><br><span class="line"> cd $jump_directory </span><br><span class="line"> ls </span><br><span class="line">else </span><br><span class="line"> echo &quot;The $jump_directory directory does not exist&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查对象是否存在"><a href="#检查对象是否存在" class="headerlink" title="检查对象是否存在"></a>检查对象是否存在</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check <span class="keyword">if</span> either a directory or file exists</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">location=<span class="variable">$HOME</span></span> </span><br><span class="line">file_name=&quot;sentinel&quot; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -e <span class="variable">$location</span> ]</span> </span><br><span class="line">then #Directory does exist </span><br><span class="line"> echo &quot;OK on the $location directory.&quot; </span><br><span class="line"> echo &quot;Now checking on the file, $file_name.&quot; </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">if</span> [ -e <span class="variable">$location</span>/<span class="variable">$file_name</span> ]</span> </span><br><span class="line"> then #File does exist </span><br><span class="line"> echo &quot;OK on the filename&quot; </span><br><span class="line"> echo &quot;Updating Current Date...&quot; </span><br><span class="line"> date &gt;&gt; $location/$file_name </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">else</span> <span class="comment">#File does not exist</span></span> </span><br><span class="line"> echo &quot;File does not exist&quot; </span><br><span class="line"> echo &quot;Nothing to update&quot; </span><br><span class="line"> fi </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">else</span> <span class="comment">#Directory does not exist</span></span> </span><br><span class="line"> echo &quot;The $location directory does not exist.&quot; </span><br><span class="line"> echo &quot;Nothing to update&quot; </span><br><span class="line">fi </span><br><span class="line"><span class="meta prompt_">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="检查文件"><a href="#检查文件" class="headerlink" title="检查文件"></a>检查文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check <span class="keyword">if</span> either a directory or file exists</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">item_name=<span class="variable">$HOME</span></span> </span><br><span class="line">echo </span><br><span class="line">echo &quot;The item being checked: $item_name&quot; </span><br><span class="line">echo </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -e <span class="variable">$item_name</span> ]</span> </span><br><span class="line">then #Item does exist </span><br><span class="line"> echo &quot;The item, $item_name, does exist.&quot; </span><br><span class="line"> echo &quot;But is it a file?&quot; </span><br><span class="line"> echo </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">if</span> [ -f <span class="variable">$item_name</span> ]</span> </span><br><span class="line"> then #Item is a file </span><br><span class="line"> echo &quot;Yes, $item_name is a file.&quot; </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">else</span> <span class="comment">#Item is not a file</span></span> </span><br><span class="line"> echo &quot;No, $item_name is not a file.&quot; </span><br><span class="line"> fi </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">else</span> <span class="comment">#Item does not exist</span></span> </span><br><span class="line"> echo &quot;The item, $item_name, does not exist.&quot; </span><br><span class="line"> echo &quot;Nothing to update&quot; </span><br><span class="line">fi </span><br><span class="line"><span class="meta prompt_">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="检查是否可读"><a href="#检查是否可读" class="headerlink" title="检查是否可读"></a>检查是否可读</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testing <span class="keyword">if</span> you can <span class="built_in">read</span> a file</span> </span><br><span class="line">pwfile=/etc/shadow </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="comment"># first, test if the file exists, and is a file</span></span> </span><br><span class="line">if [ -f $pwfile ] </span><br><span class="line">then </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">now <span class="built_in">test</span> <span class="keyword">if</span> you can <span class="built_in">read</span> it</span> </span><br><span class="line"> if [ -r $pwfile ] </span><br><span class="line"> then </span><br><span class="line"> tail $pwfile </span><br><span class="line"> else </span><br><span class="line"> echo &quot;Sorry, I am unable to read the $pwfile file&quot; </span><br><span class="line"> fi </span><br><span class="line">else </span><br><span class="line"> echo &quot;Sorry, the file $file does not exist&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查空文件"><a href="#检查空文件" class="headerlink" title="检查空文件"></a>检查空文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Testing <span class="keyword">if</span> a file is empty</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">file_name=<span class="variable">$HOME</span>/sentinel</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -f <span class="variable">$file_name</span> ]</span> </span><br><span class="line">then </span><br><span class="line"> if [ -s $file_name ] </span><br><span class="line"> then </span><br><span class="line"> echo &quot;The $file_name file exists and has data in it.&quot; </span><br><span class="line"> echo &quot;Will not remove this file.&quot; </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">else</span></span> </span><br><span class="line"> echo &quot;The $file_name file exists, but is empty.&quot; </span><br><span class="line"> echo &quot;Deleting empty file...&quot; </span><br><span class="line"> rm $file_name </span><br><span class="line"> fi </span><br><span class="line">else </span><br><span class="line"> echo &quot;File, $file_name, does not exist.&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查是否可写"><a href="#检查是否可写" class="headerlink" title="检查是否可写"></a>检查是否可写</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Check <span class="keyword">if</span> a file is writable.</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash">item_name=<span class="variable">$HOME</span>/sentinel</span> </span><br><span class="line">echo </span><br><span class="line">echo &quot;The item being checked: $item_name&quot; </span><br><span class="line">echo</span><br><span class="line"> echo &quot;Yes, $item_name is a file.&quot; </span><br><span class="line"> echo &quot;But is it writable?&quot; </span><br><span class="line"> echo </span><br><span class="line"> [...]</span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">if</span> [ -w <span class="variable">$item_name</span> ]</span> </span><br><span class="line"> then #Item is writable </span><br><span class="line"> echo &quot;Writing current time to $item_name&quot; </span><br><span class="line"> date +%H%M &gt;&gt; $item_name </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">else</span> <span class="comment">#Item is not writable</span></span> </span><br><span class="line"> echo &quot;Unable to write to $item_name&quot; </span><br><span class="line"> fi </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"> <span class="keyword">else</span> <span class="comment">#Item is not a file</span></span> </span><br><span class="line"> echo &quot;No, $item_name is not a file.&quot; </span><br><span class="line"> fi</span><br><span class="line"> [...]</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查文件是否可以执行"><a href="#检查文件是否可以执行" class="headerlink" title="检查文件是否可以执行"></a>检查文件是否可以执行</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">testing file execution</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -x test16.sh ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;You can run the script: &quot; </span><br><span class="line"> ./test16.sh </span><br><span class="line">else </span><br><span class="line"> echo &quot;Sorry, you are unable to execute the script&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查所属关系"><a href="#检查所属关系" class="headerlink" title="检查所属关系"></a>检查所属关系</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">check file ownership</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -O /etc/passwd ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;You are the owner of the /etc/passwd file&quot;</span><br><span class="line">else </span><br><span class="line"> echo &quot;Sorry, you are not the owner of the /etc/passwd file&quot; </span><br><span class="line">fi </span><br></pre></td></tr></table></figure>
+
+<h4 id="检查默认属组关系"><a href="#检查默认属组关系" class="headerlink" title="检查默认属组关系"></a>检查默认属组关系</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">check file group <span class="built_in">test</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">if</span> [ -G <span class="variable">$HOME</span>/testing ]</span> </span><br><span class="line">then </span><br><span class="line"> echo &quot;You are in the same group as the file&quot; </span><br><span class="line">else </span><br><span class="line"> echo &quot;The file is not owned by your group&quot; </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h2 id="case-命令"><a href="#case-命令" class="headerlink" title="case 命令"></a><strong>case</strong> 命令</h2><p><strong>语法</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">case variable in </span><br><span class="line">pattern1 | pattern2) commands1;; </span><br><span class="line">pattern3) commands2;; </span><br><span class="line">*) default commands;; </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释</strong>：case命令会将指定的变量与不同模式进行比较。如果变量和模式是匹配的，那么shell会执行为该模式指定的命令。可以通过竖线操作符在一行中分隔出多个模式模式。星号会捕获所有与已知模式不匹配的值。这里有个将if-then-else程序转换成用case命令的例子</p>
+<h3 id="案例-2"><a href="#案例-2" class="headerlink" title="案例"></a>案例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">using the <span class="keyword">case</span> <span class="built_in">command</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"><span class="keyword">case</span> <span class="variable">$USER</span> <span class="keyword">in</span></span> </span><br><span class="line">rich | barbara) </span><br><span class="line"> echo &quot;Welcome, $USER&quot; </span><br><span class="line"> echo &quot;Please enjoy your visit&quot;;; </span><br><span class="line">testing) </span><br><span class="line"> echo &quot;Special testing account&quot;;; </span><br><span class="line">jessica) </span><br><span class="line"> echo &quot;Do not forget to log off when you&#x27;re done&quot;;; </span><br><span class="line">*) </span><br><span class="line"> echo &quot;Sorry, you are not allowed here&quot;;; </span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/shell/" rel="tag"><i class="fa fa-tag"></i> shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2023/10/09/rt-thread/" rel="prev" title="rt-thread">
+                  <i class="fa fa-angle-left"></i> rt-thread
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

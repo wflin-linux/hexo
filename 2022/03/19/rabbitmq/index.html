@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="RabbitMQ1. MQ引言1.1 什么是MQ MQ（Message Quene）:翻译为 消息队列 ，通过典型的生产者和消费者模型 ,生产者不断向消息队列中产生消息，消费者不断从队列中获得消息。因为消息的产生和消费都是异步的，而且只关心消息的发送和接收，没用业务逻辑的侵入。轻松实现系统解耦。别名为消息中间件 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ">
+<meta property="og:url" content="http://example.com/2022/03/19/rabbitmq/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="RabbitMQ1. MQ引言1.1 什么是MQ MQ（Message Quene）:翻译为 消息队列 ，通过典型的生产者和消费者模型 ,生产者不断向消息队列中产生消息，消费者不断从队列中获得消息。因为消息的产生和消费都是异步的，而且只关心消息的发送和接收，没用业务逻辑的侵入。轻松实现系统解耦。别名为消息中间件 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统集">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png">
+<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA">
+<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM">
+<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY">
+<meta property="article:published_time" content="2022-03-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-14T07:29:13.932Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="MQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png">
+
+
+<link rel="canonical" href="http://example.com/2022/03/19/rabbitmq/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/03/19/rabbitmq/","path":"2022/03/19/rabbitmq/","title":"RabbitMQ"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RabbitMQ | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RabbitMQ"><span class="nav-number">1.</span> <span class="nav-text">RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MQ%E5%BC%95%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">1. MQ引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFMQ"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 什么是MQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-MQ-%E7%9A%84%E7%A7%8D%E7%B1%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 MQ 的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%B8%8D%E5%90%8C-MQ-%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 不同 MQ 特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RabbitMQ-%E5%BC%95%E8%A8%80"><span class="nav-number">1.2.</span> <span class="nav-text">2. RabbitMQ 引言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-RabbitMQ"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 RabbitMQ</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-RabbitMQ-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 RabbitMQ 的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-RabbitMQ-%E7%89%B9%E7%82%B9"><span class="nav-number">1.3.</span> <span class="nav-text">3. RabbitMQ 特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%AE%89%E8%A3%85-RabbitMQ"><span class="nav-number">1.4.</span> <span class="nav-text">4. 安装 RabbitMQ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">5.2 建立连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E5%90%91-mq-%E4%B8%AD%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-number">1.4.2.</span> <span class="nav-text">5.3 向 mq 中发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E6%B6%88%E8%B4%B9%E8%80%85%E4%BB%8E-mq-%E4%B8%AD%E5%8F%96%E6%B6%88%E6%81%AF"><span class="nav-number">1.4.3.</span> <span class="nav-text">5.4 消费者从 mq 中取消息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-hello-world-%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.5.</span> <span class="nav-text">6. hello world 模型</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/rabbitmq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatar/avatar.png">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RabbitMQ | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RabbitMQ
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-03-20 00:00:00" itemprop="dateCreated datePublished" datetime="2022-03-20T00:00:00+08:00">2022-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 15:29:13" itemprop="dateModified" datetime="2024-03-14T15:29:13+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/RabbitMQ/" itemprop="url" rel="index"><span itemprop="name">RabbitMQ</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="RabbitMQ"><a href="#RabbitMQ" class="headerlink" title="RabbitMQ"></a>RabbitMQ</h1><h2 id="1-MQ引言"><a href="#1-MQ引言" class="headerlink" title="1. MQ引言"></a>1. MQ引言</h2><h3 id="1-1-什么是MQ"><a href="#1-1-什么是MQ" class="headerlink" title="1.1 什么是MQ"></a>1.1 什么是MQ</h3><ul>
+<li>MQ（Message Quene）:翻译为 <code>消息队列</code> ，通过典型的<code>生产者</code>和<code>消费者</code>模型 ,生产者不断向消息队列中产生消息，消费者不断从队列中获得消息。因为消息的产生和消费都是异步的，而且只关心消息的发送和接收，没用业务逻辑的侵入。轻松实现系统解耦。别名为<code>消息中间件</code> 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统集成。</li>
+</ul>
+<h3 id="1-2-MQ-的种类"><a href="#1-2-MQ-的种类" class="headerlink" title="1.2 MQ 的种类"></a>1.2 MQ 的种类</h3><ul>
+<li>当今市面上有很多主流消息中间件，如老牌的 <code>ActiveMQ</code>,<code>RabbitMQ</code>,炙手可热的<code>KafKa</code>,阿里巴巴自主开发的 <code>RocketMQ</code></li>
+</ul>
+<h3 id="1-3-不同-MQ-特点"><a href="#1-3-不同-MQ-特点" class="headerlink" title="1.3 不同 MQ 特点"></a>1.3 不同 MQ 特点</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 1. ActiveMQ</span></span><br><span class="line"><span class="code">	ActiveMQ 是 apache 出品，最流行，能力强劲的开源数据总线。它是一个完全支持 JMS 规范的消息中间件，丰富的 API，多种集群架构模式让 ActiveMQ 在业界成为老牌消息中间件，中小企业很受欢迎</span></span><br><span class="line"><span class="code"># 2. Kafka</span></span><br><span class="line"><span class="code">	Kafka 是 LinkedIn 开源的分布式发布-订阅消息系统，目前归属于 apache 顶级项目。Kafka 的主要特点是基于 Pull 的来处理消息消费，追求高吞吐量，一开始的目的就是用于日志收集和传输，0.8 版本之后开始支持复制，不支持事务。对消息的重复，丢失，错误没有严格要求，适合产生大量数据的互联网服务的数据收集业务。</span></span><br><span class="line"><span class="code"># 3. RocketMQ</span></span><br><span class="line"><span class="code">	RocketMQ 是阿里开源的消息中间件，它是纯 Java 开发，具有高吞吐量，高可用性，适合大规模分布式系统应用的特点，RocketMQ 思路是起源于 Kafka，但并不是 Kafka 的一个 copy，它对于消息的可靠传输及事务性做了优化，目前在 阿里集团广泛被用于交易，充值，流计算，消息推送，日志流式处理，binglog 分发等场景</span></span><br><span class="line"><span class="code"># 4. RabbitMQ</span></span><br><span class="line"><span class="code">	RabbitMQ 是使用 Erlang 语言开发的开源消息队列系统，基于 AMQP 协议来实现。AMQP 的主要特点是面向消息，队列路由（包括点对点和发布订阅），可靠性，安全。AMQP 协议更多用在企业系统内对数据一致性，稳定性和可靠性要求很高的场景，对性能和吞吐量的要求还在其次。</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>RabbitMQ 和 Kafka 可靠，Kafka 更适合高 IO 的处理，一般应用在大数据日志处理或对实时性（少量延迟），可靠性（少量丢数据）要求稍低的场景使用，比如 ELK 日志收集</p>
+</blockquote>
+<h2 id="2-RabbitMQ-引言"><a href="#2-RabbitMQ-引言" class="headerlink" title="2. RabbitMQ 引言"></a>2. RabbitMQ 引言</h2><h3 id="2-1-RabbitMQ"><a href="#2-1-RabbitMQ" class="headerlink" title="2.1 RabbitMQ"></a>2.1 RabbitMQ</h3><blockquote>
+<p>基于 <code>AMOP</code> 协议，Erlang 语言开发，是部署最广泛的开源消息中间件，是最受欢迎的消息中间件之一。</p>
+</blockquote>
+<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png" alt="image-20220429151921446"></p>
+<p><code>官网</code>：[<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>](<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>)</p>
+<p><code>官方教程</code>：[<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>](<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>)</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># AMQP 介绍</span></span><br><span class="line">AMQP，即Advanced Message Queuing Protocol，高级消息队列协议，是应用层协议的一个开放标准，为面向消息的中间件设计。</span><br><span class="line"><span class="code">	AMQP的主要特征是面向消息、队列、路由（包括点对点和发布/订阅）、可靠性、安全。</span></span><br><span class="line"><span class="code">	AMQP在消息提供者和客户端的行为进行了强制规定，使得不同卖商之间真正实现了互操作能力。</span></span><br><span class="line"><span class="code">	JMS是早期消息中间件进行标准化的一个尝试，它仅仅是在API级进行了规范，离创建互操作能力还差很远。</span></span><br><span class="line"><span class="code">	与JMS不同，AMQP是一个Wire级的协议，它描述了在网络上传输的数据的格式，以字节为流。因此任何遵守此数据格式的工具，其创建和解释消息，都能与其他兼容工具进行互操作。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-RabbitMQ-的作用"><a href="#2-2-RabbitMQ-的作用" class="headerlink" title="2.2 RabbitMQ 的作用"></a>2.2 RabbitMQ 的作用</h3><ul>
+<li><p><strong>解耦</strong>。如图所示。假设有系统B、C、D都需要系统A的数据，于是系统A调用三个方法发送数据到B、C、D。这时，系统D不需要了，那就需要在系统A把相关的代码删掉。假设这时有个新的系统E需要数据，这时系统A又要增加调用系统E的代码。为了降低这种强耦合，就可以使用MQ，<strong>系统A只需要把数据发送到MQ，其他系统如果需要数据，则从MQ中获取即可</strong>。</p>
+<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA" alt="aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA (589×254) (csdnimg.cn)"></p>
+</li>
+<li><p><strong>异步</strong>。如图所示。一个客户端请求发送进来，系统A会调用系统B、C、D三个系统，同步请求的话，响应时间就是系统A、B、C、D的总和，也就是800ms。<strong>如果使用MQ，系统A发送数据到MQ，然后就可以返回响应给客户端，不需要再等待系统B、C、D的响应，可以大大地提高性能</strong>。对于一些非必要的业务，比如发送短信，发送邮件等等，就可以采用MQ。</p>
+<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM"></p>
+</li>
+<li><p><strong>削峰</strong>。如图所示。这其实是MQ一个很重要的应用。假设系统A在某一段时间请求数暴增，有5000个请求发送过来，系统A这时就会发送5000条SQL进入MySQL进行执行，MySQL对于如此庞大的请求当然处理不过来，MySQL就会崩溃，导致系统瘫痪。<strong>如果使用MQ，系统A不再是直接发送SQL到数据库，而是把数据发送到MQ，MQ短时间积压数据是可以接受的，然后由消费者每次拉取2000条进行处理，防止在请求峰值时期大量的请求直接发送到MySQL导致系统崩溃</strong>。</p>
+<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY"></p>
+</li>
+</ul>
+<h2 id="3-RabbitMQ-特点"><a href="#3-RabbitMQ-特点" class="headerlink" title="3. RabbitMQ 特点"></a>3. RabbitMQ 特点</h2><ul>
+<li>可靠性。支持持久化，传输确认，发布确认等保证了MQ的可靠性。</li>
+<li>灵活的分发消息策略。这应该是RabbitMQ的一大特点。在消息进入MQ前由Exchange(交换机)进行路由消息。分发消息策略有：简单模式、工作队列模式、发布订阅模式、路由模式、通配符模式。</li>
+<li>支持集群。多台RabbitMQ服务器可以组成一个集群，形成一个逻辑Broker。</li>
+<li>多种协议。RabbitMQ支持多种消息队列协议，比如 STOMP、MQTT 等等。</li>
+<li>支持多种语言客户端。RabbitMQ几乎支持所有常用编程语言，包括 Java、.NET、Ruby 等等。</li>
+<li>可视化管理界面。RabbitMQ提供了一个易用的用户界面，使得用户可以监控和管理消息 Broker。</li>
+<li>插件机制。RabbitMQ提供了许多插件，可以通过插件进行扩展，也可以编写自己的插件。</li>
+</ul>
+<h2 id="4-安装-RabbitMQ"><a href="#4-安装-RabbitMQ" class="headerlink" title="4. 安装 RabbitMQ"></a>4. 安装 RabbitMQ</h2><ul>
+<li>我是用的 docker 安装</li>
+</ul>
+<ol>
+<li><p>拉取镜像</p>
+<blockquote>
+<p> docker pull rabbitmq:management</p>
+</blockquote>
+</li>
+<li><p>查看镜像列表</p>
+<blockquote>
+<p>docker images</p>
+</blockquote>
+</li>
+<li><p>运行 MQ (简单版本)</p>
+<blockquote>
+<p>docker run -d -p 5672:5672 -p 15672:15672 –name rabbitmq rabbitmq:management</p>
+</blockquote>
+</li>
+<li><p>修改配置运行</p>
+<blockquote>
+<p>docker run -d -p 15672:15672  -p  5672:5672  -e RABBITMQ_DEFAULT_USER&#x3D;admin -e RABBITMQ_DEFAULT_PASS&#x3D;admin –name rabbitmq rabbitmq:management</p>
+<blockquote>
+<ul>
+<li>-d 后台运行</li>
+<li>-p 隐射端口</li>
+<li>–name 指定rabbitMQ名称</li>
+<li>RABBITMQ_DEFAULT_USER 指定用户账号</li>
+<li>RABBITMQ_DEFAULT_PASS 指定账号密码</li>
+</ul>
+</blockquote>
+</blockquote>
+</li>
+<li><pre><code class="txt"># latest RabbitMQ 3.9
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-management
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 5. java 连接 mq</span><br><span class="line"></span><br><span class="line">### 5.1 加入 mq 依赖</span><br><span class="line"></span><br><span class="line">```xml</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ol>
+<h3 id="5-2-建立连接"><a href="#5-2-建立连接" class="headerlink" title="5.2 建立连接"></a>5.2 建立连接</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生产消息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendMessagfe</span><span class="params">()</span> <span class="keyword">throws</span> IOException, TimeoutException &#123;</span><br><span class="line">        <span class="comment">// 创建连接 mq 的工厂对象</span></span><br><span class="line">        <span class="type">ConnectionFactory</span> <span class="variable">connectionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionFactory</span>();</span><br><span class="line">        <span class="comment">// mq 的连接地址</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;192.168.96.137&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的端口</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">// 设置虚拟主机</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接用户名</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的用户名密码</span></span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">        <span class="comment">// 建立连接获取连接对象</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> connectionFactory.newConnection();</span><br><span class="line">        <span class="comment">// 获取连接中的通道</span></span><br><span class="line">        <span class="type">Channel</span> <span class="variable">channel</span> <span class="operator">=</span> connection.createChannel();</span><br><span class="line">        <span class="comment">// 一定记得关，我老忘</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-向-mq-中发送消息"><a href="#5-3-向-mq-中发送消息" class="headerlink" title="5.3 向 mq 中发送消息"></a>5.3 向 mq 中发送消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Provider</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 生产消息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testSendMessagfe</span><span class="params">()</span> <span class="keyword">throws</span> IOException, TimeoutException &#123;</span><br><span class="line">        <span class="comment">// 创建连接 mq 的工厂对象</span></span><br><span class="line">        <span class="type">ConnectionFactory</span> <span class="variable">connectionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionFactory</span>();</span><br><span class="line">        <span class="comment">// mq 的连接地址</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;192.168.96.137&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的端口</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">// 设置虚拟主机</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接用户名</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的用户名密码</span></span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">        <span class="comment">// 建立连接获取连接对象</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> connectionFactory.newConnection();</span><br><span class="line">        <span class="comment">// 获取连接中的通道</span></span><br><span class="line">        <span class="type">Channel</span> <span class="variable">channel</span> <span class="operator">=</span> connection.createChannel();</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 通道绑定对应消息队列</span></span><br><span class="line"><span class="comment">         * 参数一：队列名称，如果队列不存在自动创建</span></span><br><span class="line"><span class="comment">         * 参数二：用来定义队列是否持久化 true 独占队列，false 不持久化</span></span><br><span class="line"><span class="comment">         * 参数三：execlusive 是否独占对队列，true 独占，false 不独占</span></span><br><span class="line"><span class="comment">         * 参数四：autoDelete 是否在消息完成后自动删除队列  true自动删除，false不自动删除</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.queueDeclare(<span class="string">&quot;hello&quot;</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">null</span>);</span><br><span class="line">        <span class="comment">// 发布消息</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 参数 1 ：交换机名字，因为直连，没有交换机，所以没写</span></span><br><span class="line"><span class="comment">         * 参数 2 ：队列名称</span></span><br><span class="line"><span class="comment">         * 参数 3 ：传递消息的设置</span></span><br><span class="line"><span class="comment">         * 参数 4 ： 发送消息的内容（发送的是 byte类型的数组）</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        channel.basicPublish(<span class="string">&quot;&quot;</span>,<span class="string">&quot;hello&quot;</span>,<span class="literal">null</span>,<span class="string">&quot;hello rabbitmq&quot;</span>.getBytes());</span><br><span class="line">         <span class="comment">// 一定记得关，我老忘</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-消费者从-mq-中取消息"><a href="#5-4-消费者从-mq-中取消息" class="headerlink" title="5.4 消费者从 mq 中取消息"></a>5.4 消费者从 mq 中取消息</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Customer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException, TimeoutException &#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 代码冗余了，所以后面会创建一个工具类</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// 创建连接 mq 的工厂对象</span></span><br><span class="line">        <span class="type">ConnectionFactory</span> <span class="variable">connectionFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConnectionFactory</span>();</span><br><span class="line">        <span class="comment">// mq 的连接地址</span></span><br><span class="line">        connectionFactory.setHost(<span class="string">&quot;192.168.96.137&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的端口</span></span><br><span class="line">        connectionFactory.setPort(<span class="number">5672</span>);</span><br><span class="line">        <span class="comment">// 设置虚拟主机</span></span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">&quot;/ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接用户名</span></span><br><span class="line">        connectionFactory.setUsername(<span class="string">&quot;ems&quot;</span>);</span><br><span class="line">        <span class="comment">// mq 连接的用户名密码</span></span><br><span class="line">        connectionFactory.setPassword(<span class="string">&quot;123&quot;</span>);</span><br><span class="line">        <span class="comment">// 建立连接获取连接对象</span></span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> connectionFactory.newConnection();</span><br><span class="line">        <span class="comment">// 获取通道</span></span><br><span class="line">        <span class="type">Channel</span> <span class="variable">channel</span> <span class="operator">=</span> connection.createChannel();</span><br><span class="line">        <span class="comment">// 绑定通道</span></span><br><span class="line">        channel.queueDeclare(<span class="string">&quot;hello&quot;</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">false</span>,<span class="literal">null</span>);</span><br><span class="line">        <span class="comment">// 消费消息</span></span><br><span class="line">        <span class="comment">// 参数一 ：消费那个队列的消息，队列名称</span></span><br><span class="line">        <span class="comment">// 参数二 ： 开启消息的自动确认机制</span></span><br><span class="line">        <span class="comment">// 参数三 ：消费消息时回调接口</span></span><br><span class="line">        channel.basicConsume(<span class="string">&quot;hello&quot;</span>,<span class="literal">true</span>, <span class="keyword">new</span> <span class="title class_">DefaultConsumer</span>(channel)&#123;</span><br><span class="line">            <span class="comment">/**</span></span><br><span class="line"><span class="comment">             * 参数说明：</span></span><br><span class="line"><span class="comment">             * <span class="doctag">@param</span> consumerTag</span></span><br><span class="line"><span class="comment">             * <span class="doctag">@param</span> envelope</span></span><br><span class="line"><span class="comment">             * <span class="doctag">@param</span> properties</span></span><br><span class="line"><span class="comment">             * <span class="doctag">@param</span> body 			消息的内容</span></span><br><span class="line"><span class="comment">             * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="type">byte</span>[] body)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;new String(body)=&quot;</span>+ <span class="keyword">new</span> <span class="title class_">String</span>(body));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 这俩一般不关闭，因为我们希望消费者一直监听我们的消息</span></span><br><span class="line">        <span class="comment">//channel.close();</span></span><br><span class="line">        <span class="comment">//connection.close();</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-hello-world-模型"><a href="#6-hello-world-模型" class="headerlink" title="6. hello world 模型"></a>6. hello world 模型</h2><ul>
+<li>选用上面的模型</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+              <a href="/hexo/tags/MQ/" rel="tag"><i class="fa fa-tag"></i> MQ</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2022/03/09/latex/" rel="prev" title="Latex">
+                  <i class="fa fa-angle-left"></i> Latex
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2022/03/24/restful/" rel="next" title="restful">
+                  restful <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

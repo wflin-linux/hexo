@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="下载和烧写镜像 从官网下载树莓派镜像，使用烧写工具 balena-etcher 烧录镜像  串口登录 将系统烧写到 SD 卡后，重新拔插 SD 卡，连接到系统 usb，电脑会出现树莓派的 boot 分区  修改 config.txt 文件，将内容追加到文件末尾（停止了蓝牙，解除了对串口的占用）  dtoverlay&#x3D;pi3-miniuart-bt   覆盖 cmdline.txt，万一失">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RaspberryPi">
+<meta property="og:url" content="http://example.com/2023/06/09/raspberrypi/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="下载和烧写镜像 从官网下载树莓派镜像，使用烧写工具 balena-etcher 烧录镜像  串口登录 将系统烧写到 SD 卡后，重新拔插 SD 卡，连接到系统 usb，电脑会出现树莓派的 boot 分区  修改 config.txt 文件，将内容追加到文件末尾（停止了蓝牙，解除了对串口的占用）  dtoverlay&#x3D;pi3-miniuart-bt   覆盖 cmdline.txt，万一失">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/hexo/2023/06/09/raspberrypi/raspberrypi/aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw.png">
+<meta property="og:image" content="http://example.com/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141416928.png">
+<meta property="og:image" content="http://example.com/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141527323.png">
+<meta property="article:published_time" content="2023-06-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-14T07:29:13.932Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="c">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/hexo/2023/06/09/raspberrypi/raspberrypi/aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw.png">
+
+
+<link rel="canonical" href="http://example.com/2023/06/09/raspberrypi/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/06/09/raspberrypi/","path":"2023/06/09/raspberrypi/","title":"RaspberryPi"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RaspberryPi | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E7%83%A7%E5%86%99%E9%95%9C%E5%83%8F"><span class="nav-number">1.</span> <span class="nav-text">下载和烧写镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%B2%E5%8F%A3%E7%99%BB%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">串口登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH%E7%99%BB%E5%BD%95-%E6%88%91%E5%B8%B8%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">SSH登录(我常用)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%93%E7%BC%96%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">库编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">静态库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93"><span class="nav-number">2.2.</span> <span class="nav-text">动态库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%BA%93"><span class="nav-number">2.3.</span> <span class="nav-text">生成库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">静态库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%BA%93-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">动态库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.4.</span> <span class="nav-text">库的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%BA%93-2"><span class="nav-number">2.4.1.</span> <span class="nav-text">静态库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gpio"><span class="nav-number">3.</span> <span class="nav-text">gpio</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91"><span class="nav-number">4.</span> <span class="nav-text">交叉编译</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.1.</span> <span class="nav-text">临时配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B0%B8%E4%B9%85%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.2.</span> <span class="nav-text">永久配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91"><span class="nav-number">5.</span> <span class="nav-text">内核编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%9A%84%E8%BD%AF%E4%BB%B6"><span class="nav-number">5.0.1.</span> <span class="nav-text">安装的软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="nav-number">5.0.2.</span> <span class="nav-text">编译指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C-menuconfig"><span class="nav-number">5.0.2.1.</span> <span class="nav-text">执行 menuconfig</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-number">5.0.2.2.</span> <span class="nav-text">编译</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91"><span class="nav-number">5.0.2.2.1.</span> <span class="nav-text">踩坑</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%93%E5%8C%85-zimage-%E9%95%9C%E5%83%8F"><span class="nav-number">5.0.2.3.</span> <span class="nav-text">打包 zimage 镜像</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8B%B7%E8%B4%9D"><span class="nav-number">5.0.3.</span> <span class="nav-text">数据拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%82%E8%BD%BDsd%E5%8D%A1"><span class="nav-number">5.0.3.1.</span> <span class="nav-text">挂载sd卡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-moudles"><span class="nav-number">5.0.3.2.</span> <span class="nav-text">安装 moudles</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0-kernel-img-%E6%96%87%E4%BB%B6"><span class="nav-number">5.0.4.</span> <span class="nav-text">更新 kernel.img 文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A"><span class="nav-number">5.0.4.1.</span> <span class="nav-text">方法一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A"><span class="nav-number">5.0.4.2.</span> <span class="nav-text">方法二：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="nav-number">5.0.5.</span> <span class="nav-text">复制其他相关文件</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatar/avatar.png">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/06/09/raspberrypi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatar/avatar.png">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RaspberryPi | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RaspberryPi
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-06-10 00:00:00" itemprop="dateCreated datePublished" datetime="2023-06-10T00:00:00+08:00">2023-06-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-14 15:29:13" itemprop="dateModified" datetime="2024-03-14T15:29:13+08:00">2024-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">嵌入式</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="下载和烧写镜像"><a href="#下载和烧写镜像" class="headerlink" title="下载和烧写镜像"></a>下载和烧写镜像</h1><ul>
+<li>从官网下载树莓派镜像，使用烧写工具 balena-etcher 烧录镜像</li>
+</ul>
+<h2 id="串口登录"><a href="#串口登录" class="headerlink" title="串口登录"></a>串口登录</h2><ul>
+<li><p>将系统烧写到 SD 卡后，重新拔插 SD 卡，连接到系统 usb，电脑会出现树莓派的 boot 分区</p>
+</li>
+<li><p>修改 config.txt 文件，将内容追加到文件末尾（停止了蓝牙，解除了对串口的占用）</p>
+<blockquote>
+<p>dtoverlay&#x3D;pi3-miniuart-bt</p>
+</blockquote>
+</li>
+<li><p>覆盖 cmdline.txt，万一失效，所以建议先把这个文件备份一份</p>
+<p><strong>原来的</strong></p>
+<blockquote>
+<p>console&#x3D;serial0,115200 console&#x3D;tty1 root&#x3D;PARTUUID&#x3D;738a4d67-02 rootfstype&#x3D;ext4 elevator&#x3D;deadline fsck.repair&#x3D;yes rootwait quiet init&#x3D;&#x2F;usr&#x2F;lib&#x2F;raspi-config&#x2F;init_resize.sh</p>
+</blockquote>
+<p><strong>修改后</strong></p>
+<blockquote>
+<p>dwc_otg.lpm_enable&#x3D;0 console&#x3D;tty1 console&#x3D;serial0,115200 root&#x3D;&#x2F;dev&#x2F;mmcblk0p2 rootfstype&#x3D;ext4 elevator&#x3D;deadline fsck.repair&#x3D;yes rootwait</p>
+</blockquote>
+</li>
+<li><p>使用 USB-TTL转换模块如图连接线,TTL 的 TXD 连接到树莓派的 RXD，另一根也反向接线便可</p>
+<p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw.png" alt="aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw"></p>
+</li>
+<li><p>线接好后插入电脑（电脑有安装了 USB 转串口驱动）在设备管理器看看使用的是哪个 COMS，使用终端工具选择串口和波特率进行连接便可</p>
+</li>
+</ul>
+<h2 id="SSH登录-我常用"><a href="#SSH登录-我常用" class="headerlink" title="SSH登录(我常用)"></a>SSH登录(我常用)</h2><ul>
+<li><p>烧写好镜像后，一样把 SD 卡插入电脑，显示出 boot 分区</p>
+</li>
+<li><p>在boot目录添加两个文件</p>
+<ul>
+<li><p>ssh（不要后缀，直接名字就叫 ssh，这样就可以开启 ssh）</p>
+</li>
+<li><p>创建并添加一个文件 <code>wpa_supplicant.conf</code></p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev</span><br><span class="line">update_config=1</span><br><span class="line">country=CN</span><br><span class="line"></span><br><span class="line">network=&#123;</span><br><span class="line">        ssid=&quot;无线网名称&quot;</span><br><span class="line">        psk=&quot;无线网密码&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>添加好两个文件后直接上电，在路由器的管理后台(或者 windows 直接开热点，连接Windows的热点)查看树莓派的IP</p>
+</li>
+<li><p>然后使用ssh 登录到树莓派</p>
+</li>
+<li><p>默认账户：pi</p>
+</li>
+<li><p>默认密码：raspberry</p>
+</li>
+</ul>
+<h1 id="库编程"><a href="#库编程" class="headerlink" title="库编程"></a>库编程</h1><p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141416928.png" alt="image-20230808141416928"></p>
+<h2 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h2><ul>
+<li><p><strong>静态函数库</strong>：是在程序执行前（编译）就加入到目标程序中去了 ；</p>
+</li>
+<li><p><strong>优点</strong>：运行快，发布程序无需提供静态库，因为已经在app中，移植方便</p>
+</li>
+<li><p><strong>缺点</strong>：编译生成的文件大</p>
+</li>
+</ul>
+<h2 id="动态库"><a href="#动态库" class="headerlink" title="动态库"></a>动态库</h2><ul>
+<li><strong>动态函数库</strong>，是在程序执行时动态（临时）由目标程序去调用</li>
+<li><strong>缺点</strong>： 运行慢</li>
+<li><strong>优点</strong>： 小</li>
+</ul>
+<p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141527323.png" alt="image-20230808141527323"></p>
+<h2 id="生成库"><a href="#生成库" class="headerlink" title="生成库"></a>生成库</h2><h3 id="静态库-1"><a href="#静态库-1" class="headerlink" title="静态库"></a>静态库</h3><ul>
+<li><p>静态库的生成：格式：xxxx.a </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">gcc calcufuncs.c -c 生成xxx.o文件</span><br><span class="line"></span><br><span class="line">ar rcs libcalcufunc.a calcufuncs.o xxx.o文件生成xxx.a静态库文件</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="动态库-1"><a href="#动态库-1" class="headerlink" title="动态库"></a>动态库</h3><ul>
+<li><p>动态库的生成：格式：xxxxx.so</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fpic calcufuncs.c -o libcalc.so</span><br><span class="line"></span><br><span class="line">-shared 指定生成动态库</span><br><span class="line">-fpic 标准，fPIC 选项作用于编译阶段,在生成目标文件时就得使用该选项,以生成位置无关的代码。</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="库的使用"><a href="#库的使用" class="headerlink" title="库的使用"></a>库的使用</h2><h3 id="静态库-2"><a href="#静态库-2" class="headerlink" title="静态库"></a>静态库</h3><ul>
+<li><pre><code class="shell">gcc calculatorT.c -lcalcufunc -L ./ -o mainProStatic
+
+-lcalcufunc -l #是制定要用的动态库，库名砍头去尾
+-L #告诉gcc编译器从-L制定的路径去找静态库。默认是从/usr/lib  /usr/local/lib去找
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* eg:</span><br><span class="line"></span><br><span class="line">  &gt; gcc calculatorT.c -lcalc -L ./ -o main libcalc.so</span><br><span class="line"></span><br><span class="line">### 动态库</span><br><span class="line"></span><br><span class="line">[推荐阅读博文]([linux动态库(.so)搜索路径(目录)设置方法 - zhangzheng08pku - 博客园 (cnblogs.com)](https://www.cnblogs.com/progamming/p/13043652.html))</span><br><span class="line"></span><br><span class="line">* Linux动态库的默认搜索路径是/lib和/usr/lib。动态库被创建后，一般都复制到这两个目录中。当程序执行时需要某动态库，并且该动 态库还未加载到内存中，则系统会自动到这两个默认搜索路径中去查找相应的动态库文件，然后加载该文件到内存中，这样程序就可以使用该动态库中的函数，以及该动态库的其它资源了。在Linux 中，动态库的搜索路径除了默认的搜索路径外，还可以通过以下三种方法来指定。</span><br><span class="line"></span><br><span class="line">  * 在配置文件/etc/ld.so.conf中指定动态库搜索路径；</span><br><span class="line"></span><br><span class="line">    ```shell</span><br><span class="line">    vi /etc/ld.so.conf #添加 lib目录（绝对路径）</span><br><span class="line">    ldconfig</span><br></pre></td></tr></table></figure>
+
+  
+
+* 通过环境变量LD_LIBRARY_PATH指定动态库搜索路径；
+
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=”LD_LIBRARY_PATH:libpath”</span><br></pre></td></tr></table></figure>
+
+  
+
+* 在编译目标代码时指定该程序的动态库搜索路径。
+
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">还可以在编译目标代码时指定程序的动态库搜索路径。通过gcc 的参数”-Wl,-rpath,”指定</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+</ul>
+<h1 id="gpio"><a href="#gpio" class="headerlink" title="gpio"></a>gpio</h1><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">+-----+-----+---------+------+---+---Pi 3B--+---+------+---------+-----+-----+</span><br><span class="line">| BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |</span><br><span class="line">+-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+</span><br><span class="line">|     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |</span><br><span class="line">|   2 |   8 |   SDA.1 |   IN | 1 |  3 || 4  |   |      | 5v      |     |     |</span><br><span class="line">|   3 |   9 |   SCL.1 |   IN | 1 |  5 || 6  |   |      | 0v      |     |     |</span><br><span class="line">|   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 1 | ALT0 | TxD     | 15  | 14  |</span><br><span class="line">|     |     |      0v |      |   |  9 || 10 | 1 | ALT0 | RxD     | 16  | 15  |</span><br><span class="line">|  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |</span><br><span class="line">|  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |</span><br><span class="line">|  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |</span><br><span class="line">|     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |</span><br><span class="line">|  10 |  12 |    MOSI |   IN | 0 | 19 || 20 |   |      | 0v      |     |     |</span><br><span class="line">|   9 |  13 |    MISO |   IN | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |</span><br><span class="line">|  11 |  14 |    SCLK |   IN | 0 | 23 || 24 | 1 | IN   | CE0     | 10  | 8   |</span><br><span class="line">|     |     |      0v |      |   | 25 || 26 | 1 | IN   | CE1     | 11  | 7   |</span><br><span class="line">|   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |</span><br><span class="line">|   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |</span><br><span class="line">|   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |</span><br><span class="line">|  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |</span><br><span class="line">|  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |</span><br><span class="line">|  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |</span><br><span class="line">|     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |</span><br><span class="line">+-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+</span><br><span class="line">| BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |</span><br><span class="line">+-----+-----+---------+------+---+---Pi 3B--+---+------+---------+-----+-----+</span><br></pre></td></tr></table></figure>
+
+<h1 id="交叉编译"><a href="#交叉编译" class="headerlink" title="交叉编译"></a>交叉编译</h1><h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p>编译高版本的可以使用这个</p>
+<p><a target="_blank" rel="noopener" href="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads">https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads</a></p>
+<p>交叉编译工具链</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/raspberrypi/tools.git">https://github.com/raspberrypi/tools.git</a></p>
+<p>树莓派 linux 源码</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/raspberrypi/linux.git">https://github.com/raspberrypi/linux.git</a></p>
+<h3 id="临时配置"><a href="#临时配置" class="headerlink" title="临时配置"></a>临时配置</h3><ol>
+<li><p>打印系统环境变量</p>
+<blockquote>
+<p>echo $PATH</p>
+</blockquote>
+</li>
+<li><p>把 tools bin 追加到PATH</p>
+<blockquote>
+<p>export PATH&#x3D;$PATH:(toolsPATH)</p>
+</blockquote>
+</li>
+<li><p>shell 脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line">DIR=&quot;$( cd &quot;$( dirname &quot;$&#123;BASH_SOURCE[0]&#125;&quot; )&quot; &amp;&amp; pwd )&quot;</span><br><span class="line">export PATH=&quot;$PATH:$DIR/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/&quot;</span><br><span class="line">export ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7</span><br></pre></td></tr></table></figure>
+
+
+
+<p>或者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">获取脚本所在目录的绝对路径</span></span><br><span class="line">SCRIPT_DIR=$(cd &quot;$(dirname &quot;$0&quot;)&quot; &amp;&amp; pwd)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置临时变量</span></span><br><span class="line">TEMP_VAR=&quot;$SCRIPT_DIR/tools/arm-bcm2708/arm-linux-gnueabihf/bin&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 TEMP_VAR 变量中的路径添加到 PATH 中</span></span><br><span class="line">export PATH=&quot;$TEMP_VAR:$PATH&quot;</span><br><span class="line"></span><br><span class="line">export ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输出变量值</span></span><br><span class="line">echo &quot;New PATH: $PATH&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+<blockquote>
+<p>source env.sh</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="永久配置"><a href="#永久配置" class="headerlink" title="永久配置"></a>永久配置</h3><p>则是将上面的shell 放到 profile 文件中</p>
+<h1 id="内核编译"><a href="#内核编译" class="headerlink" title="内核编译"></a>内核编译</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nicekwell/article/details/78482833">树莓派-内核开发-说明 下载代码 编译 替换内核_nicekwell的博客-CSDN博客</a>)</p>
+<p>编译64位 <a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_49475727/article/details/109247979">自己制作树莓派3B+ 64位系统（编译内核+rootfs制作）_自己复刻树莓派_请叫我雯子小姐的小爷的博客-CSDN博客</a></p>
+<h3 id="安装的软件"><a href="#安装的软件" class="headerlink" title="安装的软件"></a>安装的软件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bc -y</span><br><span class="line">sudo apt-get install libncurses5-dev libncursesw5-dev -y</span><br><span class="line">sudo apt-get install zlib1g:i386 -y</span><br><span class="line">sudo apt-get install libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 -y</span><br><span class="line">sudo apt install flex -y</span><br><span class="line">sudo apt install bison -y</span><br><span class="line">sudo apt-get install libelf-dev -y</span><br><span class="line">sudo apt-get install lib32z1 -y</span><br><span class="line">sudo apt-get install libgmp-dev -y</span><br></pre></td></tr></table></figure>
+
+<p>踩坑 </p>
+<ul>
+<li><code>Unable to locate package zlib1g:i386</code></li>
+</ul>
+<p>解决</p>
+<ul>
+<li>sudo dpkg –add-architecture i386</li>
+<li>sudo apt-get update</li>
+<li>sudo apt-get install zlib1g:i386 -y</li>
+</ul>
+<h3 id="编译指令"><a href="#编译指令" class="headerlink" title="编译指令"></a>编译指令</h3><ul>
+<li>make ARCH&#x3D;arm CROSS_COMPILE&#x3D;arm-linux-gnueabihf- bcm2709_defconfig</li>
+</ul>
+<h4 id="执行-menuconfig"><a href="#执行-menuconfig" class="headerlink" title="执行 menuconfig"></a>执行 menuconfig</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make menuconfig</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">指定arm架构  指定编译器                       树莓派            主要核心指令</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- KERNEL=kernel7 make -j2 zImage modules dtbs &gt;&amp;1 | tee build.log</span><br><span class="line">以n进程编译。不指明几进程的话则默认以单进程编译。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>zImage：生成内核镜像</li>
+<li>modules：生成驱动模块</li>
+<li>dtbs：配置文件</li>
+</ul>
+<p>编译成功会生成 vmlinux 源码树目录，失败则无，编译成功后，目标 zimage 镜像 arch&#x2F;arm&#x2F;boot目录下，需要打包 zImage 成树莓派可用的 xxx.img</p>
+<h5 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h5><p>很明显编译不会那么顺利…….</p>
+<ul>
+<li>错误：</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: #error New address family defined, please update secclass_map.</span><br><span class="line">  246 | #error New address family defined, please update secclass_map.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决办法：</li>
+</ul>
+<p>[<a target="_blank" rel="noopener" href="https://lore.kernel.org/selinux/20190225005528.28371-1-paulo@paulo.ac/">PATCH] selinux: use kernel linux&#x2F;socket.h definitions for PF_MAX - Paulo Alcantara</a></p>
+<ul>
+<li>错误</li>
+</ul>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No rule to make target &#x27;debian/canonical-certs.pem&#x27;, needed by &#x27;certs/x509_certificate_list&#x27;.  Stop.</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解决办法</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36393978/article/details/118157426">内核错误: No rule to make target ‘debian&#x2F;canonical-certs.pem‘, needed by ‘certs&#x2F;x509_certificate_list‘_no rule to make target ‘debian&#x2F;canonical-certs.pem_Imagine Miracle的博客-CSDN博客</a></p>
+<h4 id="打包-zimage-镜像"><a href="#打包-zimage-镜像" class="headerlink" title="打包 zimage 镜像"></a>打包 zimage 镜像</h4><ul>
+<li><p>直接用linux源码包里的工具：</p>
+<blockquote>
+<p>.&#x2F;scripts&#x2F;mkknlimg arch&#x2F;arm&#x2F;boot&#x2F;zImage .&#x2F;kernel_new.img</p>
+</blockquote>
+</li>
+<li><p>复制到内核</p>
+<blockquote>
+<p>sudo cp kernel_new.img &#x2F;home&#x2F;ubuntu&#x2F;raspberrypi&#x2F;boot&#x2F;kernel7.img</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="数据拷贝"><a href="#数据拷贝" class="headerlink" title="数据拷贝"></a>数据拷贝</h3><ul>
+<li>mkdir  boot data</li>
+</ul>
+<h4 id="挂载sd卡"><a href="#挂载sd卡" class="headerlink" title="挂载sd卡"></a>挂载sd卡</h4><ul>
+<li>mount &#x2F;dev&#x2F;sdb1 boot       一个 fat 分区，是 boot 相关的内容，kernel 的 img</li>
+<li>mount &#x2F;dev&#x2F;sdb2 data       一个是 ext4 分区，也就是系统的根目录分区</li>
+</ul>
+<h4 id="安装-moudles"><a href="#安装-moudles" class="headerlink" title="安装 moudles"></a>安装 moudles</h4><ul>
+<li><p>设备驱动文件：hdmi，usb，wifi，io ……</p>
+<blockquote>
+<p>sudo ARCH&#x3D;arm CROSS_COMPILE&#x3D;arm-linux-gnueabihf- KERNEL&#x3D;kernel7 make INSTALL_MOD_PATH&#x3D;(根目录)[ext4] modules_install</p>
+</blockquote>
+</li>
+<li><p>我的指令</p>
+<blockquote>
+<p>sudo ARCH&#x3D;arm CROSS_COMPILE&#x3D;arm-linux-gnueabihf- KERNEL&#x3D;kernel7 make INSTALL_MOD_PATH&#x3D;&#x2F;home&#x2F;ubuntu&#x2F;raspberrypi&#x2F;data modules_install</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="更新-kernel-img-文件"><a href="#更新-kernel-img-文件" class="headerlink" title="更新 kernel.img 文件"></a>更新 kernel.img 文件</h3><p>备份原来的镜像</p>
+<blockquote>
+<p>cp kernel7.img kernel7.old.img</p>
+</blockquote>
+<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><p>将新镜像复制到boot</p>
+<blockquote>
+<p>cp kernel_new.img boot&#x2F;kernel.img</p>
+</blockquote>
+<h4 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h4><p>将新镜像复制到boot</p>
+<blockquote>
+<p>cp kernel_new.img boot&#x2F;kernel8.img</p>
+</blockquote>
+<p>编辑 boot&#x2F;config.txt 文件，在最后加入一行：</p>
+<blockquote>
+<p>kernel&#x3D;kernel_new.img </p>
+</blockquote>
+<h3 id="复制其他相关文件"><a href="#复制其他相关文件" class="headerlink" title="复制其他相关文件"></a>复制其他相关文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cp arch/arm/boot/dts/*.*dtb* [fat]/</span><br><span class="line">cp arch/arm/boot/dts/overlays/*.dtb* [fat]/overlays/</span><br><span class="line">cp arch/arm/boot/dts/overlays/README [fat]/overlays/</span><br></pre></td></tr></table></figure>
+
+<p>我的指令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo cp arch/arm/boot/dts/*.dtb /home/ubuntu/raspberrypi/boot/</span><br><span class="line">sudo cp arch/arm/boot/dts/overlays/*.dtb* /home/ubuntu/raspberrypi/boot/overlays/</span><br><span class="line">sudo cp arch/arm/boot/dts/overlays/README /home/ubuntu/raspberrypi/boot/overlays/</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>更新完成后插回树莓派即可开机，开机后可以用 uname -a 命令查看kernel信息已经改变</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/c/" rel="tag"><i class="fa fa-tag"></i> c</a>
+              <a href="/hexo/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2023/06/09/smba/" rel="prev" title="samba">
+                  <i class="fa fa-angle-left"></i> samba
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2023/07/09/wireshark/" rel="next" title="wireshark">
+                  wireshark <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>
