@@ -118,7 +118,7 @@
 </ul>
 <h2 id="第归"><a href="#第归" class="headerlink" title="第归"></a>第归</h2><ul>
 <li><p>有点难懂，需要把函数讲了再讲。先留着</p>
-<p>那个递归的题目是：<img src="/hexo/2021/11/19/c/c/%E9%80%92%E5%BD%92%E9%A2%98%E7%9B%AE.jpg"></p>
+<p>那个递归的题目是：<img src="/hexo/2021/11/19/c/%E9%80%92%E5%BD%92%E9%A2%98%E7%9B%AE.jpg" class></p>
 </li>
 </ul>
 <h2 id="代码文件-1"><a href="#代码文件-1" class="headerlink" title="代码文件"></a>代码文件</h2><ul>
@@ -458,7 +458,8 @@
   <entry>
     <title>docker</title>
     <url>/hexo/2021/11/14/docker/</url>
-    <content><![CDATA[<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><p><img src="/hexo/2021/11/14/docker/docker/image-20220422204735324.png" alt="image-20220422204735324"></p>
+    <content><![CDATA[<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><img src="/hexo/2021/11/14/docker/image-20220422204735324.png" class title="image-20220422204735324">
+
 <ul>
 <li><p><a href="https://yeasy.gitbook.io/docker_practice">推荐阅读文档地址</a> </p>
 </li>
@@ -498,7 +499,7 @@
 <p><strong>docker pull</strong></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载镜像 docker pull 镜像名 [:tag]</span> </span><br><span class="line">root@wflin-server:/home/wflin	# docker pull mysql</span><br><span class="line">Using default tag: latest  	# 如果不写 tag 默认下载最新的</span><br><span class="line">b4d181a07f80: Pull complete  # 分层下载，docker image核心，联合文件系统</span><br><span class="line">a462b60610f5: Pull complete </span><br><span class="line">578fafb77ab8: Pull complete </span><br><span class="line">524046006037: Pull complete </span><br><span class="line">d0cbe54c8855: Pull complete </span><br><span class="line">aa18e05cc46d: Pull complete </span><br><span class="line">32ca814c833f: Pull complete </span><br><span class="line">9ecc8abdb7f5: Pull complete </span><br><span class="line">ad042b682e0f: Pull complete </span><br><span class="line">71d327c6bb78: Pull complete </span><br><span class="line">165d1d10a3fa: Pull complete </span><br><span class="line">2f40c47d0626: Pull complete </span><br><span class="line">Digest: sha256:52b8406e4c32b8cf0557f1b74517e14c5393aff5cf0384eff62d9e81f4985d4b	# 签名</span><br><span class="line">Status: Downloaded newer image for mysql:latest</span><br><span class="line">docker.io/library/mysql:latest	# 真实地址</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">等价于它</span></span><br><span class="line">docker pull mysql</span><br><span class="line">docker pull docker.io/library/mysql:latest</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">指定版本下载</span></span><br><span class="line">docker pull mysql:5.7</span><br><span class="line">root@wflin-server:/home/wflin# docker pull mysql:5.7</span><br><span class="line">5.7: Pulling from library/mysql</span><br><span class="line">b4d181a07f80: Already exists </span><br><span class="line">a462b60610f5: Already exists </span><br><span class="line">578fafb77ab8: Already exists </span><br><span class="line">524046006037: Already exists </span><br><span class="line">d0cbe54c8855: Already exists </span><br><span class="line">aa18e05cc46d: Already exists </span><br><span class="line">32ca814c833f: Already exists </span><br><span class="line">52645b4af634: Pull complete </span><br><span class="line">bca6a5b14385: Pull complete </span><br><span class="line">309f36297c75: Pull complete </span><br><span class="line">7d75cacde0f8: Pull complete </span><br><span class="line">Digest: sha256:1a2f9cd257e75cc80e9118b303d1648366bc2049101449bf2c8d82b022ea86b7</span><br><span class="line">Status: Downloaded newer image for mysql:5.7</span><br><span class="line">docker.io/library/mysql:5.7</span><br></pre></td></tr></table></figure>
 
-<p><img src="/hexo/2021/11/14/docker/docker.assets/image-20210627132518934.png" alt="image-20210627132518934"></p>
+<p><img src="/hexo/docker.assets/image-20210627132518934.png" alt="image-20210627132518934"></p>
 <p><strong>docker rmi 删除镜像</strong></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">root@wflin-server:/home/wflin# docker rmi -f 镜像id      #删除指定的容器</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">删除多个容器</span></span><br><span class="line">root@wflin-server:/home/wflin# docker rmi -f 镜像id 容器id 容器id </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除全部的容器</span></span><br><span class="line">root@wflin-server:/home/wflin# docker rmi -f $(docker images -aq)	 </span><br></pre></td></tr></table></figure>
 
@@ -541,8 +542,10 @@
 <li>Dockerfile：构建文件，定义了一切的步骤，源代码</li>
 <li>Dockerimages：通过dockerfile 构建生成的一个镜像，最终发布和运行的产品，原来是一个jar，war 包执行起来，全部都要变成容器</li>
 </ol>
-<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><h3 id="Docker-文件结构视图"><a href="#Docker-文件结构视图" class="headerlink" title="Docker 文件结构视图"></a>Docker 文件结构视图</h3><p><img src="/hexo/2021/11/14/docker/docker/image-20210708224811555.png"></p>
-<h3 id="Dokcerfile-指令"><a href="#Dokcerfile-指令" class="headerlink" title="Dokcerfile 指令"></a>Dokcerfile 指令</h3><p><img src="/hexo/2021/11/14/docker/docker/image-20210708230532320.png"></p>
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><h3 id="Docker-文件结构视图"><a href="#Docker-文件结构视图" class="headerlink" title="Docker 文件结构视图"></a>Docker 文件结构视图</h3><img src="/hexo/2021/11/14/docker/image-20210708224811555.png" class>
+
+<h3 id="Dokcerfile-指令"><a href="#Dokcerfile-指令" class="headerlink" title="Dokcerfile 指令"></a>Dokcerfile 指令</h3><img src="/hexo/2021/11/14/docker/image-20210708230532320.png" class>
+
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">FROM				# 基础镜像，一切从这里开始构建</span><br><span class="line">MAINTAINER			# 镜像是谁写的，姓名+邮箱</span><br><span class="line">RUN					# 镜像构建的时候西药运行的命令</span><br><span class="line">ADD 				# 步骤：tomcat 镜像，这个 tomcat 压缩包</span><br><span class="line">WORKDIR				# 镜像的工作目录</span><br><span class="line">VOLUEME				# 挂载目录位置</span><br><span class="line">EXPOSE				# 暴露端口配置 也可通过 -p 暴露端口</span><br><span class="line">CMD					# 指定这个容器启动的时候需要运行的命令【只有最后一个会生效，可以被替代】</span><br><span class="line">ENTRYPOINT			# 指定这个容器启动的时候需要运行的命令【可以追加命令】</span><br><span class="line">ONBUILD				# 当构建一个被继承 DockerFile 这个时候就会运行 ONBUILD 的指令，触发指令</span><br><span class="line">COPY				# 类似 add 命令，将文件拷贝到镜像中</span><br><span class="line">ENV					# 构建的时候设置环境变量</span><br></pre></td></tr></table></figure>
 
 <h3 id="定制镜像测试"><a href="#定制镜像测试" class="headerlink" title="定制镜像测试"></a>定制镜像测试</h3><p>Docker Hub 中 99% 的镜像都是从基础镜像构建过来的</p>
@@ -580,7 +583,7 @@
 <li><p>准备工作</p>
 <ol>
 <li><p>准备镜像文件 <code>tomcat</code> 压缩包，<code>jdk</code>的压缩包</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420111006420.png" alt="image-20220420111006420"></p>
+<img src="/hexo/2021/11/14/docker/image-20220420111006420.png" class title="image-20220420111006420">
 </li>
 <li><p>编写 <code>dockerfile</code> 文件，官方命名 <code>Dockerfile</code>，build 会自动寻找这个文件，就不用 -f 指定了</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">初始镜像</span></span><br><span class="line">FROM centos:7</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">镜像作者信息</span></span><br><span class="line">MAINTAINER wflin&lt;test.com&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只是拷贝文件，不会解压</span></span><br><span class="line">COPY readme.txt /usr/local/readme.txt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加jdk</span></span><br><span class="line">ADD jdk-8u281-linux-x64.tar.gz /usr/local/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加 tomcat</span></span><br><span class="line">ADD apache-tomcat-9.0.62.tar.gz /usr/local/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装 vim</span></span><br><span class="line">RUN yum -y install vim</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置工作目录</span></span><br><span class="line">ENV MYPATH /usr/local</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置Java环境变量</span></span><br><span class="line">ENV JAVA_HOME /usr/local/jdk1.8.0_281</span><br><span class="line">ENV CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">ENV CATALINA_HOME  /usr/local/apache-tomcat-9.0.62</span><br><span class="line">ENV CATALINA_BASH /usr/local/apache-tomcat-9.0.62</span><br><span class="line">ENV PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">暴露端口</span></span><br><span class="line">EXPOSE 80</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输出信息</span></span><br><span class="line">CMD /usr/local/apache-tomcat-9.0.62/bin/startup.sh &amp;&amp; tail -f /usr/local/apache-tomcat-9.0.62/logs/catalina.out</span><br></pre></td></tr></table></figure>
@@ -641,19 +644,19 @@
 </ol>
 <h3 id="提交到-阿里云容器仓库"><a href="#提交到-阿里云容器仓库" class="headerlink" title="提交到 阿里云容器仓库"></a>提交到 阿里云容器仓库</h3><ol>
 <li><p>登陆阿里云</p>
-<img src="/hexo/2021/11/14/docker/image-20220420142030709.png" alt="image-20220420142030709" style="zoom:50%;">
+<style>.crnqqbhcehgs{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="crnqqbhcehgs" alt="image-20220420142030709">
 </li>
 <li><p>找到容器镜像服务 并创建 容器镜像服务，个人版本好像是免费的</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420142516275.png" alt="image-20220420142516275"></p>
+<img src="/hexo/2021/11/14/docker/image-20220420142516275.png" class title="image-20220420142516275">
 </li>
 <li><p>创建好之后就是这个样子</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420142638675.png" alt="image-20220420142638675"></p>
+<img src="/hexo/2021/11/14/docker/image-20220420142638675.png" class title="image-20220420142638675">
 </li>
 <li><p>创建一个私有命名空间</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420142749025.png" alt="image-20220420142749025"></p>
+<img src="/hexo/2021/11/14/docker/image-20220420142749025.png" class title="image-20220420142749025">
 </li>
 <li><p>再创建一个镜像仓库,选择本地仓库</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420142855312.png" alt="image-20220420142855312"></p>
+<img src="/hexo/2021/11/14/docker/image-20220420142855312.png" class title="image-20220420142855312">
 </li>
 <li><p>根据提示操作就行（很详细）</p>
 </li>
@@ -671,11 +674,13 @@
 <h2 id="Docker-网络"><a href="#Docker-网络" class="headerlink" title="Docker 网络"></a>Docker 网络</h2><h3 id="理解-Docker-0"><a href="#理解-Docker-0" class="headerlink" title="理解 Docker 0"></a>理解 Docker 0</h3><blockquote>
 <p>测试：获取 IP 地址 ifconfig 或者 ip addr</p>
 </blockquote>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220330230041350.png" alt="image-20220330230041350"></p>
+<img src="/hexo/2021/11/14/docker/image-20220330230041350.png" class title="image-20220330230041350">
+
 <blockquote>
 <p>容器内部网络情况，外部可以 ping 通 docker 外部</p>
 </blockquote>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220330230210877.png" alt="image-20220330230210877"></p>
+<img src="/hexo/2021/11/14/docker/image-20220330230210877.png" class title="image-20220330230210877">
+
 <blockquote>
 <p>原理</p>
 </blockquote>
@@ -686,8 +691,7 @@
 <li><p>docker0 就是一个网桥（可以理解为一个路由）所有docker 容器之间的通信都是通过 docker0路由转发（小型局域网） 通信。</p>
 </li>
 <li><p>可以看图示</p>
-<p><img src="/hexo/2021/11/14/docker/docker/image-20220420153503228.png" alt="image-20220420153503228"></p>
-</li>
+<img src="/hexo/2021/11/14/docker/image-20220420153503228.png" class title="image-20220420153503228"></li>
 </ol>
 <h3 id="–link"><a href="#–link" class="headerlink" title="–link"></a>–link</h3><blockquote>
 <p>项目不重启的情况下，数据库的IP换掉了，可以通过容器别名 –link ping 通容器</p>
@@ -1214,11 +1218,14 @@
     <content><![CDATA[<h1 id="启动metasploit"><a href="#启动metasploit" class="headerlink" title="启动metasploit"></a>启动metasploit</h1><ul>
 <li><p>msfconsole</p>
 </li>
-<li><p><img src="/hexo/2020/05/31/metasploit/metasploit/image-20230628011359661.png" alt="image-20230628011359661"></p>
+<li><img src="/hexo/2020/05/31/metasploit/image-20230628011359661.png" class title="image-20230628011359661">
+
+
+
+
 </li>
 <li><p>操作步骤</p>
-<p>  <img src="/hexo/2020/05/31/metasploit/metasploit/image-20230628012546912.png" alt="image-20230628012546912"></p>
-</li>
+  <img src="/hexo/2020/05/31/metasploit/image-20230628012546912.png" class title="image-20230628012546912"></li>
 </ul>
 ]]></content>
       <categories>
@@ -1385,28 +1392,28 @@
 <li><p>SR &#x3D; 1000ms：轮询周期</p>
 </li>
 <li><p>No connection 无连接</p>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426150558525.png" alt="image-20230426150558525"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230426150558525.png" alt="image-20230426150558525"></p>
 </li>
 </ul>
 <h2 id="Slave"><a href="#Slave" class="headerlink" title="Slave"></a>Slave</h2><ul>
 <li><p>从机配置</p>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426151108754.png" alt="image-20230426151108754"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230426151108754.png" alt="image-20230426151108754"></p>
 </li>
 <li><p>常用功能码及其地址对应表</p>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230426161902783.png" alt="image-20230426161902783"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230426161902783.png" alt="image-20230426161902783"></p>
 </li>
 <li><p>修改名字及其对应的值</p>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/c603849b8caf4e4ba164d1224446bf9a.png"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/c603849b8caf4e4ba164d1224446bf9a.png"></p>
 </li>
 </ul>
 <h2 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h2><h3 id="tcp报文"><a href="#tcp报文" class="headerlink" title="tcp报文"></a>tcp报文</h3><ul>
 <li><p>发送报文格式</p>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173732124.png" alt="image-20230427173732124"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230427173732124.png" alt="image-20230427173732124"></p>
 </li>
 <li><p>响应报文格式</p>
 </li>
 </ul>
-<p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427173656515.png" alt="image-20230427173656515"></p>
+<p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230427173656515.png" alt="image-20230427173656515"></p>
 <ul>
 <li><p>结构、</p>
 <ul>
@@ -1481,7 +1488,7 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="手册解释"><a href="#手册解释" class="headerlink" title="手册解释"></a>手册解释</h4><p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427141150127.png" alt="image-20230427141150127"></p>
+<h4 id="手册解释"><a href="#手册解释" class="headerlink" title="手册解释"></a>手册解释</h4><p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230427141150127.png" alt="image-20230427141150127"></p>
 <h4 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h4><p><strong>湿度</strong>：363&#x2F;10 &#x3D; 36.3 RH</p>
 <p><strong>温度</strong>：259&#x2F;10 &#x3D; 25.9 摄氏度</p>
 <h4 id="异常测试"><a href="#异常测试" class="headerlink" title="异常测试"></a>异常测试</h4><ul>
@@ -1519,7 +1526,7 @@
 <ul>
 <li>温湿度结论：读的寄存器大于设备本身寄存器，响应报文会填 0 补充。</li>
 </ul>
-<h2 id="通过网关"><a href="#通过网关" class="headerlink" title="通过网关"></a>通过网关</h2><p><img src="/hexo/2020/05/31/modbus/blog/source/_posts/modbus/image-20230427163655007.png" alt="image-20230427163655007"></p>
+<h2 id="通过网关"><a href="#通过网关" class="headerlink" title="通过网关"></a>通过网关</h2><p><img src="/hexo/F:/blog/source/_posts/modbus/image-20230427163655007.png" alt="image-20230427163655007"></p>
 <h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="发送报文思路"><a href="#发送报文思路" class="headerlink" title="发送报文思路"></a>发送报文思路</h3><ul>
 <li><p>设备地址</p>
 </li>
@@ -1568,7 +1575,8 @@
 <li>提供一对多消息分发模式，实现应用程序解耦</li>
 <li>消息传递模式，消息不是直接发送到接收点，而是由 mqtt-server（MQTT-Broke） 分发</li>
 </ul>
-<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p><img src="/hexo/2022/08/31/mqtt/mqtt/v2-17b8d17ca2318b951ca48539f04306f7_720w.webp"></p>
+<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><img src="/hexo/2022/08/31/mqtt/v2-17b8d17ca2318b951ca48539f04306f7_720w.webp" class>
+
 <h2 id="QoS："><a href="#QoS：" class="headerlink" title="QoS："></a>QoS：</h2><ul>
 <li>QoS0: 会发送消息丢失或重复，消息发布依赖于底层TCP&#x2F;IP网络。</li>
 <li>QoS1: 消息至少一次传送给订阅者</li>
@@ -1580,8 +1588,7 @@
 <li><p><code>可变头（Variable header）</code>，存在于部分<code>MQTT</code>数据包中，数据包类型决定了可变头是否存在及其具体内容；</p>
 </li>
 <li><p><code>消息体（Payload）</code>，存在于部分<code>MQTT</code>数据包中，表示客户端收到的具体内容；</p>
-<p><img src="/hexo/2022/08/31/mqtt/mqtt/v2-861c089bea9570876bb13a031e6c3902_720w.webp"></p>
-</li>
+<img src="/hexo/2022/08/31/mqtt/v2-861c089bea9570876bb13a031e6c3902_720w.webp" class></li>
 </ul>
 <h2 id="平台"><a href="#平台" class="headerlink" title="平台"></a>平台</h2><ul>
 <li><h3 id="Mosquitto"><a href="#Mosquitto" class="headerlink" title="Mosquitto"></a>Mosquitto</h3></li>
@@ -1620,15 +1627,14 @@
 </li>
 </ul>
 <h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><ul>
-<li><p><img src="/hexo/2022/08/31/mqtt/mqtt/image-20230504162948660.png" alt="image-20230504162948660"></p>
+<li><img src="/hexo/2022/08/31/mqtt/image-20230504162948660.png" class title="image-20230504162948660">
 </li>
 <li><p>界面信息说明</p>
 </li>
-<li><p><img src="/hexo/2022/08/31/mqtt/mqtt/image-20230504163115396.png" alt="image-20230504163115396"></p>
-</li>
+<li><img src="/hexo/2022/08/31/mqtt/image-20230504163115396.png" class title="image-20230504163115396"></li>
 </ul>
 <h3 id="日志："><a href="#日志：" class="headerlink" title="日志："></a>日志：</h3><ul>
-<li><img src="/hexo/2022/08/31/mqtt/mqtt/image-20230504163431942.png" alt="image-20230504163431942"></li>
+<li><img src="/hexo/2022/08/31/mqtt/image-20230504163431942.png" class title="image-20230504163431942"></li>
 </ul>
 <h2 id="开源框架"><a href="#开源框架" class="headerlink" title="开源框架"></a>开源框架</h2><h3 id="SpringBoot-整合"><a href="#SpringBoot-整合" class="headerlink" title="SpringBoot 整合"></a>SpringBoot 整合</h3><ul>
 <li><p>博客：<a href="https://blog.csdn.net/f4233441/article/details/121829743">https://blog.csdn.net/f4233441/article/details/121829743</a></p>
@@ -3324,26 +3330,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Opencv</title>
-    <url>/hexo/2020/08/26/opencv-config/</url>
-    <content><![CDATA[<h2 id="视觉常用依赖库"><a href="#视觉常用依赖库" class="headerlink" title="视觉常用依赖库"></a>视觉常用依赖库</h2><ul>
-<li><p>opencv 和 mediapipe</p>
-<blockquote>
-<p>安装指令 ： pip install -r requirements.txt</p>
-</blockquote>
-</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip</span><br><span class="line">absl-py==1.0.0</span><br><span class="line">attrs==21.4.0</span><br><span class="line">click==8.0.4</span><br><span class="line">cmake==3.22.4</span><br><span class="line">dataclasses==0.8</span><br><span class="line">dlib==19.18.0</span><br><span class="line">face-recognition==1.3.0</span><br><span class="line">face-recognition-models==0.3.0</span><br><span class="line">importlib-metadata==4.8.3</span><br><span class="line">mediapipe==0.8.3</span><br><span class="line">numpy==1.19.3</span><br><span class="line">opencv-python==4.5.5.64</span><br><span class="line">Pillow==8.4.0</span><br><span class="line">pkg_resources==0.0.0</span><br><span class="line">protobuf==3.19.4</span><br><span class="line">six==1.16.0</span><br><span class="line">typing_extensions==4.1.1</span><br><span class="line">zipp==3.6.0</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ngnix</title>
     <url>/hexo/2019/08/26/nginx/</url>
     <content><![CDATA[<h2 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">user  nobody; <span class="comment">#以啥子用户运行</span></span></span><br><span class="line">worker_processes  1; #开启一个worker进程（和机器配置有关，动态调整）</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log  notice;</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">error_log  logs/error.log  info;</span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">pid        logs/nginx.pid; <span class="comment">#nginx pid</span></span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024; #一个 worker 的动态连接数量</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">http &#123;</span><br><span class="line">    include       mime.types; #支持接收和响应的类型</span><br><span class="line">    default_type  application/octet-stream; #默认的类型 </span><br><span class="line">    #access_log  logs/access.log  main; #连接日志</span><br><span class="line"> </span><br><span class="line">    sendfile        on; #开启高效网络传输，0拷贝</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"> </span><br><span class="line">    #keepalive_timeout  0;</span><br><span class="line">    keepalive_timeout  65; #tcp连接的过期时间</span><br><span class="line"> </span><br><span class="line">    #gzip  on;</span><br><span class="line"> </span><br><span class="line">    # 定义一个虚拟主机</span><br><span class="line">    server &#123;</span><br><span class="line">        listen       80; #监听端口</span><br><span class="line">        server_name  localhost; #主机名（或者解析的域名）</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">        location / &#123;</span><br><span class="line">            root   html; #文件根目录</span><br><span class="line">            index  index.html index.htm; #默认页名称</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        error_page   500 502 503 504  /50x.html; #报错码对应页</span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">            root   html;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3461,6 +3447,26 @@
       </tags>
   </entry>
   <entry>
+    <title>Opencv</title>
+    <url>/hexo/2020/08/26/opencv-config/</url>
+    <content><![CDATA[<h2 id="视觉常用依赖库"><a href="#视觉常用依赖库" class="headerlink" title="视觉常用依赖库"></a>视觉常用依赖库</h2><ul>
+<li><p>opencv 和 mediapipe</p>
+<blockquote>
+<p>安装指令 ： pip install -r requirements.txt</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip</span><br><span class="line">absl-py==1.0.0</span><br><span class="line">attrs==21.4.0</span><br><span class="line">click==8.0.4</span><br><span class="line">cmake==3.22.4</span><br><span class="line">dataclasses==0.8</span><br><span class="line">dlib==19.18.0</span><br><span class="line">face-recognition==1.3.0</span><br><span class="line">face-recognition-models==0.3.0</span><br><span class="line">importlib-metadata==4.8.3</span><br><span class="line">mediapipe==0.8.3</span><br><span class="line">numpy==1.19.3</span><br><span class="line">opencv-python==4.5.5.64</span><br><span class="line">Pillow==8.4.0</span><br><span class="line">pkg_resources==0.0.0</span><br><span class="line">protobuf==3.19.4</span><br><span class="line">six==1.16.0</span><br><span class="line">typing_extensions==4.1.1</span><br><span class="line">zipp==3.6.0</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>openwrt</title>
     <url>/hexo/2023/07/09/openwrt/</url>
     <content><![CDATA[<h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>额。。。 建议按照这个来(因为我就按照这个编译成功了)，因为最新镜像有时候要求你的 python 必须要 3.7 以上，所以编译的环境我推荐选用 ubuntu20</p>
@@ -3502,8 +3508,7 @@
 <h1 id="使用镜像"><a href="#使用镜像" class="headerlink" title="使用镜像"></a>使用镜像</h1><h2 id="usb-转-ttl-连接开发板"><a href="#usb-转-ttl-连接开发板" class="headerlink" title="usb 转 ttl 连接开发板"></a>usb 转 ttl 连接开发板</h2><ul>
 <li>我的是树莓派，我用usb转串口进入的，也可以烧写进入之后连接网线和显示器的方式打开或者直接修改配置文件开启ssh ，使用 ssh 进入</li>
 </ul>
-<p><img src="/hexo/2023/07/09/openwrt/openwrt/image-20230731160005185.png" alt="image-20230731160005185"></p>
-]]></content>
+<img src="/hexo/2023/07/09/openwrt/image-20230731160005185.png" class title="image-20230731160005185">]]></content>
       <categories>
         <category>嵌入式</category>
       </categories>
@@ -3538,7 +3543,10 @@
 <p>比如按钮信号</p>
 </li>
 </ol>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903164907782.png" alt="image-20230903164907782"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903164907782.png" class title="image-20230903164907782">
+
+
+
 <ul>
 <li>槽：就是槽函数的意思，我们可以把槽函数绑定在某一个控件信号上</li>
 </ul>
@@ -3546,50 +3554,48 @@
 <li><p>手动选择控件，然后右键 -&gt; 转到槽</p>
 </li>
 <li><p>自动关联会给我们的工程添加以下内容</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903165542104.png" alt="image-20230903165542104"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903165542104.png" class title="image-20230903165542104">
 </li>
 <li><p>槽函数只能声明到 <strong>private slot</strong> 或者 <strong>public slot</strong></p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903165817793.png" alt="image-20230903165817793"></p>
-</li>
+<img src="/hexo/2023/08/24/qt/image-20230903165817793.png" class title="image-20230903165817793"></li>
 </ul>
 <h2 id="手动关联"><a href="#手动关联" class="headerlink" title="手动关联"></a>手动关联</h2><ul>
 <li><p>使用 connect 函数</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">connect</span>(ui-&gt; reBtn,<span class="built_in">SIGNAL</span>(<span class="built_in">clicked</span>()),<span class="keyword">this</span>,<span class="built_in">SLOT</span>(<span class="built_in">on_reBtn_clicked</span>()));</span><br><span class="line"></span><br><span class="line"><span class="built_in">connect</span>(A,<span class="built_in">SIGNAL</span>(B),C,<span class="built_in">SLOT</span>(D));</span><br><span class="line">#当对象 A 发出 B 信号的时候，就会触发对象 c 的槽函数 D</span><br></pre></td></tr></table></figure>
 
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903171021719.png" alt="image-20230903171021719"></p>
-<p>​	<img src="/hexo/2023/08/24/qt/qt/image-20230903171108708.png" alt="image-20230903171108708"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903171021719.png" class title="image-20230903171021719">
+
+<p>​	<img src="/hexo/2023/08/24/qt/image-20230903171108708.png" class title="image-20230903171108708"></p>
 </li>
 </ul>
 <h1 id="控件"><a href="#控件" class="headerlink" title="控件"></a>控件</h1><h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h2><ol>
 <li><p>添加 qt 资源文件</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903171248242.png" alt="image-20230903171248242"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903171248242.png" class title="image-20230903171248242">
 </li>
 <li><p>添加资源文件 open with-&gt; 资源编辑器</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903171915787.png" alt="image-20230903171915787"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903171915787.png" class title="image-20230903171915787">
 </li>
 <li><p>添加前置路径</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172017953.png" alt="image-20230903172017953"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903172017953.png" class title="image-20230903172017953">
 </li>
 <li><p>点击添加文件选项，将要要的图片添加进去</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172125200.png" alt="image-20230903172125200"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903172125200.png" class title="image-20230903172125200">
 </li>
 <li><p>添加 qlabel 控件，更改样式表</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172252879.png" alt="image-20230903172252879"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903172252879.png" class title="image-20230903172252879">
 </li>
 <li><p>添加资源 img（border-images）</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172503880.png" alt="image-20230903172503880"></p>
+<img src="/hexo/2023/08/24/qt/image-20230903172503880.png" class title="image-20230903172503880">
 </li>
 <li><p>效果</p>
 <ul>
 <li>border-images</li>
 </ul>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172626974.png" alt="image-20230903172626974"></p>
-</li>
+<img src="/hexo/2023/08/24/qt/image-20230903172626974.png" class title="image-20230903172626974"></li>
 </ol>
 <ul>
 <li><p>background-images</p>
-<p><img src="/hexo/2023/08/24/qt/qt/image-20230903172748573.png" alt="image-20230903172748573"></p>
-</li>
+<img src="/hexo/2023/08/24/qt/image-20230903172748573.png" class title="image-20230903172748573"></li>
 </ul>
 <h1 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h1><h2 id="水平布局"><a href="#水平布局" class="headerlink" title="水平布局"></a>水平布局</h2><h2 id="垂直布局"><a href="#垂直布局" class="headerlink" title="垂直布局"></a>垂直布局</h2><h2 id="栅格化布局"><a href="#栅格化布局" class="headerlink" title="栅格化布局"></a>栅格化布局</h2><h1 id="界面切换"><a href="#界面切换" class="headerlink" title="界面切换"></a>界面切换</h1><h1 id="qt下的串口编程"><a href="#qt下的串口编程" class="headerlink" title="qt下的串口编程"></a>qt下的串口编程</h1><h1 id="qt网络编程"><a href="#qt网络编程" class="headerlink" title="qt网络编程"></a>qt网络编程</h1><h1 id="qt下操作GPIO"><a href="#qt下操作GPIO" class="headerlink" title="qt下操作GPIO"></a>qt下操作GPIO</h1>]]></content>
       <categories>
@@ -3617,20 +3623,20 @@
 <h2 id="2-RabbitMQ-引言"><a href="#2-RabbitMQ-引言" class="headerlink" title="2. RabbitMQ 引言"></a>2. RabbitMQ 引言</h2><h3 id="2-1-RabbitMQ"><a href="#2-1-RabbitMQ" class="headerlink" title="2.1 RabbitMQ"></a>2.1 RabbitMQ</h3><blockquote>
 <p>基于 <code>AMOP</code> 协议，Erlang 语言开发，是部署最广泛的开源消息中间件，是最受欢迎的消息中间件之一。</p>
 </blockquote>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png" alt="image-20220429151921446"></p>
+<p><img src="/hexo/RabbitMQ/image-20220429151921446.png" alt="image-20220429151921446"></p>
 <p><code>官网</code>：[<a href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>](<a href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>)</p>
 <p><code>官方教程</code>：[<a href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>](<a href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>)</p>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section"># AMQP 介绍</span></span><br><span class="line">AMQP，即Advanced Message Queuing Protocol，高级消息队列协议，是应用层协议的一个开放标准，为面向消息的中间件设计。</span><br><span class="line"><span class="code">	AMQP的主要特征是面向消息、队列、路由（包括点对点和发布/订阅）、可靠性、安全。</span></span><br><span class="line"><span class="code">	AMQP在消息提供者和客户端的行为进行了强制规定，使得不同卖商之间真正实现了互操作能力。</span></span><br><span class="line"><span class="code">	JMS是早期消息中间件进行标准化的一个尝试，它仅仅是在API级进行了规范，离创建互操作能力还差很远。</span></span><br><span class="line"><span class="code">	与JMS不同，AMQP是一个Wire级的协议，它描述了在网络上传输的数据的格式，以字节为流。因此任何遵守此数据格式的工具，其创建和解释消息，都能与其他兼容工具进行互操作。</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-RabbitMQ-的作用"><a href="#2-2-RabbitMQ-的作用" class="headerlink" title="2.2 RabbitMQ 的作用"></a>2.2 RabbitMQ 的作用</h3><ul>
 <li><p><strong>解耦</strong>。如图所示。假设有系统B、C、D都需要系统A的数据，于是系统A调用三个方法发送数据到B、C、D。这时，系统D不需要了，那就需要在系统A把相关的代码删掉。假设这时有个新的系统E需要数据，这时系统A又要增加调用系统E的代码。为了降低这种强耦合，就可以使用MQ，<strong>系统A只需要把数据发送到MQ，其他系统如果需要数据，则从MQ中获取即可</strong>。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA" alt="aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA (589×254) (csdnimg.cn)"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA" alt="aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA (589×254) (csdnimg.cn)"></p>
 </li>
 <li><p><strong>异步</strong>。如图所示。一个客户端请求发送进来，系统A会调用系统B、C、D三个系统，同步请求的话，响应时间就是系统A、B、C、D的总和，也就是800ms。<strong>如果使用MQ，系统A发送数据到MQ，然后就可以返回响应给客户端，不需要再等待系统B、C、D的响应，可以大大地提高性能</strong>。对于一些非必要的业务，比如发送短信，发送邮件等等，就可以采用MQ。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM"></p>
 </li>
 <li><p><strong>削峰</strong>。如图所示。这其实是MQ一个很重要的应用。假设系统A在某一段时间请求数暴增，有5000个请求发送过来，系统A这时就会发送5000条SQL进入MySQL进行执行，MySQL对于如此庞大的请求当然处理不过来，MySQL就会崩溃，导致系统瘫痪。<strong>如果使用MQ，系统A不再是直接发送SQL到数据库，而是把数据发送到MQ，MQ短时间积压数据是可以接受的，然后由消费者每次拉取2000条进行处理，防止在请求峰值时期大量的请求直接发送到MySQL导致系统崩溃</strong>。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY"></p>
 </li>
 </ul>
 <h2 id="3-RabbitMQ-特点"><a href="#3-RabbitMQ-特点" class="headerlink" title="3. RabbitMQ 特点"></a>3. RabbitMQ 特点</h2><ul>
@@ -3724,7 +3730,9 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 </blockquote>
 </li>
 <li><p>使用 USB-TTL转换模块如图连接线,TTL 的 TXD 连接到树莓派的 RXD，另一根也反向接线便可</p>
-<p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw.png" alt="aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw"></p>
+<img src="/hexo/2023/06/09/raspberrypi/aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw.png" class title="aHR0cHM6Ly9zeWpzeHhqeS5naXRodWIuaW8vbXlibG9nL2Fzc2V0cy8xLzIwMTgwNjIyLTk5ZjRjNWE1LnBuZw">
+
+
 </li>
 <li><p>线接好后插入电脑（电脑有安装了 USB 转串口驱动）在设备管理器看看使用的是哪个 COMS，使用终端工具选择串口和波特率进行连接便可</p>
 </li>
@@ -3749,7 +3757,8 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 <li><p>默认密码：raspberry</p>
 </li>
 </ul>
-<h1 id="库编程"><a href="#库编程" class="headerlink" title="库编程"></a>库编程</h1><p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141416928.png" alt="image-20230808141416928"></p>
+<h1 id="库编程"><a href="#库编程" class="headerlink" title="库编程"></a>库编程</h1><img src="/hexo/2023/06/09/raspberrypi/image-20230808141416928.png" class title="image-20230808141416928">
+
 <h2 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h2><ul>
 <li><p><strong>静态函数库</strong>：是在程序执行前（编译）就加入到目标程序中去了 ；</p>
 </li>
@@ -3763,7 +3772,10 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 <li><strong>缺点</strong>： 运行慢</li>
 <li><strong>优点</strong>： 小</li>
 </ul>
-<p><img src="/hexo/2023/06/09/raspberrypi/raspberrypi/image-20230808141527323.png" alt="image-20230808141527323"></p>
+<img src="/hexo/2023/06/09/raspberrypi/image-20230808141527323.png" class title="image-20230808141527323">
+
+
+
 <h2 id="生成库"><a href="#生成库" class="headerlink" title="生成库"></a>生成库</h2><h3 id="静态库-1"><a href="#静态库-1" class="headerlink" title="静态库"></a>静态库</h3><ul>
 <li><p>静态库的生成：格式：xxxx.a </p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">gcc calcufuncs.c -c 生成xxx.o文件</span><br><span class="line"></span><br><span class="line">ar rcs libcalcufunc.a calcufuncs.o xxx.o文件生成xxx.a静态库文件</span><br></pre></td></tr></table></figure></li>
@@ -4242,7 +4254,8 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 <li><code>Redis事务</code>是一个单独的隔离操作：<code>事务中的所有命令都会序列化</code>、按<code>顺序地执行</code>。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。</li>
 <li>Redis事务的主要作用就是<code>串联多个命令防止别的命令插队</code>。</li>
 </ul>
-<h3 id="事务成功"><a href="#事务成功" class="headerlink" title="事务成功"></a>事务成功</h3><p><img src="/hexo/2022/01/26/redis/redis/image-20220324135303964.png" alt="image-20220324135303964"></p>
+<h3 id="事务成功"><a href="#事务成功" class="headerlink" title="事务成功"></a>事务成功</h3><img src="/hexo/2022/01/26/redis/image-20220324135303964.png" class title="image-20220324135303964">
+
 <h4 id="Multi"><a href="#Multi" class="headerlink" title="Multi"></a>Multi</h4><ul>
 <li>创建一个队列 Queen<ul>
 <li>类似 MySQL 中的开启事务（translate）</li>
@@ -4265,14 +4278,14 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 
 <h3 id="事务失败"><a href="#事务失败" class="headerlink" title="事务失败"></a>事务失败</h3><h4 id="组队中出错"><a href="#组队中出错" class="headerlink" title="组队中出错"></a>组队中出错</h4><ul>
 <li><p><code>组队中某个命令出现报告错误，执行时整个的所有队列都会被取消</code></p>
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220324142858758.png" alt="image-20220324142858758"></p>
+<img src="/hexo/2022/01/26/redis/image-20220324142858758.png" class title="image-20220324142858758">
 </li>
 <li><p>事例演示</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; multi</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k1 v1</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k2 v2</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k3</span><br><span class="line">(error) ERR wrong number of arguments for &#x27;set&#x27; command</span><br><span class="line">127.0.0.1:6379(TX)&gt; exec</span><br><span class="line">(error) EXECABORT Transaction discarded because of previous errors.</span><br><span class="line">127.0.0.1:6379&gt; </span><br></pre></td></tr></table></figure></li>
 </ul>
 <h4 id="执行时出错"><a href="#执行时出错" class="headerlink" title="执行时出错"></a>执行时出错</h4><ul>
 <li><p><code>如果执行阶段某个命令报出了错误，则只有报错的命令不会被执行，而其他的命令都会执行，不会回滚</code></p>
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220324143105145.png" alt="image-20220324143105145"></p>
+<img src="/hexo/2022/01/26/redis/image-20220324143105145.png" class title="image-20220324143105145">
 </li>
 <li><p>实例演示</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">127.0.0.1:6379&gt; multi</span><br><span class="line">OK</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k1 v1</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k2 v2</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; INCR k3</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; set k4 v4</span><br><span class="line">QUEUED</span><br><span class="line">127.0.0.1:6379(TX)&gt; exec</span><br><span class="line">1) OK</span><br><span class="line">2) OK</span><br><span class="line">3) (integer) 1</span><br><span class="line">4) OK </span><br></pre></td></tr></table></figure></li>
@@ -4283,21 +4296,21 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 <h3 id="事务冲突的问题"><a href="#事务冲突的问题" class="headerlink" title="事务冲突的问题"></a>事务冲突的问题</h3><ul>
 <li>事例子：</li>
 </ul>
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220417231850767.png" alt="image-20220417231850767"></p>
-<h2 id="Redis-事务-秒杀案例"><a href="#Redis-事务-秒杀案例" class="headerlink" title="Redis_事务_秒杀案例"></a>Redis_事务_秒杀案例</h2><h3 id="1、解决计数器和人员记录的事务操作"><a href="#1、解决计数器和人员记录的事务操作" class="headerlink" title="1、解决计数器和人员记录的事务操作"></a>1、解决计数器和人员记录的事务操作</h3><p><img src="/hexo/2022/01/26/redis/redis/image-20220419144211964-1672285122941.png" alt="image-20220419144211964"></p>
+<img src="/hexo/2022/01/26/redis/image-20220417231850767.png" class title="image-20220417231850767">
+
+<h2 id="Redis-事务-秒杀案例"><a href="#Redis-事务-秒杀案例" class="headerlink" title="Redis_事务_秒杀案例"></a>Redis_事务_秒杀案例</h2><h3 id="1、解决计数器和人员记录的事务操作"><a href="#1、解决计数器和人员记录的事务操作" class="headerlink" title="1、解决计数器和人员记录的事务操作"></a>1、解决计数器和人员记录的事务操作</h3><img src="/hexo/2022/01/26/redis/image-20220419144211964-1672285122941.png" class title="image-20220419144211964">
+
 <h3 id="2、Redis事务–秒杀并发模拟"><a href="#2、Redis事务–秒杀并发模拟" class="headerlink" title="2、Redis事务–秒杀并发模拟"></a>2、Redis事务–秒杀并发模拟</h3><h3 id="jedis秒杀实例"><a href="#jedis秒杀实例" class="headerlink" title="jedis秒杀实例"></a>jedis秒杀实例</h3><blockquote>
 <p>待整理</p>
 </blockquote>
 <h3 id="RedisTemplate-秒杀实例"><a href="#RedisTemplate-秒杀实例" class="headerlink" title="RedisTemplate 秒杀实例"></a>RedisTemplate 秒杀实例</h3><p><a href="seckill.html" title=":include">RedisTemplate</a></p>
 <h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h4 id="悲观锁：-Pessimistic-Lock"><a href="#悲观锁：-Pessimistic-Lock" class="headerlink" title="悲观	锁：(Pessimistic Lock)"></a>悲观	锁：(Pessimistic Lock)</h4><ul>
 <li><p>顾名思义，就是很悲观，<code>每次去拿数据的时候都认为别人会修改</code>，所以<code>每次在拿数据的时候都会上锁</code>，这样<code>别人想拿这个数据就会block直到它拿到锁</code>。传统的关系型数据库里边就用到了很多这种锁机制，比如<code>行锁，表锁等，读锁，写锁</code>等，都是在做操作之前先上锁。</p>
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220417232210268.png" alt="image-20220417232210268"></p>
-</li>
+<img src="/hexo/2022/01/26/redis/image-20220417232210268.png" class title="image-20220417232210268"></li>
 </ul>
 <h4 id="乐观锁-Optimistic-Lock"><a href="#乐观锁-Optimistic-Lock" class="headerlink" title="乐观锁 (Optimistic Lock)"></a>乐观锁 (Optimistic Lock)</h4><ul>
 <li><p>顾名思义，就是很乐观，<code>每次去拿数据的时候都认为别人不会修改</code>，所以<code>不会上锁</code>，但是<code>在更新的时候会判断</code>一下在此期间别人有没有去更新这个数据，可以<code>使用版本号等机制</code>。<code>乐观锁适用于多读的应用类型</code>，这样可以提高吞吐量。<code>Redis就是利用这种check-and-set机制实现事务的</code>。(MybatisPlus 事务机制很像)</p>
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220417232444176.png" alt="image-20220417232444176"></p>
-</li>
+<img src="/hexo/2022/01/26/redis/image-20220417232444176.png" class title="image-20220417232444176"></li>
 </ul>
 <h4 id="watch-and-unwatch"><a href="#watch-and-unwatch" class="headerlink" title="watch and unwatch"></a>watch and unwatch</h4><ul>
 <li><p>watch </p>
@@ -4401,7 +4414,7 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 <li>全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中。</li>
 <li>增量复制：Master继续将新的所有收集到的修改命令依次传给slave,完成同步</li>
 <li>但是只要是重新连接master,一次完全同步（全量复制)将被自动执行</li>
-<li><img src="/hexo/2022/01/26/redis/redis/image-20220419222150752.png" alt="image-20220419222150752"></li>
+<li><img src="/hexo/2022/01/26/redis/image-20220419222150752.png" class title="image-20220419222150752"></li>
 </ul>
 <h3 id="薪伙相传"><a href="#薪伙相传" class="headerlink" title="薪伙相传"></a>薪伙相传</h3><ul>
 <li>上一个Slave可以是下一个slave的Master，Slave同样可以接收其他slaves的连接和同步请求，那么该slave作为了链条中下一个的master, 可以有效减轻master的写压力,去中心化降低风险。</li>
@@ -4497,7 +4510,7 @@ docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.9-man
 </blockquote>
 <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">优先级在redis.conf中默认：【版本不同可能这个名字不同】slave-priority 100，值越小优先级越高</span><br><span class="line">偏移量是指获得原主机数据最全的</span><br><span class="line">每个redis实例启动后都会随机生成一个40位的runid</span><br></pre></td></tr></table></figure>
 
-<p><img src="/hexo/2022/01/26/redis/redis/image-20220419230223477.png" alt="image-20220419230223477">	</p>
+<img src="/hexo/2022/01/26/redis/image-20220419230223477.png" class title="image-20220419230223477">	
 </li>
 <li><blockquote>
 <p>java 代码中使用哨兵主从</p>
@@ -4842,7 +4855,8 @@ fi
     <title>socket-tcp详解</title>
     <url>/hexo/2023/09/30/socket-tcp/</url>
     <content><![CDATA[<h1 id="网络模型"><a href="#网络模型" class="headerlink" title="网络模型"></a>网络模型</h1><p><strong>引言</strong>：就是平时开发的时候就基本单纯调库，对于底层怎么做的感知不是很多，然后有时候在编写网络编程的时候遇到一些<code>玄学</code>问题【特别是数据传输过程中出现问题】得到更好的方法和方向，然后就是尝试自己编写一个网络协议栈</p>
-<p><img src="/hexo/2023/09/30/socket-tcp/socket-tcp/image-20231016010415292.png"></p>
+<img src="/hexo/2023/09/30/socket-tcp/image-20231016010415292.png" class>
+
 <h2 id="osi七层模型"><a href="#osi七层模型" class="headerlink" title="osi七层模型"></a>osi七层模型</h2><ul>
 <li>物理层、数据链路层、网络层、传输层、会话层、表示层、应用层</li>
 </ul>
@@ -5076,21 +5090,20 @@ fi
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认端口</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8761</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 指定服务名称 &lt;推荐大写，因为服务名在注册中心默认就是大写&gt; [必填]</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">EUREKASERVER</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#eureka server 服务注册中心地址,暴露服务地址</span></span><br><span class="line"><span class="attr">eureka.client.service-url.defaultZone</span>=<span class="string">http://localhost:8761/eureka</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>此时访问 <code>http://localhost:8761</code> 地址就可以看到注册中心的页面了</p>
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628210123819.png" alt="image-20220628210123819"></p>
+<img src="/hexo/2019/08/27/springcloud/image-20220628210123819.png" class title="image-20220628210123819">
 </li>
 <li><p>此时有一个问题，就是 Eureka-Server 也被当成了一个客户端被注册进去了，所以这是不科学的。改进配置文件</p>
 </li>
 <li><p>application.porperties</p>
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">#默认端口</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8761</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 指定服务名称 &lt;推荐大写，因为服务名在注册中心默认就是大写&gt;</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">EUREKASERVER</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#eureka server 服务注册中心地址,暴露服务地址</span></span><br><span class="line"><span class="attr">eureka.client.service-url.defaultZone</span>=<span class="string">http://localhost:8761/eureka</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 关闭 eureka 的立即注册默认是true，【立即注册】，改为 false 就会关闭立即注册</span></span><br><span class="line"><span class="attr">eureka.client.fetch-registry</span>=<span class="string">false</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 让当前应用只被当成服务注册中心</span></span><br><span class="line"><span class="attr">eureka.client.register-with-eureka</span>=<span class="string">false</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628210803943.png" alt="image-20220628210803943"></p>
-</li>
+<img src="/hexo/2019/08/27/springcloud/image-20220628210803943.png" class title="image-20220628210803943"></li>
 </ul>
 <h3 id="3、开发一个-eureka-的客户端"><a href="#3、开发一个-eureka-的客户端" class="headerlink" title="3、开发一个 eureka 的客户端"></a>3、开发一个 eureka 的客户端</h3><ul>
 <li><p>拆分出来的微服务</p>
 </li>
 <li><p>创建一个 springboot 项目</p>
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628220032563.png" alt="image-20220628220032563"></p>
+<img src="/hexo/2019/08/27/springcloud/image-20220628220032563.png" class title="image-20220628220032563">
 </li>
 <li><p>添加 springboot  项目依赖和 Eureka-client 依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- springboot 的应用--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -5102,7 +5115,8 @@ fi
 <figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 指定微服务的端口</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8989</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">#指定服务的名称</span></span><br><span class="line"><span class="attr">spring.application.name</span>=<span class="string">EUREKACLIENT</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 指定服务注册中心地址 &lt;重要&gt;</span></span><br><span class="line"><span class="attr">eureka.client.service-url.defaultZone</span>=<span class="string">http://localhost:8761/eureka</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>启动 EurekaServer 和 EurekaClient 访问 <a href="http://localhost:8761/">http://localhost:8761</a></p>
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628220654698.png" alt="image-20220628220654698"></p>
+<img src="/hexo/2019/08/27/springcloud/image-20220628220654698.png" class title="image-20220628220654698">
+
 <blockquote>
 <p>这里显示了 EurekaClient 的一个客户端</p>
 </blockquote>
@@ -5128,7 +5142,8 @@ fi
 </blockquote>
 </li>
 </ul>
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628230759024.png" alt="image-20220628230759024"></p>
+<img src="/hexo/2019/08/27/springcloud/image-20220628230759024.png" class title="image-20220628230759024">
+
 <ul>
 <li>管理界面基本介绍<ul>
 <li>dcl：数据中心名称</li>
@@ -5142,7 +5157,7 @@ fi
 </ul>
 <h2 id="consul-client-服务客户端（微服务）"><a href="#consul-client-服务客户端（微服务）" class="headerlink" title="consul client 服务客户端（微服务）"></a>consul client 服务客户端（微服务）</h2><ul>
 <li><p>创建一个独立的 springboot 应用</p>
-<p><img src="/hexo/2019/08/27/springcloud/springcloud/image-20220628232349475.png" alt="image-20220628232349475"></p>
+<img src="/hexo/2019/08/27/springcloud/image-20220628232349475.png" class title="image-20220628232349475">
 </li>
 <li><p>引入 consul 相关依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">  </span><br></pre></td></tr></table></figure></li>
@@ -5219,29 +5234,29 @@ fi
     <content><![CDATA[<h2 id="一、IDEA-创建-POM-项目"><a href="#一、IDEA-创建-POM-项目" class="headerlink" title="一、IDEA 创建 POM 项目"></a>一、IDEA 创建 POM 项目</h2><ul>
 <li><p>打开 idea 选择新建项目，并选择 maven 的模板文件,模板为图片光标所指的那一个</p>
 <p><strong>maven-archetype-webapp</strong></p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220330593.png" alt="image-20221212220330593"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220330593.png" alt="image-20221212220330593"></p>
 </li>
 <li><p>设置项目名和项目保存位置</p>
 <ul>
 <li>项目的包的命名顺序一般为域名倒序指的是：假设要建立一个 商店的项目，而这个商店的域名是 shop.test.com,那么这个项目的包的顺序应该是 com.test.shop，一般我们选取 项目名字作为项目的包名就是说 Artifactid 为 shop</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212215058992.png" alt="image-20221212215058992"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212215058992.png" alt="image-20221212215058992"></p>
 </li>
 <li><p>上一步选择 next 之后 会进行 maven 配置（如果你的 idea 之前在 setting中配置好的那么这一步应该是啥也不用改），点击 finish</p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212215639842.png" alt="image-20221212215639842"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212215639842.png" alt="image-20221212215639842"></p>
 </li>
 <li><p>完成之后会进入 idea 工程的主界面</p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220510195.png" alt="image-20221212220510195"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220510195.png" alt="image-20221212220510195"></p>
 </li>
 <li><p>创建 Javaweb 的目录结构</p>
 <ul>
 <li>在 main 目录下创建 java 和 resource 文件夹</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220720662.png" alt="image-20221212220720662"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220720662.png" alt="image-20221212220720662"></p>
 <p>创建后</p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220741561.png" alt="image-20221212220741561"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212220741561.png" alt="image-20221212220741561"></p>
 <p>注意：如果你所创建的 java 和 resource 文件夹没有变颜色可以通过选中文件夹然后鼠标右键的 mark as 进行颜色标注,如果标记错误可以通过 unmark as 取消后重新标记</p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221036715.png" alt="image-20221212221036715"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221036715.png" alt="image-20221212221036715"></p>
 </li>
 </ul>
 <h2 id="二、添加项目-POM-的依赖"><a href="#二、添加项目-POM-的依赖" class="headerlink" title="二、添加项目 POM 的依赖"></a>二、添加项目 POM 的依赖</h2><h3 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h3><ul>
@@ -5251,11 +5266,11 @@ fi
 
 <ul>
 <li><p>加入之后点击 maven 刷新</p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221530194.png" alt="image-20221212221530194"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221530194.png" alt="image-20221212221530194"></p>
 <ul>
 <li>点击导入刷新，（最好保证网络通畅，因为断网的话文件会损坏，maven 没有断电续传）</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221638192.png" alt="image-20221212221638192"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212221638192.png" alt="image-20221212221638192"></p>
 </li>
 </ul>
 <h2 id="三、-在-resource-目录下创建以下文件"><a href="#三、-在-resource-目录下创建以下文件" class="headerlink" title="三、 在 resource 目录下创建以下文件"></a>三、 在 resource 目录下创建以下文件</h2><h3 id="MySQL5"><a href="#MySQL5" class="headerlink" title="MySQL5"></a>MySQL5</h3><h4 id="spring-database-xml"><a href="#spring-database-xml" class="headerlink" title="spring-database.xml"></a>spring-database.xml</h4><ul>
@@ -5297,46 +5312,46 @@ fi
 <p>resource</p>
 <p>​	mapper&#x2F;*.xml</p>
 </blockquote>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212223821563.png" alt="image-20221212223821563"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212223821563.png" alt="image-20221212223821563"></p>
 <h2 id="在controller里编写测试"><a href="#在controller里编写测试" class="headerlink" title="在controller里编写测试"></a>在controller里编写测试</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserController</span>&#123;</span><br><span class="line">   <span class="meta">@GetMapping()</span></span><br><span class="line">   <span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;test&quot;</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="配置tomcat"><a href="#配置tomcat" class="headerlink" title="配置tomcat"></a>配置tomcat</h2><ul>
 <li>第一步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224008654.png" alt="image-20221212224008654"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224008654.png" alt="image-20221212224008654"></p>
 <ul>
 <li>第二步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224128421.png" alt="image-20221212224128421"></p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224208815.png" alt="image-20221212224208815"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224128421.png" alt="image-20221212224128421"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224208815.png" alt="image-20221212224208815"></p>
 <ul>
 <li>第三步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224243218.png" alt="image-20221212224243218"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224243218.png" alt="image-20221212224243218"></p>
 <ul>
 <li>第四步 ： 配置 tomcat 的位置</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224310996.png" alt="image-20221212224310996"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224310996.png" alt="image-20221212224310996"></p>
 <ul>
 <li>第五步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224354239.png" alt="image-20221212224354239"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224354239.png" alt="image-20221212224354239"></p>
 <ul>
 <li>第六步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224428293.png" alt="image-20221212224428293"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224428293.png" alt="image-20221212224428293"></p>
 <ul>
 <li>第七步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224502890.png" alt="image-20221212224502890"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224502890.png" alt="image-20221212224502890"></p>
 <ul>
 <li>第八步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224529214.png" alt="image-20221212224529214"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224529214.png" alt="image-20221212224529214"></p>
 <ul>
 <li>第九步</li>
 </ul>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224557045.png" alt="image-20221212224557045"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221212224557045.png" alt="image-20221212224557045"></p>
 <ul>
 <li>第十步</li>
 </ul>
@@ -5359,10 +5374,10 @@ fi
 
 <h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><ul>
 <li><p><strong>如果前面在 spring-database.xml 中注释掉了扫描 xml 文件的配置的话，需要先开启之后再运行（因为有时候不注释配置文件报错会导致项目无法运行成功，所以在没有业务的时候为了测试系统框架是否搭建成功，需要将 扫描 xml 的配置注释，有业务的时候再放开就行了）</strong></p>
-<p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221219223620502.png" alt="image-20221219223620502"></p>
+<p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221219223620502.png" alt="image-20221219223620502"></p>
 </li>
 </ul>
-<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><h3 id="浏览器输入：http-127-0-0-1-8080-user"><a href="#浏览器输入：http-127-0-0-1-8080-user" class="headerlink" title="浏览器输入：http://127.0.0.1:8080/user"></a>浏览器输入：<a href="http://127.0.0.1:8080/user">http://127.0.0.1:8080/user</a></h3><h3 id="结果显示："><a href="#结果显示：" class="headerlink" title="结果显示："></a>结果显示：</h3><p><img src="/hexo/2021/08/27/ssm-huan-jing-da-jian/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221219224142096.png" alt="image-20221219224142096"></p>
+<h2 id="测试："><a href="#测试：" class="headerlink" title="测试："></a>测试：</h2><h3 id="浏览器输入：http-127-0-0-1-8080-user"><a href="#浏览器输入：http-127-0-0-1-8080-user" class="headerlink" title="浏览器输入：http://127.0.0.1:8080/user"></a>浏览器输入：<a href="http://127.0.0.1:8080/user">http://127.0.0.1:8080/user</a></h3><h3 id="结果显示："><a href="#结果显示：" class="headerlink" title="结果显示："></a>结果显示：</h3><p><img src="/hexo/ssm%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/image-20221219224142096.png" alt="image-20221219224142096"></p>
 ]]></content>
       <categories>
         <category>java</category>
@@ -5714,8 +5729,7 @@ fi
   <entry>
     <title>wireshark</title>
     <url>/hexo/2023/07/09/wireshark/</url>
-    <content><![CDATA[<p><img src="/hexo/2023/07/09/wireshark/wireshark/image-20230811211811504.png" alt="image-20230811211811504"></p>
-]]></content>
+    <content><![CDATA[<img src="/hexo/2023/07/09/wireshark/image-20230811211811504.png" class title="image-20230811211811504">]]></content>
       <categories>
         <category>wireshark</category>
       </categories>
@@ -5792,7 +5806,7 @@ fi
 </li>
 <li><p>数据传输先发高位再发低位</p>
 </li>
-<li><p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801095335830.png" alt="image-20230801095335830"></p>
+<li><p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801095335830.png" alt="image-20230801095335830"></p>
 </li>
 <li><p>I2C 是电平触发数据传输，不同于spi 的边缘触发</p>
 </li>
@@ -5801,10 +5815,10 @@ fi
 <li><p>位速率可达400kbit&#x2F;s</p>
 </li>
 <li><p>I2C传输格式（写数据）</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801100924367.png" alt="image-20230801100924367"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801100924367.png" alt="image-20230801100924367"></p>
 </li>
 <li><p>I2C传输格式（读数据）</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801101033404.png" alt="image-20230801101033404"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801101033404.png" alt="image-20230801101033404"></p>
 </li>
 <li><p>I2C 工作模式</p>
 <ul>
@@ -5816,7 +5830,7 @@ fi
 </ul>
 <h2 id="i2c-模拟时许分布实现"><a href="#i2c-模拟时许分布实现" class="headerlink" title="i2c 模拟时许分布实现"></a>i2c 模拟时许分布实现</h2><ul>
 <li><p>起始信号时序编写</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801105414199.png" alt="image-20230801105414199"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801105414199.png" alt="image-20230801105414199"></p>
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 起始信号</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">demo_i2c_start</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 将数据置1</span></span><br><span class="line">    data_set();</span><br><span class="line">    <span class="comment">// 将时钟置1</span></span><br><span class="line">    clk_set();</span><br><span class="line">    demo_i2c_dalay();</span><br><span class="line">    data_clear();</span><br><span class="line">    demo_i2c_dalay();</span><br><span class="line">    <span class="comment">// 空闲时钟为低电平</span></span><br><span class="line">    clk_clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -5825,14 +5839,14 @@ fi
 
 <ul>
 <li><p>终止信号时序编写</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801110848197.png" alt="image-20230801110848197"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801110848197.png" alt="image-20230801110848197"></p>
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 终止信号</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">demo_i2c_stop</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 将数据置0</span></span><br><span class="line">    data_clear();</span><br><span class="line">    <span class="comment">// 将时钟置1</span></span><br><span class="line">    clk_set();</span><br><span class="line">    demo_i2c_dalay();</span><br><span class="line">    data_set();</span><br><span class="line">    demo_i2c_dalay();</span><br><span class="line">    <span class="comment">// 空闲时钟为高电平</span></span><br><span class="line">    clk_clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><p>发送数据</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801113840396.png" alt="image-20230801113840396"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230801113840396.png" alt="image-20230801113840396"></p>
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 发送数据</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">demo_i2c_send_byte</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> data)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    clk_clear(); <span class="comment">// 时钟为低电平开始准备</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (data &amp; (<span class="number">1</span> &lt;&lt; (<span class="number">7</span> - i)))</span><br><span class="line">            data_set();</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            data_clear();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 等待准备的数据稳定</span></span><br><span class="line">        demo_i2c_dalay();</span><br><span class="line">        <span class="comment">// 数据已稳定对方可以读取</span></span><br><span class="line">        clk_set();</span><br><span class="line">        <span class="comment">// 等待对方读取数据</span></span><br><span class="line">        demo_i2c_dalay();</span><br><span class="line">        clk_clear();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -5866,7 +5880,7 @@ fi
 <li><p>所有的命令均由主机发起，从机处于被应答状态</p>
 </li>
 <li><p>usb 传输事物</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230809220527140.png" alt="image-20230809220527140"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230809220527140.png" alt="image-20230809220527140"></p>
 </li>
 </ul>
 <h2 id="usb设备描述符及其枚举过程"><a href="#usb设备描述符及其枚举过程" class="headerlink" title="usb设备描述符及其枚举过程"></a>usb设备描述符及其枚举过程</h2><ul>
@@ -5892,7 +5906,7 @@ fi
 <p>设备和主机通信</p>
 </li>
 <li><p>Linux usb驱动框架</p>
-<p><img src="/hexo/2023/06/09/zong-xian-xie-yi/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230809223618785.png" alt="image-20230809223618785"></p>
+<p><img src="/hexo/%E6%80%BB%E7%BA%BF%E5%8D%8F%E8%AE%AE/image-20230809223618785.png" alt="image-20230809223618785"></p>
 </li>
 </ul>
 <h2 id="Linux-usb驱动开发流程"><a href="#Linux-usb驱动开发流程" class="headerlink" title="Linux usb驱动开发流程"></a>Linux usb驱动开发流程</h2><ul>
@@ -6214,7 +6228,7 @@ fi
 
 </li>
 <li><p><strong>显示信息说明</strong></p>
-<p><img src="/hexo/2021/11/16/niu-ke-mysql/%E7%89%9B%E5%AE%A2MySQL/D9E601E7A15464E123E07993B5B38512.png" alt="img"></p>
+<p><img src="/hexo/%E7%89%9B%E5%AE%A2MySQL/D9E601E7A15464E123E07993B5B38512.png" alt="img"></p>
 </li>
 <li><p><strong>题解</strong></p>
 <ul>
@@ -6347,7 +6361,7 @@ fi
 <li><p>题目来源<a href="https://www.luogu.com.cn/problem/P1914">传送门</a></p>
 </li>
 <li><p>题目</p>
-<p><img src="/hexo/2021/10/19/ti-mu-ti-jie/%E9%A2%98%E7%9B%AE-%E9%A2%98%E8%A7%A3/7.png"></p>
+<img src="/hexo/2021/10/19/ti-mu-ti-jie/7.png" class>
 </li>
 <li><p>题解</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">暂时没有</span><br></pre></td></tr></table></figure></li>
@@ -6356,7 +6370,7 @@ fi
 <li><p>题目来源洛谷<a href="https://www.luogu.com.cn/problem/P1308">传送门</a></p>
 </li>
 <li><p>题目</p>
-<p><img src="/hexo/2021/10/19/ti-mu-ti-jie/%E9%A2%98%E7%9B%AE-%E9%A2%98%E8%A7%A3/8.png"></p>
+<img src="/hexo/2021/10/19/ti-mu-ti-jie/8.png" class>
 </li>
 <li><p>题解</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">暂时没有</span><br></pre></td></tr></table></figure></li>
@@ -6373,7 +6387,7 @@ fi
 <h2 id="计数问题"><a href="#计数问题" class="headerlink" title="计数问题"></a>计数问题</h2><p>题目来源-洛谷<a href="https://www.luogu.com.cn/problem/P1980">传送门</a></p>
 <ul>
 <li><p>题目</p>
-<p><img src="/hexo/2021/10/19/ti-mu-ti-jie/%E9%A2%98%E7%9B%AE-%E9%A2%98%E8%A7%A3/6.png" alt="6"></p>
+<img src="/hexo/2021/10/19/ti-mu-ti-jie/6.png" class width="6">
 </li>
 <li><p>题解</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 待定</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">trans</span><span class="params">(<span class="type">int</span> a,<span class="type">char</span> b)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">trans</span><span class="params">(<span class="type">int</span> a,<span class="type">char</span> b)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> s[<span class="number">10</span>];</span><br><span class="line">	<span class="type">int</span> j,m,count=<span class="number">0</span>,i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(a&gt;<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		m=a%<span class="number">10</span>;</span><br><span class="line">		s[i]=m+<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		a=a/<span class="number">10</span>;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	i--;</span><br><span class="line">	j=i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;=j;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(s[i]==b)</span><br><span class="line">		count++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> i,num,count=<span class="number">0</span>;</span><br><span class="line">	<span class="type">char</span> s;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;num);</span><br><span class="line"><span class="comment">//	printf(&quot;num=%d\n&quot;,num);</span></span><br><span class="line">	getchar();</span><br><span class="line">	<span class="type">int</span> a[num],b[num];</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>,&amp;s);</span><br><span class="line"><span class="comment">//	printf(&quot;s=%c\n&quot;,s);</span></span><br><span class="line">	<span class="keyword">if</span>(num&gt;=<span class="number">0</span>&amp;&amp;num&lt;=<span class="number">1000000</span>)</span><br><span class="line">	<span class="keyword">if</span>(s&gt;=<span class="string">&#x27;0&#x27;</span>&amp;&amp;s&lt;=<span class="string">&#x27;9&#x27;</span>)</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		a[i]=i+<span class="number">1</span>;</span><br><span class="line"><span class="comment">//		printf(&quot;a[%d]=%-5d&quot;,i,a[i]);</span></span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//	putchar(&#x27;\n&#x27;);</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		b[i]=trans(a[i],s);</span><br><span class="line"><span class="comment">//		printf(&quot;b[%d]=%-5d\n&quot;,i,b[i]);</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;num;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		count+=b[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,count);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
@@ -6382,7 +6396,8 @@ fi
 <ul>
 <li>题目</li>
 </ul>
-<p><img src="/hexo/2021/10/19/ti-mu-ti-jie/%E9%A2%98%E7%9B%AE-%E9%A2%98%E8%A7%A3/4.png" alt="2"></p>
+<img src="/hexo/2021/10/19/ti-mu-ti-jie/4.png" class width="2">
+
 <ul>
 <li>题解</li>
 </ul>
@@ -6392,7 +6407,8 @@ fi
 <ul>
 <li>题目</li>
 </ul>
-<p><img src="/hexo/2021/10/19/ti-mu-ti-jie/%E9%A2%98%E7%9B%AE-%E9%A2%98%E8%A7%A3/5.png" alt="5"></p>
+<img src="/hexo/2021/10/19/ti-mu-ti-jie/5.png" class width="5">
+
 <ul>
 <li>题解</li>
 </ul>

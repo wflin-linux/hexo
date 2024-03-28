@@ -28,17 +28,17 @@
 <meta property="og:site_name" content="wflin&#39;s Blog">
 <meta property="og:description" content="RabbitMQ1. MQ引言1.1 什么是MQ MQ（Message Quene）:翻译为 消息队列 ，通过典型的生产者和消费者模型 ,生产者不断向消息队列中产生消息，消费者不断从队列中获得消息。因为消息的产生和消费都是异步的，而且只关心消息的发送和接收，没用业务逻辑的侵入。轻松实现系统解耦。别名为消息中间件 通过利用高效可靠的消息传递机制进行平台无关的数据交流，并基于数据通信来进行分布式系统集">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png">
-<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA">
-<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM">
-<meta property="og:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY">
+<meta property="og:image" content="http://example.com/hexo/RabbitMQ/image-20220429151921446.png">
+<meta property="og:image" content="http://example.com/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA">
+<meta property="og:image" content="http://example.com/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM">
+<meta property="og:image" content="http://example.com/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY">
 <meta property="article:published_time" content="2022-03-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-03-24T15:01:05.763Z">
+<meta property="article:modified_time" content="2024-03-28T16:58:56.041Z">
 <meta property="article:author" content="wflin">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="MQ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png">
+<meta name="twitter:image" content="http://example.com/hexo/RabbitMQ/image-20220429151921446.png">
 
 
 <link rel="canonical" href="http://example.com/2022/03/19/rabbitmq/">
@@ -241,7 +241,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-24 23:01:05" itemprop="dateModified" datetime="2024-03-24T23:01:05+08:00">2024-03-24</time>
+      <time title="修改时间：2024-03-29 00:58:56" itemprop="dateModified" datetime="2024-03-29T00:58:56+08:00">2024-03-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,20 +276,20 @@
 <h2 id="2-RabbitMQ-引言"><a href="#2-RabbitMQ-引言" class="headerlink" title="2. RabbitMQ 引言"></a>2. RabbitMQ 引言</h2><h3 id="2-1-RabbitMQ"><a href="#2-1-RabbitMQ" class="headerlink" title="2.1 RabbitMQ"></a>2.1 RabbitMQ</h3><blockquote>
 <p>基于 <code>AMOP</code> 协议，Erlang 语言开发，是部署最广泛的开源消息中间件，是最受欢迎的消息中间件之一。</p>
 </blockquote>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/image-20220429151921446.png" alt="image-20220429151921446"></p>
+<p><img src="/hexo/RabbitMQ/image-20220429151921446.png" alt="image-20220429151921446"></p>
 <p><code>官网</code>：[<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>](<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">Messaging that just works — RabbitMQ</a>)</p>
 <p><code>官方教程</code>：[<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>](<a target="_blank" rel="noopener" href="https://www.rabbitmq.com/getstarted.html">RabbitMQ Tutorials — RabbitMQ</a>)</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># AMQP 介绍</span></span><br><span class="line">AMQP，即Advanced Message Queuing Protocol，高级消息队列协议，是应用层协议的一个开放标准，为面向消息的中间件设计。</span><br><span class="line"><span class="code">	AMQP的主要特征是面向消息、队列、路由（包括点对点和发布/订阅）、可靠性、安全。</span></span><br><span class="line"><span class="code">	AMQP在消息提供者和客户端的行为进行了强制规定，使得不同卖商之间真正实现了互操作能力。</span></span><br><span class="line"><span class="code">	JMS是早期消息中间件进行标准化的一个尝试，它仅仅是在API级进行了规范，离创建互操作能力还差很远。</span></span><br><span class="line"><span class="code">	与JMS不同，AMQP是一个Wire级的协议，它描述了在网络上传输的数据的格式，以字节为流。因此任何遵守此数据格式的工具，其创建和解释消息，都能与其他兼容工具进行互操作。</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-2-RabbitMQ-的作用"><a href="#2-2-RabbitMQ-的作用" class="headerlink" title="2.2 RabbitMQ 的作用"></a>2.2 RabbitMQ 的作用</h3><ul>
 <li><p><strong>解耦</strong>。如图所示。假设有系统B、C、D都需要系统A的数据，于是系统A调用三个方法发送数据到B、C、D。这时，系统D不需要了，那就需要在系统A把相关的代码删掉。假设这时有个新的系统E需要数据，这时系统A又要增加调用系统E的代码。为了降低这种强耦合，就可以使用MQ，<strong>系统A只需要把数据发送到MQ，其他系统如果需要数据，则从MQ中获取即可</strong>。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA" alt="aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA (589×254) (csdnimg.cn)"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA" alt="aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OGM3YTgxY2MxYzA (589×254) (csdnimg.cn)"></p>
 </li>
 <li><p><strong>异步</strong>。如图所示。一个客户端请求发送进来，系统A会调用系统B、C、D三个系统，同步请求的话，响应时间就是系统A、B、C、D的总和，也就是800ms。<strong>如果使用MQ，系统A发送数据到MQ，然后就可以返回响应给客户端，不需要再等待系统B、C、D的响应，可以大大地提高性能</strong>。对于一些非必要的业务，比如发送短信，发送邮件等等，就可以采用MQ。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3OTQ1YThjNGRmNzM"></p>
 </li>
 <li><p><strong>削峰</strong>。如图所示。这其实是MQ一个很重要的应用。假设系统A在某一段时间请求数暴增，有5000个请求发送过来，系统A这时就会发送5000条SQL进入MySQL进行执行，MySQL对于如此庞大的请求当然处理不过来，MySQL就会崩溃，导致系统瘫痪。<strong>如果使用MQ，系统A不再是直接发送SQL到数据库，而是把数据发送到MQ，MQ短时间积压数据是可以接受的，然后由消费者每次拉取2000条进行处理，防止在请求峰值时期大量的请求直接发送到MySQL导致系统崩溃</strong>。</p>
-<p><img src="/hexo/2022/03/19/rabbitmq/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY"></p>
+<p><img src="/hexo/RabbitMQ/aHR0cHM6Ly91c2VyLWdvbGQtY2RuLnhpdHUuaW8vMjAyMC83LzE5LzE3MzY3YTlkOTAyY2NhNGY"></p>
 </li>
 </ul>
 <h2 id="3-RabbitMQ-特点"><a href="#3-RabbitMQ-特点" class="headerlink" title="3. RabbitMQ 特点"></a>3. RabbitMQ 特点</h2><ul>
