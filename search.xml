@@ -644,7 +644,7 @@
 </ol>
 <h3 id="提交到-阿里云容器仓库"><a href="#提交到-阿里云容器仓库" class="headerlink" title="提交到 阿里云容器仓库"></a>提交到 阿里云容器仓库</h3><ol>
 <li><p>登陆阿里云</p>
-<style>.crnqqbhcehgs{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="crnqqbhcehgs" alt="image-20220420142030709">
+<style>.lkjybxcyytdm{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="lkjybxcyytdm" alt="image-20220420142030709">
 </li>
 <li><p>找到容器镜像服务 并创建 容器镜像服务，个人版本好像是免费的</p>
 <img src="/hexo/2021/11/14/docker/image-20220420142516275.png" class title="image-20220420142516275">
@@ -5735,6 +5735,120 @@ fi
       </categories>
       <tags>
         <tag>wireshark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>齐次坐标系</title>
+    <url>/hexo/2024/04/08/qi-ci-zuo-biao-xi/</url>
+    <content><![CDATA[<p><code>推荐阅读</code>: [<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>](<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>)</p>
+<h1 id="笛卡尔坐标系"><a href="#笛卡尔坐标系" class="headerlink" title="笛卡尔坐标系"></a>笛卡尔坐标系</h1><h2 id="平面直角坐标系"><a href="#平面直角坐标系" class="headerlink" title="平面直角坐标系"></a>平面直角坐标系</h2><h3 id="（略）"><a href="#（略）" class="headerlink" title="（略）"></a>（略）</h3><h1 id="齐次坐标系"><a href="#齐次坐标系" class="headerlink" title="齐次坐标系"></a>齐次坐标系</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li><p>齐次坐标是由 August Ferdinand Möbius 引入的，使其在投影空间中进行图形和几何计算成为可能。</p>
+<ul>
+<li>齐次坐标就是用N+1维来代表N维坐标</li>
+</ul>
+</li>
+<li><p>我们可以在一个2D笛卡尔坐标末尾加上一个额外的变量w来形成 2D齐次坐标。因此，一个在笛卡尔坐标系下的点$(X, Y)$在齐次坐标里面变成了 (x,y,w) ，并且有</p>
+  <figure class="highlight latex"><table><tr><td class="code"><pre><span class="line">X = x/w</span><br><span class="line">X = y/w</span><br></pre></td></tr></table></figure>
+
+<p>  例如，笛卡尔坐标系下 (1,2) 齐次坐标可以表示为 (1,2,1) ，如果点 (1,2) 移动到无限远处，在笛卡尔坐标下它变为 (∞,∞) ，然后它的齐次坐标表示为 (1,2,0) ，因为 (1&#x2F;0,2&#x2F;0)&#x3D;(∞,∞) 。 注意这样的话，我们可以不用 ” ∞ “ 来表示一个无穷远处的点了。</p>
+</li>
+</ul>
+<h2 id="坐标转化方法"><a href="#坐标转化方法" class="headerlink" title="坐标转化方法"></a>坐标转化方法</h2><ul>
+<li>如前面所述，我们<strong>把齐次坐标转化为笛卡尔坐标的方法是前面n-1个坐标分量分别除以最后一个分量即可</strong>。</li>
+</ul>
+<p><img src="/hexo/v2-da28eed57fda0fc6a06b7122be5f2a1d_720w.webp" alt="img"></p>
+]]></content>
+      <categories>
+        <category>线性代数</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>位运算</title>
+    <url>/hexo/2024/04/09/wei-yun-suan/</url>
+    <content><![CDATA[<ul>
+<li>推荐阅读:<a href="%5BC%E8%AF%AD%E8%A8%80%E4%BD%8D%E6%93%8D%E4%BD%9C%E8%AF%A6%E8%A7%A3(%E5%85%A8%E7%BD%91%E6%9C%80%E5%85%A8)-CSDN%E5%8D%9A%E5%AE%A2%5D(https://blog.csdn.net/qq_41854911/article/details/117390949)"><a href="https://blog.csdn.net/qq_41854911/article/details/117390949">C语言位操作详解(全网最全)-CSDN博客</a></a></li>
+</ul>
+<h1 id="操作符号"><a href="#操作符号" class="headerlink" title="操作符号"></a>操作符号</h1><ul>
+<li><p>C语言中存在的6个位操作运算符号，且他们只能用于整形操作数</p>
+<table>
+<thead>
+<tr>
+<th align="center">位操作符</th>
+<th align="center">名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&amp;</td>
+<td align="center">按位与</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td align="center">按位或</td>
+</tr>
+<tr>
+<td align="center">^</td>
+<td align="center">按位异或</td>
+</tr>
+<tr>
+<td align="center">&lt;&lt;</td>
+<td align="center">按位左移</td>
+</tr>
+<tr>
+<td align="center">&gt;&gt;</td>
+<td align="center">按位右移</td>
+</tr>
+<tr>
+<td align="center">~</td>
+<td align="center">按位取反</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2 id="按位与："><a href="#按位与：" class="headerlink" title="按位与：&amp;"></a>按位与：&amp;</h2><ul>
+<li><p>定义：同一二进制位上的数字都是1的话，&amp;的结果为1，否则为0</p>
+  <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">0 &amp; 0 = 0；</span><br><span class="line"></span><br><span class="line">0 &amp; 1 = 0；</span><br><span class="line"></span><br><span class="line">1 &amp; 1 = 1；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>不同大小的数据位操作的原则，<strong>低位对齐，高位补零</strong>。</p>
+<ul>
+<li><p>根据这个特性，&amp;操作常常用来屏蔽特定的二进制位</p>
+  <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">0000 1111 &amp; 0000 0011</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结果为0000 0011.可以看见，1111的前两位被屏蔽成为0了。所以如果想清空数据，只需要将原二进制数与上0就可以了。0的位数对应原二进制数的位数，对各位进行屏蔽，全部置0.</p>
+</li>
+<li><p>相对的，&amp;可以利用0来屏蔽，也可以用1来读取。例如： 一个二进制数 1101 1001，我只想要它的后四位，怎么办呢？ 只需要进行如下操作：1101 1001 &amp; 0000 1111即可。其实该方法是屏蔽和读取的结合，&amp;0保证消除无用位，&amp;1保证有用数据的完整性。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>对于原二进制数来说，&amp;0是屏蔽，&amp;1是不变。</li>
+</ul>
+<h2 id="按位或-OR-："><a href="#按位或-OR-：" class="headerlink" title="按位或(OR)：|"></a>按位或(OR)：|</h2><ul>
+<li><p>定义：只要参与运算的双方其中有一个是1，结果就是1.同0才为0.</p>
+  <figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">0 | 0 = 0；</span><br><span class="line"></span><br><span class="line">0 | 1 = 1；</span><br><span class="line"></span><br><span class="line">1 | 0 = 1；</span><br><span class="line"></span><br><span class="line">1 | 1 = 1；</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>不同大小的数据位操作的原则，低位对齐，高位补零。</p>
+</li>
+<li><p>将某些特定位置1.</p>
+<ul>
+<li>例如：1010 0000 | 0000 1111.结果为 1010 1111.</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>对于原二进制数来说，|0是不变，|1是置1.</li>
+</ul>
+<h2 id="按位异或："><a href="#按位异或：" class="headerlink" title="按位异或：^"></a>按位异或：^</h2>]]></content>
+      <categories>
+        <category>c</category>
+      </categories>
+      <tags>
+        <tag>c</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
