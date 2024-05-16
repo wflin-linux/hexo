@@ -644,7 +644,7 @@
 </ol>
 <h3 id="提交到-阿里云容器仓库"><a href="#提交到-阿里云容器仓库" class="headerlink" title="提交到 阿里云容器仓库"></a>提交到 阿里云容器仓库</h3><ol>
 <li><p>登陆阿里云</p>
-<style>.lkjybxcyytdm{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="lkjybxcyytdm" alt="image-20220420142030709">
+<style>.bjinaxlejkhh{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="bjinaxlejkhh" alt="image-20220420142030709">
 </li>
 <li><p>找到容器镜像服务 并创建 容器镜像服务，个人版本好像是免费的</p>
 <img src="/hexo/2021/11/14/docker/image-20220420142516275.png" class title="image-20220420142516275">
@@ -5842,7 +5842,9 @@ fi
 <h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><ul>
 <li>对于原二进制数来说，|0是不变，|1是置1.</li>
 </ul>
-<h2 id="按位异或："><a href="#按位异或：" class="headerlink" title="按位异或：^"></a>按位异或：^</h2>]]></content>
+<h2 id="按位异或："><a href="#按位异或：" class="headerlink" title="按位异或：^"></a>按位异或：^</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center&quot;</span>&gt;</span>&#123;&#123; articleInfo.name &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: center; color: #939393; margin: 0;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; &quot;类型: &quot; + articleInfo.typeName &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;content&quot;</span> <span class="attr">v-html</span>=<span class="string">&quot;htmlContent&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;text-align: left;color: #8c939d;margin-bottom:10px&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123; &quot;发布时间: &quot; + articleInfo.time &#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
       <categories>
         <category>c</category>
       </categories>
