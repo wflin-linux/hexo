@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="指令类pkill 用于杀死进程和 kill 指令不同的是它可以直接通过进程的名字，而不需要进程的pid pkill appName  watch 它的作用是定期执行并显示另一个命令或脚本的输出变化，例如：它可以用于持续监控系统的负载情况。 123456watch [-tnv] command [seconds]command：要执行的命令或脚本。-t, --no-title：不显示标题（默认每执行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常用linux指令">
+<meta property="og:url" content="http://example.com/2025/02/11/em-tool-code/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="指令类pkill 用于杀死进程和 kill 指令不同的是它可以直接通过进程的名字，而不需要进程的pid pkill appName  watch 它的作用是定期执行并显示另一个命令或脚本的输出变化，例如：它可以用于持续监控系统的负载情况。 123456watch [-tnv] command [seconds]command：要执行的命令或脚本。-t, --no-title：不显示标题（默认每执行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-24T02:12:17.945Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/02/11/em-tool-code/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/02/11/em-tool-code/","path":"2025/02/11/em-tool-code/","title":"常用linux指令"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>常用linux指令 | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">指令类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pkill"><span class="nav-number">1.1.</span> <span class="nav-text">pkill</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#watch"><span class="nav-number">1.2.</span> <span class="nav-text">watch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptabels"><span class="nav-number">1.3.</span> <span class="nav-text">iptabels</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.3.1.</span> <span class="nav-text">转发端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcpdump"><span class="nav-number">1.4.</span> <span class="nav-text">tcpdump</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">1.4.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9"><span class="nav-number">1.4.2.</span> <span class="nav-text">常用选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E8%BF%87%E6%BB%A4%E6%9D%A1%E4%BB%B6%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.4.3.</span> <span class="nav-text">捕获过滤条件示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.4.4.</span> <span class="nav-text">实际应用示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">软件类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pidstat"><span class="nav-number">2.1.</span> <span class="nav-text">pidstat</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatars/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/02/11/em-tool-code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="常用linux指令 | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          常用linux指令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-02-12T00:00:00+08:00">2025-02-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/linux-command/" itemprop="url" rel="index"><span itemprop="name">linux command</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="指令类"><a href="#指令类" class="headerlink" title="指令类"></a>指令类</h1><h2 id="pkill"><a href="#pkill" class="headerlink" title="pkill"></a>pkill</h2><ul>
+<li>用于杀死进程和 kill 指令不同的是它可以直接通过进程的名字，而不需要进程的pid</li>
+<li>pkill appName</li>
+</ul>
+<h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><ul>
+<li><p>它的作用是定期执行并显示另一个命令或脚本的输出变化，例如：它可以用于持续监控系统的负载情况。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">watch [-tnv] command [seconds]</span><br><span class="line"></span><br><span class="line">command：要执行的命令或脚本。</span><br><span class="line">-t, --no-title：不显示标题（默认每执行一屏会有一个 &quot;Every 2.0s: ....&quot; 的提示）。</span><br><span class="line">-n, --interval seconds：设置更新之间的时间间隔，单位为秒。默认值是 2秒</span><br><span class="line">-v 或 --differences：突出显示变化的部分，默认不 highlighting 变化的字符串</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>举例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">watch -n 1 uptime    # 每秒检查一次 sysload</span><br><span class="line">watch -n 5 service httpd restart   # 每五秒重启httpd服务并显示重启信息</span><br><span class="line">watch -nv &quot;ps aux | grep mysqld&quot;    # 连续刷新运行mysqld进程的状态，并以粗体形式高亮显示变化位置</span><br><span class="line"></span><br><span class="line">需要适当设置更新频率：“watch” 的使用非常频繁地运行命令会消耗系统资源，应谨慎使用。</span><br><span class="line">可以与 less 结合使用以更好地查看滚动内容并暂停监控：</span><br><span class="line">watch -n 5 &quot;command | less&quot;</span><br><span class="line"></span><br><span class="line">监控udp端口是否有数据</span><br><span class="line">watch -n 1 &quot;ss -u -l sport = :56001&quot;</span><br><span class="line">watch -n 1 &quot;netstat -anu | grep 56001&quot;</span><br><span class="line"></span><br><span class="line">监控tcp端口是否有数据</span><br><span class="line">watch -n 1 &quot;ss -t -l dport = :56001&quot;</span><br><span class="line">watch -n 1 &quot;netstat -an | grep &quot;:56001 &quot; | grep ESTABLISHED&quot;  </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="iptabels"><a href="#iptabels" class="headerlink" title="iptabels"></a>iptabels</h2><ul>
+<li>iptables 是Linux内核中自带的防火墙，用于在网络数据包层 4（传输控制协议 TCP 和用户 datagram 协议 UDP）级别进行过滤和 NAT 等网络配置和管理。它提供了一种高度灵活、模块化且功能强大的方式来设置系统级别的防火墙规则</li>
+</ul>
+<h3 id="转发端口"><a href="#转发端口" class="headerlink" title="转发端口"></a>转发端口</h3><ul>
+<li>有一个ip摄像头（192.168.8.243）连接在一块开发板上并接入了内网（172.16.19.146）,摄像头有一个80的web后台服务。内网无法直接访问到摄像头的地址，现在需要通过 iptables 配置端口转发将相机的后台服务转发到内网的80端口上，我们就能通过 172.16.19.146:80 对开发板中相机服务进行访问</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">DEVICEIP：本地网卡eth0ip地址</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CAMERAIP：相机ip地址（设备内部某个服务的ip）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">VPNIP：设备VPNIP(设备能ping通的内网ip)</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">浏览器输入vpn地址就能访问相机了</span></span><br><span class="line"></span><br><span class="line">iptables -F</span><br><span class="line">iptables -t nat -F</span><br><span class="line">export INNETMASK=&quot;192.168.8.0/24&quot;</span><br><span class="line">export DEVICEIP=&quot;192.168.8.2&quot;</span><br><span class="line">export CAMERAIP=&quot;192.168.8.243&quot;</span><br><span class="line">export VPNIP=&quot;172.16.19.146&quot;</span><br><span class="line">iptables -t nat -A POSTROUTING -s $INNETMASK -j MASQUERADE</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 80 -j DNAT --to-destination $CAMERAIP:80		// 映射80</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 9000 -j DNAT --to-destination $CAMERAIP:9000	// 映射9000</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 554 -j DNAT --to-destination $CAMERAIP:554	// 映射554</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这段代码在所有发出去的数据包的目标地址是 CAMERAIP 时，会做一次目的网络地址变换（SNAT），使其显示为从 DEVICEIP 出去的数据。这里主要是为了解决潜在的安全问题如 IP 数据包重放攻击等</span></span><br><span class="line">iptables -t nat -A POSTROUTING -d $CAMERAIP -j SNAT --to $DEVICEIP</span><br></pre></td></tr></table></figure>
+
+<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><ul>
+<li>是一个广泛使用的网络协议分析工具（也称为数据包捕获工具），可以用来捕获并显示计算机在局域网上传输的数据包。它通常用于故障排除、网络分析或安全监测等活动</li>
+</ul>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>  基本的 <code>tcpdump</code> 调用格式如下：</p>
+  <SH>
+
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &lt;options&gt; &lt;expression&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;options&gt;</code>: 一些可选参数，可以用来过滤特定的数据包或设置输出格式。</li>
+<li><code>&lt;expression&gt;</code>: 数据包捕获过滤条件，用于选择要查看或者记录的数据包。</li>
+</ul>
+<h3 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h3><ol>
+<li><p><strong>-i</strong>: 指定监听某个网络接口。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-n</strong>: 不将 IP 地址和端口号转换为名字，直接显示数字形式。</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -n -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-c</strong>: 指定要捕获的数据包数量。例如，以下命令将仅捕获前10个数据包：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -c 10 -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-w</strong>: 将结果写入文件以便后续分析。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 -w output.pcap</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>tcpdump</code> 可以将捕获的数据包保存到 <code>.pcap 或 .cap</code> 文件，之后可以用专门的数据包分析工具如 Wireshark 进行深入分析。</p>
+</SH></li>
+<li><p><strong>-r</strong>: 从文件中读取数据包进行解析和显示。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -r output.pcap</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>v</strong>, <strong>vv</strong>, <strong>vvv</strong>: 可以增加输出的详细级别，<code>tcpdump</code> 默认处于 <code>v</code> 级别。</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 -v</span><br></pre></td></tr></table></figure>
+
+<p>数字越大表示输出的调试信息越详细。</p>
+</SH></li>
+</ol>
+<h3 id="捕获过滤条件示例"><a href="#捕获过滤条件示例" class="headerlink" title="捕获过滤条件示例"></a>捕获过滤条件示例</h3><p>  以下是一些常用的捕获过滤条件：</p>
+<ol>
+<li><p><strong>抓取所有发往特定端口的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump dst portno 80</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取指定源 IP 和端口的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump src ipno 192.168.0.1 and src portno 554</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取 HTTP 请求的数据包</strong>（TCP 端口为 80）：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &#x27;tcp[((tcp[12:1] &amp; 0xf0) &gt;&gt; 2):4] = 47414c2f&#x27;</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取 HTTPS 请求的数据包</strong>（TCP 端口为 443）：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump &#x27;port 443&#x27; -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取特定 IP 范围内的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump net 192.168.0.0/16</span><br></pre></td></tr></table></figure></SH></li>
+</ol>
+<h3 id="实际应用示例"><a href="#实际应用示例" class="headerlink" title="实际应用示例"></a>实际应用示例</h3><p>  假设你想抓取所有发往外网（即目标 IP 不在本机网络中）并且使用端口 80 的 HTTP 数据包，可以这样做：</p>
+  <SH>
+
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -i eth0 and not dst net 192.168.0.0/24 and port 80</span><br></pre></td></tr></table></figure>
+
+<p>  在这个命令中：</p>
+<ul>
+<li><code>-i eth0</code>: 监听 <code>eth0</code> 网络接口。</li>
+<li><code>and not dst net 192.168.0.0/24</code>: 过滤掉目标 IP 落在 <code>192.168.0.0/24</code> 网段的数据包，即不抓取发往本机的流量。</li>
+<li><code>and port 80</code>: 只抓取端口为 80 (HTTP) 的数据包。</li>
+</ul>
+<p>  通过结合使用选项和过滤条件，你可以灵活地捕获和分析网络中的各种感兴趣的数据包。</p>
+<h1 id="软件类"><a href="#软件类" class="headerlink" title="软件类"></a>软件类</h1><h2 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h2></SH></SH>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2024/04/09/wei-yun-suan/" rel="prev" title="位运算">
+                  <i class="fa fa-angle-left"></i> 位运算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2025/03/14/ffmpeg/" rel="next" title="ffmpeg">
+                  ffmpeg <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

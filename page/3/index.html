@@ -153,18 +153,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/hexo/archives/">
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/hexo/categories/">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/hexo/tags/">
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -186,6 +186,291 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/03/05/springboot-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2023/03/05/springboot-tools/" class="post-title-link" itemprop="url">springboot-tools</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-06 00:00:00" itemprop="dateCreated datePublished" datetime="2023-03-06T00:00:00+08:00">2023-03-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/Java-%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">Java 开发常用配置</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h1><h2 id="清除本地仓库的坏包"><a href="#清除本地仓库的坏包" class="headerlink" title="清除本地仓库的坏包"></a>清除本地仓库的坏包</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//列出File的一些常用操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">util</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 遍历指定目录下（包括其子目录）的所有文件，并删除以 lastUpdated 结尾的文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dir 目录的位置 path</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">listDirectory</span><span class="params">(File dir)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="keyword">if</span> (!dir.exists())</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;目录：&quot;</span> + dir + <span class="string">&quot;不存在.&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!dir.isDirectory()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(dir + <span class="string">&quot; 不是目录。&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        File[] files = dir.listFiles();</span><br><span class="line">        <span class="keyword">if</span> (files != <span class="literal">null</span> &amp;&amp; files.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">                <span class="keyword">if</span> (file.isDirectory())</span><br><span class="line">                    <span class="comment">//递归</span></span><br><span class="line">                    listDirectory(file);</span><br><span class="line">                <span class="keyword">else</span>&#123; <span class="comment">// 删除以 lastUpdated 结尾的文件</span></span><br><span class="line">                    <span class="type">String</span> <span class="variable">fileName</span> <span class="operator">=</span> file.getName();</span><br><span class="line">                    <span class="type">boolean</span> <span class="variable">isLastupdated</span> <span class="operator">=</span> fileName.toLowerCase().endsWith(<span class="string">&quot;lastupdated&quot;</span>);</span><br><span class="line">                    <span class="keyword">if</span> (isLastupdated)&#123;</span><br><span class="line">                        <span class="type">boolean</span> <span class="variable">is_delete</span> <span class="operator">=</span> file.delete();</span><br><span class="line">                        System.out.println(<span class="string">&quot;删除的文件名 =&gt; &quot;</span> + file.getName() + <span class="string">&quot;  || 是否删除成功？ ==&gt; &quot;</span> + is_delete);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">// 指定maven的本地仓库路径</span></span><br><span class="line">        listDirectory(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;path&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="boot"><a href="#boot" class="headerlink" title="boot"></a>boot</h2><h3 id="spirngboot"><a href="#spirngboot" class="headerlink" title="spirngboot"></a>spirngboot</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2023/03/05/springboot-tools/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/18/code-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2023/02/18/code-tools/" class="post-title-link" itemprop="url">编码常用类和方法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-19 00:00:00" itemprop="dateCreated datePublished" datetime="2023-02-19T00:00:00+08:00">2023-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/code-tools/" itemprop="url" rel="index"><span itemprop="name">code-tools</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="java"><a href="#java" class="headerlink" title="java"></a>java</h1><h2 id="boot常用pom"><a href="#boot常用pom" class="headerlink" title="boot常用pom"></a>boot常用pom</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!--jar 管理--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">boot.version</span>&gt;</span>2.2.2.RELEASE<span class="tag">&lt;/<span class="name">boot.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mysql.vsersion</span>&gt;</span>5.1.49<span class="tag">&lt;/<span class="name">mysql.vsersion</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--&lt;mysql.version&gt;8.0.25&lt;/mysql.version&gt;--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">druid.version</span>&gt;</span>1.2.3<span class="tag">&lt;/<span class="name">druid.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">lombok.version</span>&gt;</span>1.18.24<span class="tag">&lt;/<span class="name">lombok.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">log4j.version</span>&gt;</span>1.2.17<span class="tag">&lt;/<span class="name">log4j.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">mybatisPlus.version</span>&gt;</span>3.5.1<span class="tag">&lt;/<span class="name">mybatisPlus.version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">hutools.version</span>&gt;</span>5.7.17<span class="tag">&lt;/<span class="name">hutools.version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;boot.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;boot.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.junit.vintage<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit-vintage-engine<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;boot.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">&lt;!--连接数据库--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;druid.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mysql.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;lombok.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;log4j.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.baomidou<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-plus-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;mybatisPlus.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment">&lt;!--hutool--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.hutool<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hutool-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;hutools.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="./springboot-tools.html">如果要更换或者添加某些依赖的版本</a></p>
+<h2 id="常用Java类"><a href="#常用Java类" class="headerlink" title="常用Java类"></a>常用Java类</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2023/02/18/code-tools/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/02/17/js-han-shu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2023/02/17/js-han-shu/" class="post-title-link" itemprop="url">JavaScript 常用函数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-18 00:00:00" itemprop="dateCreated datePublished" datetime="2023-02-18T00:00:00+08:00">2023-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="JavaScript-下拉加载防抖节流函数"><a href="#JavaScript-下拉加载防抖节流函数" class="headerlink" title="JavaScript 下拉加载防抖节流函数"></a>JavaScript 下拉加载防抖节流函数</h2><h2 id="防抖函数"><a href="#防抖函数" class="headerlink" title="防抖函数"></a>防抖函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">debounce</span>(<span class="params">fn, delay</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">        <span class="keyword">const</span> args = <span class="variable language_">arguments</span>;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            fn.<span class="title function_">apply</span>(context, args);</span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<h2 id="节流函数"><a href="#节流函数" class="headerlink" title="节流函数"></a>节流函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">throttle</span>(<span class="params">fn, delay</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">let</span> lastTime = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">        <span class="keyword">const</span> args = <span class="variable language_">arguments</span>;</span><br><span class="line">        <span class="keyword">const</span> nowTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">        <span class="keyword">if</span> (nowTime - lastTime &gt;= delay) &#123;</span><br><span class="line">            fn.<span class="title function_">apply</span>(context, args);</span><br><span class="line">            lastTime = nowTime;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2023/02/17/js-han-shu/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -231,7 +516,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -325,7 +610,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -419,7 +704,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -523,7 +808,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -649,7 +934,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -744,7 +1029,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -906,7 +1191,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1030,300 +1315,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2021/11/19/c/" class="post-title-link" itemprop="url">c</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-20T00:00:00+08:00">2021-11-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/c/" itemprop="url" rel="index"><span itemprop="name">c</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="逻辑表达式（又叫布尔表达式）"><a href="#逻辑表达式（又叫布尔表达式）" class="headerlink" title="逻辑表达式（又叫布尔表达式）"></a>逻辑表达式（又叫布尔表达式）</h1><h2 id="与-、或-、非"><a href="#与-、或-、非" class="headerlink" title="与( &amp; )、或( | )、非( ! )"></a>与( &amp; )、或( | )、非( ! )</h2><ul>
-<li><p><strong>逻辑表达式：</strong>简单点理解就是 只有俩结果 真 或 假 的运算结果的代码语句都可以叫 逻辑表达式</p>
-</li>
-<li><p>真 或 假 在C语言没有对应的类型，但是可以用 0（假） 或 1 （真）表示逻辑表达式的结果，boolean 类型是 c++ 扩充进来的，C语言 原生没用 布尔类型。但是可以代替 用 0 和 非0</p>
-</li>
-<li><p>C语言中 说的 <strong>真就是 1</strong> 、<strong>假就是 0</strong> ，可以，但是不准确。这个说法的由来可以验证，如下程序</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!0 = %d&quot;</span>,!<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!5 = %d&quot;</span>,!<span class="number">5</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!1 = %d&quot;</span>,!<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!&#x27;a&#x27; = %d&quot;</span>,!<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>通过上面的程序我们可以看到 他们的结果都是 0 和 1，所以 我们 通常说的 0 是 假，1 是 真 ；但是为啥说不准确呢？就在于 我们上面的程序中 的 !5 的结果，!’a’ 的结果都是 0， 说明 5 和 ‘a’ 都是真，那么我们前面说 1 是真是不是就不准确了，所以 应该是  <strong>0是假，非0就是真</strong>;，所以 像 后面的 if（判断语句），while for，do while 循环这些，判断语句的结果就是逻辑表达式的结果，真或者假，只有真（true）才进入，假（false）就不进入。</p>
-</li>
-</ul>
-<h1 id="选择分支"><a href="#选择分支" class="headerlink" title="选择分支"></a>选择分支</h1><h2 id="if-else-结构"><a href="#if-else-结构" class="headerlink" title="if else 结构"></a>if else 结构</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/hexo/2021/11/19/c/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/raspi-source/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2021/11/19/raspi-source/" class="post-title-link" itemprop="url">树莓派国内镜像源</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-20T00:00:00+08:00">2021-11-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/raspberrypi/" itemprop="url" rel="index"><span itemprop="name">raspberrypi</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="树莓派国内镜像源地址"><a href="#树莓派国内镜像源地址" class="headerlink" title="树莓派国内镜像源地址"></a>树莓派国内镜像源地址</h1><ul>
-<li><p>查看树莓版本命令：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="buster-版本"><a href="#buster-版本" class="headerlink" title="buster 版本"></a>buster 版本</h2><h3 id="中科大"><a href="#中科大" class="headerlink" title="中科大"></a>中科大</h3><p>在<code>/etc/apt/sources.list</code> 加入</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/hexo/2021/11/19/raspi-source/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/niu-ke-mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2021/11/16/niu-ke-mysql/" class="post-title-link" itemprop="url">MySQL practise</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-11-17 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-17T00:00:00+08:00">2021-11-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="MySQL-exam"><a href="#MySQL-exam" class="headerlink" title="MySQL exam"></a>MySQL exam</h1><p>[传送门](<a target="_blank" rel="noopener" href="https://www.nowcoder.com/exam/oj?tab=SQL%E7%AF%87&topicId=199&fromPut=pc_wzcpa_yupi_sf">牛客网 - 找工作神器|笔试题库|面试经验|实习招聘内推，求职就业一站解决_牛客网 (nowcoder.com)</a>)</p>
-<h2 id="创建数据库并插入数据"><a href="#创建数据库并插入数据" class="headerlink" title="创建数据库并插入数据"></a>创建数据库并插入数据</h2><h3 id="SQL-Select-语句完整的执行顺序"><a href="#SQL-Select-语句完整的执行顺序" class="headerlink" title="SQL Select 语句完整的执行顺序"></a>SQL Select 语句完整的执行顺序</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1、from 子句组装来自不同数据源的数据；</span><br><span class="line">2、where 子句基于指定的条件对记录行进行筛选； </span><br><span class="line">3、group by 子句将数据划分为多个分组； </span><br><span class="line">4、使用聚集函数进行计算； </span><br><span class="line">5、使用 having 子句筛选分组； </span><br><span class="line">6、计算所有的表达式； </span><br><span class="line">7、select 的字段； </span><br><span class="line">8、使用 order by 对结果集进行排序。</span><br><span class="line"></span><br><span class="line">SQL 语言不同于其他编程语言的最明显特征是处理代码的顺序。 在大多数据库语言中，代码按编码顺序被处理。但在 SQL 语句中，第一个被处理的子句式 FROM，而不是第一出现的 SELECT。</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/hexo/2021/11/16/niu-ke-mysql/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/hexo/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/hexo/">1</a><a class="page-number" href="/hexo/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/hexo/page/4/">4</a><a class="page-number" href="/hexo/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/hexo/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1336,7 +1327,7 @@
 
   <div class="copyright">
     &copy; 2019 – 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

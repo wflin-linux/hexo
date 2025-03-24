@@ -153,18 +153,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/hexo/archives/">
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/hexo/categories/">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/hexo/tags/">
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -186,6 +186,300 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2021/11/19/c/" class="post-title-link" itemprop="url">c</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-20T00:00:00+08:00">2021-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/c/" itemprop="url" rel="index"><span itemprop="name">c</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="逻辑表达式（又叫布尔表达式）"><a href="#逻辑表达式（又叫布尔表达式）" class="headerlink" title="逻辑表达式（又叫布尔表达式）"></a>逻辑表达式（又叫布尔表达式）</h1><h2 id="与-、或-、非"><a href="#与-、或-、非" class="headerlink" title="与( &amp; )、或( | )、非( ! )"></a>与( &amp; )、或( | )、非( ! )</h2><ul>
+<li><p><strong>逻辑表达式：</strong>简单点理解就是 只有俩结果 真 或 假 的运算结果的代码语句都可以叫 逻辑表达式</p>
+</li>
+<li><p>真 或 假 在C语言没有对应的类型，但是可以用 0（假） 或 1 （真）表示逻辑表达式的结果，boolean 类型是 c++ 扩充进来的，C语言 原生没用 布尔类型。但是可以代替 用 0 和 非0</p>
+</li>
+<li><p>C语言中 说的 <strong>真就是 1</strong> 、<strong>假就是 0</strong> ，可以，但是不准确。这个说法的由来可以验证，如下程序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!0 = %d&quot;</span>,!<span class="number">0</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!5 = %d&quot;</span>,!<span class="number">5</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!1 = %d&quot;</span>,!<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;!&#x27;a&#x27; = %d&quot;</span>,!<span class="string">&#x27;a&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>通过上面的程序我们可以看到 他们的结果都是 0 和 1，所以 我们 通常说的 0 是 假，1 是 真 ；但是为啥说不准确呢？就在于 我们上面的程序中 的 !5 的结果，!’a’ 的结果都是 0， 说明 5 和 ‘a’ 都是真，那么我们前面说 1 是真是不是就不准确了，所以 应该是  <strong>0是假，非0就是真</strong>;，所以 像 后面的 if（判断语句），while for，do while 循环这些，判断语句的结果就是逻辑表达式的结果，真或者假，只有真（true）才进入，假（false）就不进入。</p>
+</li>
+</ul>
+<h1 id="选择分支"><a href="#选择分支" class="headerlink" title="选择分支"></a>选择分支</h1><h2 id="if-else-结构"><a href="#if-else-结构" class="headerlink" title="if else 结构"></a>if else 结构</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2021/11/19/c/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/19/raspi-source/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2021/11/19/raspi-source/" class="post-title-link" itemprop="url">树莓派国内镜像源</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-20 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-20T00:00:00+08:00">2021-11-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/raspberrypi/" itemprop="url" rel="index"><span itemprop="name">raspberrypi</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="树莓派国内镜像源地址"><a href="#树莓派国内镜像源地址" class="headerlink" title="树莓派国内镜像源地址"></a>树莓派国内镜像源地址</h1><ul>
+<li><p>查看树莓版本命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="buster-版本"><a href="#buster-版本" class="headerlink" title="buster 版本"></a>buster 版本</h2><h3 id="中科大"><a href="#中科大" class="headerlink" title="中科大"></a>中科大</h3><p>在<code>/etc/apt/sources.list</code> 加入</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2021/11/19/raspi-source/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/11/16/niu-ke-mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/2021/11/16/niu-ke-mysql/" class="post-title-link" itemprop="url">MySQL practise</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-17 00:00:00" itemprop="dateCreated datePublished" datetime="2021-11-17T00:00:00+08:00">2021-11-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="MySQL-exam"><a href="#MySQL-exam" class="headerlink" title="MySQL exam"></a>MySQL exam</h1><p>[传送门](<a target="_blank" rel="noopener" href="https://www.nowcoder.com/exam/oj?tab=SQL%E7%AF%87&topicId=199&fromPut=pc_wzcpa_yupi_sf">牛客网 - 找工作神器|笔试题库|面试经验|实习招聘内推，求职就业一站解决_牛客网 (nowcoder.com)</a>)</p>
+<h2 id="创建数据库并插入数据"><a href="#创建数据库并插入数据" class="headerlink" title="创建数据库并插入数据"></a>创建数据库并插入数据</h2><h3 id="SQL-Select-语句完整的执行顺序"><a href="#SQL-Select-语句完整的执行顺序" class="headerlink" title="SQL Select 语句完整的执行顺序"></a>SQL Select 语句完整的执行顺序</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1、from 子句组装来自不同数据源的数据；</span><br><span class="line">2、where 子句基于指定的条件对记录行进行筛选； </span><br><span class="line">3、group by 子句将数据划分为多个分组； </span><br><span class="line">4、使用聚集函数进行计算； </span><br><span class="line">5、使用 having 子句筛选分组； </span><br><span class="line">6、计算所有的表达式； </span><br><span class="line">7、select 的字段； </span><br><span class="line">8、使用 order by 对结果集进行排序。</span><br><span class="line"></span><br><span class="line">SQL 语言不同于其他编程语言的最明显特征是处理代码的顺序。 在大多数据库语言中，代码按编码顺序被处理。但在 SQL 语句中，第一个被处理的子句式 FROM，而不是第一出现的 SELECT。</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/2021/11/16/niu-ke-mysql/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -231,7 +525,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -351,7 +645,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -457,7 +751,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:25" itemprop="dateModified" datetime="2024-05-16T15:33:25+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -543,7 +837,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -652,7 +946,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -752,7 +1046,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -878,7 +1172,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -927,295 +1221,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/26/python-thread-pool/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2020/08/26/python-thread-pool/" class="post-title-link" itemprop="url">python thread-pool</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-08-27 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-27T00:00:00+08:00">2020-08-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="手写池"><a href="#手写池" class="headerlink" title="手写池"></a>手写池</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41493224/article/details/108301855">参考博客</a></p>
-<h2 id="python-线程池"><a href="#python-线程池" class="headerlink" title="python 线程池"></a>python 线程池</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">一个基于thread和queue的线程池，以任务为队列元素，动态创建线程，重复利用线程，</span></span><br><span class="line"><span class="string">通过close和terminate方法关闭线程池。</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> contextlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建空对象,用于停止线程</span></span><br><span class="line">StopEvent = <span class="built_in">object</span>()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">callback</span>(<span class="params">status, result</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    根据需要进行的回调函数，默认不执行。</span></span><br><span class="line"><span class="string">    :param status: action函数的执行状态</span></span><br><span class="line"><span class="string">    :param result: action函数的返回值</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">action</span>(<span class="params">thread_name, arg</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    真实的任务定义在这个函数里</span></span><br><span class="line"><span class="string">    :param thread_name: 执行该方法的线程名</span></span><br><span class="line"><span class="string">    :param arg: 该函数需要的参数</span></span><br><span class="line"><span class="string">    :return:</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    resp = requests.get(url=<span class="string">&quot;https://www.baidu.com&quot;</span>)</span><br><span class="line">    <span class="comment"># 模拟该函数执行了0.1秒</span></span><br><span class="line">    resp.encoding = resp.apparent_encoding</span><br><span class="line">    <span class="built_in">print</span>(resp.text)</span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br><span class="line">    <span class="comment"># print(&quot;第%s个任务调用了线程 %s，并打印了这条信息！&quot; % (arg + 1, thread_name))</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadPool</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, max_num, max_task_num=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        初始化线程池</span></span><br><span class="line"><span class="string">        :param max_num: 线程池最大线程数量</span></span><br><span class="line"><span class="string">        :param max_task_num: 任务队列长度</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 如果提供了最大任务数的参数，则将队列的最大元素个数设置为这个值。</span></span><br><span class="line">        <span class="keyword">if</span> max_task_num:</span><br><span class="line">            self.q = queue.Queue(max_task_num)</span><br><span class="line">        <span class="comment"># 默认队列可接受无限多个的任务</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.q = queue.Queue()</span><br><span class="line">        <span class="comment"># 设置线程池最多可实例化的线程数</span></span><br><span class="line">        self.max_num = max_num</span><br><span class="line">        <span class="comment"># 任务取消标识</span></span><br><span class="line">        self.cancel = <span class="literal">False</span></span><br><span class="line">        <span class="comment"># 任务中断标识</span></span><br><span class="line">        self.terminal = <span class="literal">False</span></span><br><span class="line">        <span class="comment"># 已实例化的线程列表</span></span><br><span class="line">        self.generate_list = []</span><br><span class="line">        <span class="comment"># 处于空闲状态的线程列表</span></span><br><span class="line">        self.free_list = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">put</span>(<span class="params">self, func, args, callback=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        往任务队列里放入一个任务</span></span><br><span class="line"><span class="string">        :param func: 任务函数</span></span><br><span class="line"><span class="string">        :param args: 任务函数所需参数</span></span><br><span class="line"><span class="string">        :param callback: 任务执行失败或成功后执行的回调函数，回调函数有两个参数</span></span><br><span class="line"><span class="string">        1、任务函数执行状态；2、任务函数返回值（默认为None，即：不执行回调函数）</span></span><br><span class="line"><span class="string">        :return: 如果线程池已经终止，则返回True否则None</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 先判断标识，看看任务是否取消了</span></span><br><span class="line">        <span class="keyword">if</span> self.cancel:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment"># 如果没有空闲的线程，并且已创建的线程的数量小于预定义的最大线程数，则创建新线程。</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(self.free_list) == <span class="number">0</span> <span class="keyword">and</span> <span class="built_in">len</span>(self.generate_list) &lt; self.max_num:</span><br><span class="line">            self.generate_thread()</span><br><span class="line">        <span class="comment"># 构造任务参数元组，分别是调用的函数，该函数的参数，回调函数。</span></span><br><span class="line">        w = (func, args, callback,)</span><br><span class="line">        <span class="comment"># 将任务放入队列</span></span><br><span class="line">        self.q.put(w)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">generate_thread</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        创建一个线程</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 每个线程都执行call方法</span></span><br><span class="line">        t = threading.Thread(target=self.call)</span><br><span class="line">        t.start()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">call</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        循环去获取任务函数并执行任务函数。在正常情况下，每个线程都保存生存状态，</span></span><br><span class="line"><span class="string">        直到获取线程终止的flag。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 获取当前线程的名字</span></span><br><span class="line">        current_thread = threading.currentThread().getName()</span><br><span class="line">        <span class="comment"># 将当前线程的名字加入已实例化的线程列表中</span></span><br><span class="line">        self.generate_list.append(current_thread)</span><br><span class="line">        <span class="comment"># 从任务队列中获取一个任务</span></span><br><span class="line">        event = self.q.get()</span><br><span class="line">        <span class="comment"># print(event)</span></span><br><span class="line">        <span class="comment"># 让获取的任务不是终止线程的标识对象时</span></span><br><span class="line">        <span class="keyword">while</span> event != StopEvent:</span><br><span class="line">            <span class="comment"># 解析任务中封装的三个参数</span></span><br><span class="line">            func, arguments, callback = event</span><br><span class="line">            <span class="comment"># 抓取异常，防止线程因为异常退出</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 正常执行任务函数</span></span><br><span class="line">                result = func(current_thread, *arguments)</span><br><span class="line">                success = <span class="literal">True</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="comment"># 当任务执行过程中弹出异常</span></span><br><span class="line">                result = <span class="literal">None</span></span><br><span class="line">                success = <span class="literal">False</span></span><br><span class="line">            <span class="comment"># 如果有指定的回调函数</span></span><br><span class="line">            <span class="keyword">if</span> callback <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                <span class="comment"># 执行回调函数，并抓取异常</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    callback(success, result)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="comment"># 当某个线程正常执行完一个任务时，先执行worker_state方法</span></span><br><span class="line">            <span class="keyword">with</span> self.worker_state(self.free_list, current_thread):</span><br><span class="line">                <span class="comment"># 如果强制关闭线程的flag开启，则传入一个StopEvent元素</span></span><br><span class="line">                <span class="keyword">if</span> self.terminal:</span><br><span class="line">                    event = StopEvent</span><br><span class="line">                <span class="comment"># 否则获取一个正常的任务，并回调worker_state方法的yield语句</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># 从这里开始又是一个正常的任务循环</span></span><br><span class="line">                    event = self.q.get()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 一旦发现任务是个终止线程的标识元素，将线程从已创建线程列表中删除</span></span><br><span class="line">            self.generate_list.remove(current_thread)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">close</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        执行完所有的任务后，让所有线程都停止的方法</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 设置flag</span></span><br><span class="line">        self.cancel = <span class="literal">True</span></span><br><span class="line">        <span class="comment"># 计算已创建线程列表中线程的个数，然后往任务队列里推送相同数量的终止线程的标识元素</span></span><br><span class="line">        full_size = <span class="built_in">len</span>(self.generate_list)</span><br><span class="line">        <span class="keyword">while</span> full_size:</span><br><span class="line">            self.q.put(StopEvent)</span><br><span class="line">            full_size -= <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">terminate</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        在任务执行过程中，终止线程，提前退出。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.terminal = <span class="literal">True</span></span><br><span class="line">        <span class="comment"># 强制性的停止线程</span></span><br><span class="line">        <span class="keyword">while</span> self.generate_list:</span><br><span class="line">            self.q.put(StopEvent)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 该装饰器用于上下文管理</span></span><br><span class="line"><span class="meta">    @contextlib.contextmanager</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">worker_state</span>(<span class="params">self, state_list, worker_thread</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        用于记录空闲的线程，或从空闲列表中取出线程处理任务</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 将当前线程，添加到空闲线程列表中</span></span><br><span class="line">        state_list.append(worker_thread)</span><br><span class="line">        <span class="comment"># 捕获异常</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 在此等待</span></span><br><span class="line">            <span class="keyword">yield</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="comment"># 将线程从空闲列表中移除</span></span><br><span class="line">            state_list.remove(worker_thread)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 调用方式</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 创建一个最多包含5个线程的线程池</span></span><br><span class="line">    pool = ThreadPool(<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># 创建100个任务，让线程池进行处理</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">        pool.put(action, (i,), callback)</span><br><span class="line">    <span class="comment"># 等待一定时间，让线程执行任务</span></span><br><span class="line">    time.sleep(<span class="number">0.3</span>)</span><br><span class="line">    <span class="comment"># print(&quot;-&quot; * 50)</span></span><br><span class="line">    <span class="comment"># print(&quot;任务停止之前线程池中有%s个线程，空闲的线程有%s个!&quot;</span></span><br><span class="line">    <span class="comment">#       % (len(pool.generate_list), len(pool.free_list)))</span></span><br><span class="line">    <span class="comment"># 正常关闭线程池</span></span><br><span class="line">    pool.close()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;任务执行完毕，正常退出！&quot;</span>)</span><br><span class="line">    <span class="comment"># 强制关闭线程池</span></span><br><span class="line">    <span class="comment"># pool.terminate()</span></span><br><span class="line">    <span class="comment"># print(&quot;强制停止任务！&quot;)</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="pthon-数据库连接池"><a href="#pthon-数据库连接池" class="headerlink" title="pthon 数据库连接池"></a>pthon 数据库连接池</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/hexo/2020/08/26/python-thread-pool/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/31/metasploit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2020/05/31/metasploit/" class="post-title-link" itemprop="url">metasploit</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-01T00:00:00+08:00">2020-06-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/metasploit/" itemprop="url" rel="index"><span itemprop="name">metasploit</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="启动metasploit"><a href="#启动metasploit" class="headerlink" title="启动metasploit"></a>启动metasploit</h1><ul>
-<li><p>msfconsole</p>
-</li>
-<li><img src="/hexo/2020/05/31/metasploit/image-20230628011359661.png" class title="image-20230628011359661">
-
-
-
-
-</li>
-<li><p>操作步骤</p>
-  <img src="/hexo/2020/05/31/metasploit/image-20230628012546912.png" class title="image-20230628012546912"></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/05/31/modbus/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
-      <meta itemprop="name" content="wflin">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wflin's Blog">
-      <meta itemprop="description" content="一只野生程序员">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wflin's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/hexo/2020/05/31/modbus/" class="post-title-link" itemprop="url">modbus</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2020-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-01T00:00:00+08:00">2020-06-01</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 15:33:24" itemprop="dateModified" datetime="2024-05-16T15:33:24+08:00">2024-05-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/hexo/categories/iot/" itemprop="url" rel="index"><span itemprop="name">iot</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="GitHub中拉取源码"><a href="#GitHub中拉取源码" class="headerlink" title="GitHub中拉取源码"></a>GitHub中拉取源码</h2><blockquote>
-<p>git clone <a target="_blank" rel="noopener" href="https://github.com/stephane/libmodbus.git">https://github.com/stephane/libmodbus.git</a></p>
-</blockquote>
-<ul>
-<li>如果无法访问 GitHub 网站，自行百度魔法。进行访问</li>
-</ul>
-<h2 id="编译源码"><a href="#编译源码" class="headerlink" title="编译源码"></a>编译源码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd libmodbus # 进入目录</span><br><span class="line">./autogen.sh # 生成 congfig 文件</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/hexo/2020/05/31/modbus/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/hexo/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/hexo/">1</a><span class="space">&hellip;</span><a class="page-number" href="/hexo/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/hexo/page/5/">5</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/hexo/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -1228,7 +1233,7 @@
 
   <div class="copyright">
     &copy; 2019 – 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

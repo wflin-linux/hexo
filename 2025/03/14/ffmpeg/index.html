@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/hexo/medias/logo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/hexo/medias/logo.png">
+  <link rel="mask-icon" href="/hexo/images/logo.svg" color="#222">
+  <link rel="manifest" href="/hexo/manifest.json">
+
+<link rel="stylesheet" href="/hexo/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/hexo/","images":"/hexo/images","scheme":"Muse","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"width":300},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/hexo/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/hexo/js/config.js"></script>
+
+    <meta name="description" content="FFmpeg-n5.0.2编译：ubuntu18 编译 123456789101112131415161718192021222324252627282930313233343536install_dir&#x3D;&#x2F;tmp&#x2F;depsnum_cores&#x3D;$(nproc).&#x2F;configure \        --prefix&#x3D;$&#123;install_dir&#125; \        --enab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg">
+<meta property="og:url" content="http://example.com/2025/03/14/ffmpeg/index.html">
+<meta property="og:site_name" content="wflin&#39;s Blog">
+<meta property="og:description" content="FFmpeg-n5.0.2编译：ubuntu18 编译 123456789101112131415161718192021222324252627282930313233343536install_dir&#x3D;&#x2F;tmp&#x2F;depsnum_cores&#x3D;$(nproc).&#x2F;configure \        --prefix&#x3D;$&#123;install_dir&#125; \        --enab">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-24T02:12:17.930Z">
+<meta property="article:author" content="wflin">
+<meta property="article:tag" content="ffmpeg">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2025/03/14/ffmpeg/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/03/14/ffmpeg/","path":"2025/03/14/ffmpeg/","title":"ffmpeg"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ffmpeg | wflin's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/hexo/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/hexo/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wflin's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/hexo/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/hexo/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/hexo/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/hexo/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/hexo/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-commonweal"><a href="/hexo/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FFmpeg-n5-0-2"><span class="nav-number">1.</span> <span class="nav-text">FFmpeg-n5.0.2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">编译：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">指令：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%91%84%E5%83%8F%E5%A4%B4%E6%94%AF%E6%8C%81%E7%9A%84%E8%BE%93%E5%87%BA%E7%9A%84%E7%BC%96%E7%A0%81"><span class="nav-number">1.2.1.</span> <span class="nav-text">查看摄像头支持的输出的编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF1%EF%BC%9A%E6%89%93%E5%BC%80%E6%91%84%E5%83%8F%E5%A4%B4%E5%B9%B6%E5%8F%96%E4%B8%80%E5%B8%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">场景1：打开摄像头并取一帧数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF2%EF%BC%9A%E4%BB%8E%E6%91%84%E5%83%8F%E5%A4%B4%E5%8F%96%E6%B5%81%EF%BC%8C%E5%B9%B6%E4%BF%9D%E5%AD%98%E4%B8%BAh264%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">1.4.</span> <span class="nav-text">场景2：从摄像头取流，并保存为h264的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%BA%E6%99%AF3%EF%BC%9A%E6%8E%A8%E6%B5%81yuv%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E5%88%B0rtsp%E6%B5%81%E5%AA%92%E4%BD%93%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.5.</span> <span class="nav-text">场景3：推流yuv视频文件到rtsp流媒体服务</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wflin"
+      src="/hexo/medias/avatars/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wflin</p>
+  <div class="site-description" itemprop="description">一只野生程序员</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/hexo/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/hexo/categories/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/hexo/tags/">
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wflin-linux" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wflin-linux" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/14/ffmpeg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/hexo/medias/avatars/avatar.jpg">
+      <meta itemprop="name" content="wflin">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wflin's Blog">
+      <meta itemprop="description" content="一只野生程序员">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ffmpeg | wflin's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ffmpeg
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-03-15 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-15T00:00:00+08:00">2025-03-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-24 10:12:17" itemprop="dateModified" datetime="2025-03-24T10:12:17+08:00">2025-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/hexo/categories/ffmpeg/" itemprop="url" rel="index"><span itemprop="name">ffmpeg</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="FFmpeg-n5-0-2"><a href="#FFmpeg-n5-0-2" class="headerlink" title="FFmpeg-n5.0.2"></a>FFmpeg-n5.0.2</h1><h2 id="编译："><a href="#编译：" class="headerlink" title="编译："></a>编译：</h2><p>ubuntu18 编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">install_dir=/tmp/deps</span><br><span class="line">num_cores=$(nproc)</span><br><span class="line">./configure \</span><br><span class="line">        --prefix=$&#123;install_dir&#125; \</span><br><span class="line">        --enable-gpl \</span><br><span class="line">        --enable-version3 \</span><br><span class="line">        --enable-nonfree \</span><br><span class="line">        --enable-shared \</span><br><span class="line">        --disable-static \</span><br><span class="line">        --enable-small \</span><br><span class="line">        --enable-cross-compile \</span><br><span class="line">        --enable-pthreads \</span><br><span class="line">        --enable-hwaccels \</span><br><span class="line">        --enable-ffplay \</span><br><span class="line">        --enable-ffmpeg \</span><br><span class="line">        --enable-ffprobe \</span><br><span class="line">        --enable-libx264 \</span><br><span class="line">        --enable-encoder=libx264 \</span><br><span class="line">        --enable-decoder=h264 \</span><br><span class="line">        --enable-encoder=mjpeg \</span><br><span class="line">        --enable-decoder=mjpeg \</span><br><span class="line">        --disable-doc \</span><br><span class="line">        --disable-htmlpages \</span><br><span class="line">        --disable-podpages \</span><br><span class="line">        --disable-txtpages \</span><br><span class="line">        --disable-manpages \</span><br><span class="line">        --disable-doc \</span><br><span class="line">        --disable-symver \</span><br><span class="line">        --disable-x86asm \</span><br><span class="line">        --disable-asm \</span><br><span class="line">        --target-os=linux \</span><br><span class="line">        --extra-cflags=&quot;-I$&#123;install_dir&#125;/include&quot; \</span><br><span class="line">        --extra-ldflags=&quot;-L$&#123;install_dir&#125;/lib&quot;</span><br><span class="line"></span><br><span class="line">make -j$&#123;num_cores&#125;</span><br><span class="line">make -j$&#123;num_cores&#125; install</span><br></pre></td></tr></table></figure>
+
+<h2 id="指令："><a href="#指令：" class="headerlink" title="指令："></a>指令：</h2><h3 id="查看摄像头支持的输出的编码"><a href="#查看摄像头支持的输出的编码" class="headerlink" title="查看摄像头支持的输出的编码"></a>查看摄像头支持的输出的编码</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -hide_banner -f v4l2 -list_formats all -i /dev/video1</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       :     yuyv422 :           YUYV 4:2:2 : 1280x520</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       :     uyvy422 :           UYVY 4:2:2 : 1280x520</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       : Unsupported : 59555956-0000-0010-8000-00aa003 : 1280x520</span><br><span class="line">/dev/video1: Immediate exit requested</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">sudo apt install -y v4l-utils (v4l2的工具)</span></span><br><span class="line">v4l2-ctl --list-formats-ext -d /dev/video1</span><br><span class="line">ioctl: VIDIOC_ENUM_FMT</span><br><span class="line">        Type: Video Capture</span><br><span class="line"></span><br><span class="line">        [0]: &#x27;YUYV&#x27; (YUYV 4:2:2)</span><br><span class="line">                Size: Discrete 1280x520</span><br><span class="line">                        Interval: Discrete 0.033s (30.000 fps)</span><br><span class="line">        [1]: &#x27;UYVY&#x27; (UYVY 4:2:2)</span><br><span class="line">                Size: Discrete 1280x520</span><br><span class="line">                        Interval: Discrete 0.033s (30.000 fps)</span><br><span class="line">        [2]: &#x27;&#x27; (59555956-0000-0010-8000-00aa003)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="场景1：打开摄像头并取一帧数据"><a href="#场景1：打开摄像头并取一帧数据" class="headerlink" title="场景1：打开摄像头并取一帧数据"></a>场景1：打开摄像头并取一帧数据</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavdevice/avdevice.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	video_device	<span class="string">&quot;/dev/video1&quot;</span></span></span><br><span class="line"><span class="type">int</span> videoStreamIndex = <span class="number">-1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WIDTH 640</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HEIGHT 512</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">av_log_set_level</span>(AV_LOG_DEBUG); <span class="comment">// 开启ffmpeg日志</span></span><br><span class="line"><span class="built_in">avdevice_register_all</span>(); <span class="comment">// 注册 FFmpeg 设备	【ffmpeg5之后可以不用进行声明初始化，但是实测有些摄像头不声明就无法打开摄像头】</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建输入格式</span></span><br><span class="line"><span class="type">const</span> AVInputFormat *ifmt_ctx = <span class="built_in">av_find_input_format</span>(<span class="string">&quot;video4linux2&quot;</span>);	<span class="comment">// 可以简写为v4l2</span></span><br><span class="line"><span class="keyword">if</span> (!ifmt_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法找到 V4L2 输入格式&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVDictionary *options = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="built_in">av_dict_set</span>(&amp;options, <span class="string">&quot;input_format&quot;</span>, <span class="string">&quot;uyvy422&quot;</span>, <span class="number">0</span>);	<span class="comment">// 配置摄像头帧格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 打开摄像头</span></span><br><span class="line">AVFormatContext *fmt_ctx = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avformat_open_input</span>(&amp;fmt_ctx, video_device, ifmt_ctx, &amp;options) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开摄像头&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 查找视频流</span></span><br><span class="line">AVCodecParameters *codecParams = <span class="literal">nullptr</span>;	<span class="comment">//包含了与音频或视频流相关的编码参数（如编码类型、分辨率、帧率等）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; fmt_ctx-&gt;nb_streams; i++)</span><br><span class="line">&#123;	<span class="comment">//循环遍历 fmt_ctx中的所有流（视频流、音频流、字幕流等）,fmt_ctx-&gt;nb_streams 表示流的总数</span></span><br><span class="line">    <span class="keyword">if</span> (fmt_ctx-&gt;streams[i]-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO)	<span class="comment">//检查当前流是否是视频流,codecpar 是该流的编码参数（AVCodecParameters）。codec_type 是编码参数的一个字段，用于表示流的类型（视频、音频、字幕等）。AVMEDIA_TYPE_VIDEO 是一个常量，表示视频流类型。</span></span><br><span class="line">    &#123;</span><br><span class="line">        videoStreamIndex = i;	<span class="comment">//记录视频流的索引位置</span></span><br><span class="line">        codecParams = fmt_ctx-&gt;streams[i]-&gt;codecpar;	<span class="comment">//记录该视频流的详细编码信息，例如分辨率、像素格式</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 没找到就退出</span></span><br><span class="line"><span class="keyword">if</span> (videoStreamIndex == <span class="number">-1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;未找到视频流&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查找解码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *decoder = <span class="built_in">avcodec_find_decoder</span>(codecParams-&gt;codec_id);</span><br><span class="line"><span class="keyword">if</span> (!decoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 创建解码器上下文</span></span><br><span class="line">AVCodecContext *decode_ctx = <span class="built_in">avcodec_alloc_context3</span>(decoder);</span><br><span class="line"><span class="built_in">avcodec_parameters_to_context</span>(decode_ctx, codecParams);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(decode_ctx, decoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVPacket *packet = <span class="built_in">av_packet_alloc</span>(); <span class="comment">//用于存储压缩后的数据（编码数据），例如压缩的视频帧或音频帧。</span></span><br><span class="line">AVFrame *frame = <span class="built_in">av_frame_alloc</span>();	  <span class="comment">//用于存储解压缩后的数据（原始数据），例如解码后的像素数据（视频）或音频数据。</span></span><br><span class="line"></span><br><span class="line">frame-&gt;width=WIDTH	<span class="comment">// 设置帧的宽高</span></span><br><span class="line">frame-&gt;heightHEIGHT</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">av_read_frame</span>(fmt_ctx, packet) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(packet-&gt;stream_index == videoStreamIndex)&#123;</span><br><span class="line">        <span class="built_in">avcodec_send_packet</span>(decode_ctx, packet);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">avcodec_receive_frame</span>(decodeCtx, frame) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;packet size：%d&quot;</span>,packet-&gt;size);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;frame-&gt;width ：%d,frame-&gt;height ：%d&quot;</span>,frame-&gt;width,frame-&gt;height);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 释放ffmpeg资源</span></span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;packet);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;decodeCtx);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line"><span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景2：从摄像头取流，并保存为h264的文件"><a href="#场景2：从摄像头取流，并保存为h264的文件" class="headerlink" title="场景2：从摄像头取流，并保存为h264的文件"></a>场景2：从摄像头取流，并保存为h264的文件</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavdevice/avdevice.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	video_device	<span class="string">&quot;/dev/video1&quot;</span></span></span><br><span class="line"><span class="type">int</span> videoStreamIndex = <span class="number">-1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WIDTH 640</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HEIGHT 512</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EnCoderName     <span class="string">&quot;libx264&quot;</span></span></span><br><span class="line"><span class="comment">// 7. 打开 H.264 输出文件</span></span><br><span class="line"><span class="function">std::ofstream <span class="title">outFile</span><span class="params">(<span class="string">&quot;out.h264&quot;</span>, std::ios::binary)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> AVPixelFormat OUT_PIX_FMT = AV_PIX_FMT_NV12;</span><br><span class="line"><span class="type">const</span> AVPixelFormat IN_PIX_FMT = AV_PIX_FMT_UYVY422;</span><br><span class="line"></span><br><span class="line"><span class="built_in">av_log_set_level</span>(AV_LOG_DEBUG); <span class="comment">// 开启ffmpeg日志</span></span><br><span class="line"><span class="built_in">avdevice_register_all</span>(); <span class="comment">// 注册 FFmpeg 设备	【ffmpeg5之后可以不用进行声明初始化，但是实测有些摄像头不声明就无法打开摄像头】</span></span><br><span class="line"><span class="built_in">avformat_network_init</span>(); <span class="comment">// 初始化 RTSP 网络</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建输入格式</span></span><br><span class="line"><span class="type">const</span> AVInputFormat *ifmt_ctx = <span class="built_in">av_find_input_format</span>(<span class="string">&quot;video4linux2&quot;</span>);	<span class="comment">// 可以简写为v4l2</span></span><br><span class="line"><span class="keyword">if</span> (!ifmt_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法找到 V4L2 输入格式&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVDictionary *options = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="built_in">av_dict_set</span>(&amp;options, <span class="string">&quot;input_format&quot;</span>, <span class="string">&quot;uyvy422&quot;</span>, <span class="number">0</span>);	<span class="comment">// 配置摄像头帧格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 打开摄像头</span></span><br><span class="line">AVFormatContext *fmt_ctx = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avformat_open_input</span>(&amp;fmt_ctx, video_device, ifmt_ctx, &amp;options) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开摄像头&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 查找视频流</span></span><br><span class="line">AVCodecParameters *codecParams = <span class="literal">nullptr</span>;	<span class="comment">//包含了与音频或视频流相关的编码参数（如编码类型、分辨率、帧率等）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; fmt_ctx-&gt;nb_streams; i++)</span><br><span class="line">&#123;	<span class="comment">//循环遍历 fmt_ctx中的所有流（视频流、音频流、字幕流等）,fmt_ctx-&gt;nb_streams 表示流的总数</span></span><br><span class="line">    <span class="keyword">if</span> (fmt_ctx-&gt;streams[i]-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO)	<span class="comment">//检查当前流是否是视频流,codecpar 是该流的编码参数（AVCodecParameters）。codec_type 是编码参数的一个字段，用于表示流的类型（视频、音频、字幕等）。AVMEDIA_TYPE_VIDEO 是一个常量，表示视频流类型。</span></span><br><span class="line">    &#123;</span><br><span class="line">        videoStreamIndex = i;	<span class="comment">//记录视频流的索引位置</span></span><br><span class="line">        codecParams = fmt_ctx-&gt;streams[i]-&gt;codecpar;	<span class="comment">//记录该视频流的详细编码信息，例如分辨率、像素格式</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 没找到就退出</span></span><br><span class="line"><span class="keyword">if</span> (videoStreamIndex == <span class="number">-1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;未找到视频流&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查找解码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *decoder = <span class="built_in">avcodec_find_decoder</span>(codecParams-&gt;codec_id);</span><br><span class="line"><span class="keyword">if</span> (!decoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 创建解码器上下文</span></span><br><span class="line">AVCodecContext *decode_ctx = <span class="built_in">avcodec_alloc_context3</span>(decoder);</span><br><span class="line"><span class="built_in">avcodec_parameters_to_context</span>(decode_ctx, codecParams);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(decode_ctx, decoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 查找 H.264 编码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *encoder = <span class="built_in">avcodec_find_encoder_by_name</span>(EnCoderName);</span><br><span class="line"><span class="keyword">if</span> (!encoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到 H.264 编码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建编码器</span></span><br><span class="line">AVCodecContext *codec_ctx = <span class="built_in">avcodec_alloc_context3</span>(encoder);</span><br><span class="line">codec_ctx-&gt;bit_rate = <span class="number">100000</span>; <span class="comment">// 码率</span></span><br><span class="line">codec_ctx-&gt;width = WIDTH;</span><br><span class="line">codec_ctx-&gt;height = HEIGHT;</span><br><span class="line">codec_ctx-&gt;time_base = &#123;<span class="number">1</span>, FPS&#125;; <span class="comment">//时间基准</span></span><br><span class="line">codec_ctx-&gt;framerate = &#123;FPS, <span class="number">1</span>&#125;;</span><br><span class="line">codec_ctx-&gt;gop_size = FPS * <span class="number">2</span>; <span class="comment">// I帧间隔</span></span><br><span class="line">codec_ctx-&gt;max_b_frames = <span class="number">0</span>;</span><br><span class="line">codec_ctx-&gt;pix_fmt = OUT_PIX_FMT;</span><br><span class="line"></span><br><span class="line"><span class="built_in">av_opt_set</span>(codec_ctx-&gt;priv_data, <span class="string">&quot;preset&quot;</span>, <span class="string">&quot;fast&quot;</span>, <span class="number">0</span>);    <span class="comment">// 更快编码速度</span></span><br><span class="line"><span class="built_in">av_opt_set</span>(codec_ctx-&gt;priv_data, <span class="string">&quot;tune&quot;</span>, <span class="string">&quot;zerolatency&quot;</span>, <span class="number">0</span>); <span class="comment">// 低延迟模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开编码器</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(codec_ctx, encoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开 H.264 编码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7 初始化格式转换上下文</span></span><br><span class="line">SwsContext* sws_ctx = <span class="built_in">sws_getContext</span>(</span><br><span class="line">    WIDTH, HEIGHT, IN_PIX_FMT, </span><br><span class="line">    WIDTH, HEIGHT, OUT_PIX_FMT,</span><br><span class="line">    SWS_BILINEAR, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">AVPacket *src_packet = <span class="built_in">av_packet_alloc</span>(); 	<span class="comment">//用于存储压缩后的数据（编码数据），例如压缩的视频帧或音频帧。</span></span><br><span class="line">AVFrame *src_frame = <span class="built_in">av_frame_alloc</span>();		<span class="comment">//用于存储解压缩后的数据（原始数据），例如解码后的像素数据（视频）或音频数据。</span></span><br><span class="line">AVFrame* dist_frame = <span class="built_in">av_frame_alloc</span>();		<span class="comment">//分配转换后的帧</span></span><br><span class="line">AVPacket *dist_packet = <span class="built_in">av_packet_alloc</span>();	<span class="comment">//分配转换后的paket</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置帧参数</span></span><br><span class="line">src_frame-&gt;format = OUT_PIX_FMT;</span><br><span class="line">src_frame-&gt;width = WIDTH;</span><br><span class="line">src_frame-&gt;height = HEIGHT;</span><br><span class="line"><span class="built_in">av_frame_get_buffer</span>(src_frame, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">dist_frame-&gt;format = OUT_PIX_FMT;</span><br><span class="line">dist_frame-&gt;width = WIDTH;</span><br><span class="line">dist_frame-&gt;height = HEIGHT;</span><br><span class="line"><span class="built_in">av_frame_get_buffer</span>(dist_frame, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> frameIndex = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">av_read_frame</span>(fmt_ctx, src_packet) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(packet-&gt;stream_index == videoStreamIndex)&#123;</span><br><span class="line">        <span class="built_in">avcodec_send_packet</span>(decode_ctx, src_packet);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">avcodec_receive_frame</span>(decode_ctx, src_frame) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 转换UYVY422 → NV12</span></span><br><span class="line">            <span class="built_in">sws_scale</span>(sws_ctx,src_frame-&gt;data, src_frame-&gt;linesize,<span class="number">0</span>, HEIGHT,dist_frame-&gt;data, dist_frame-&gt;linesize);</span><br><span class="line">            <span class="comment">// 编码</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">avcodec_send_frame</span>(codec_ctx, src_frame) == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="built_in">av_init_packet</span>(dist_packet);</span><br><span class="line">                dist_packet-&gt;data = <span class="literal">nullptr</span>;</span><br><span class="line">                dist_packet-&gt;size = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (<span class="built_in">avcodec_receive_packet</span>(codec_ctx, dist_packet) == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;写入文件大小为：size：%d\n&quot;</span>,dist_packet-&gt;size);</span><br><span class="line">                    outFile.<span class="built_in">write</span>((<span class="type">char</span>*)dist_packet-&gt;data, dist_packet-&gt;size);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="built_in">av_packet_unref</span>(src_packet);</span><br><span class="line">	<span class="built_in">av_packet_unref</span>(dist_packet);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 12. 释放资源</span></span><br><span class="line">outFile.<span class="built_in">close</span>();</span><br><span class="line"><span class="built_in">sws_freeContext</span>(sws_ctx);</span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;src_frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;src_packet);</span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;dist_frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;dist_packet);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line"><span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景3：推流yuv视频文件到rtsp流媒体服务"><a href="#场景3：推流yuv视频文件到rtsp流媒体服务" class="headerlink" title="场景3：推流yuv视频文件到rtsp流媒体服务"></a>场景3：推流yuv视频文件到rtsp流媒体服务</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/opt.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/error.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> WIDTH = <span class="number">1920</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> HEIGHT = <span class="number">1080</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> FPS = <span class="number">25</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *YUV_FILE = <span class="string">&quot;timer25fps.yuv&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* RTSP_URL = <span class="string">&quot;rtsp://172.16.19.220:8554/stream&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/hexo/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/hexo/tags/ffmpeg/" rel="tag"><i class="fa fa-tag"></i> ffmpeg</a>
+              <a href="/hexo/tags/linux/" rel="tag"><i class="fa fa-tag"></i> linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/2025/02/11/em-tool-code/" rel="prev" title="常用linux指令">
+                  <i class="fa fa-angle-left"></i> 常用linux指令
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/2025/03/19/linux-vnc/" rel="next" title="vnc">
+                  vnc <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wflin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/hexo/js/comments.js"></script><script src="/hexo/js/utils.js"></script><script src="/hexo/js/motion.js"></script><script src="/hexo/js/schemes/muse.js"></script><script src="/hexo/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/hexo/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<script src="/hexo/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/hexo/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":300,"height":300},"mobile":{"show":false},"react":{"opacity":1}});</script></body>
+</html>

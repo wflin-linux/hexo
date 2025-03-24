@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ffmpeg</title>
+    <url>/hexo/2025/03/14/ffmpeg/</url>
+    <content><![CDATA[<h1 id="FFmpeg-n5-0-2"><a href="#FFmpeg-n5-0-2" class="headerlink" title="FFmpeg-n5.0.2"></a>FFmpeg-n5.0.2</h1><h2 id="编译："><a href="#编译：" class="headerlink" title="编译："></a>编译：</h2><p>ubuntu18 编译</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">install_dir=/tmp/deps</span><br><span class="line">num_cores=$(nproc)</span><br><span class="line">./configure \</span><br><span class="line">        --prefix=$&#123;install_dir&#125; \</span><br><span class="line">        --enable-gpl \</span><br><span class="line">        --enable-version3 \</span><br><span class="line">        --enable-nonfree \</span><br><span class="line">        --enable-shared \</span><br><span class="line">        --disable-static \</span><br><span class="line">        --enable-small \</span><br><span class="line">        --enable-cross-compile \</span><br><span class="line">        --enable-pthreads \</span><br><span class="line">        --enable-hwaccels \</span><br><span class="line">        --enable-ffplay \</span><br><span class="line">        --enable-ffmpeg \</span><br><span class="line">        --enable-ffprobe \</span><br><span class="line">        --enable-libx264 \</span><br><span class="line">        --enable-encoder=libx264 \</span><br><span class="line">        --enable-decoder=h264 \</span><br><span class="line">        --enable-encoder=mjpeg \</span><br><span class="line">        --enable-decoder=mjpeg \</span><br><span class="line">        --disable-doc \</span><br><span class="line">        --disable-htmlpages \</span><br><span class="line">        --disable-podpages \</span><br><span class="line">        --disable-txtpages \</span><br><span class="line">        --disable-manpages \</span><br><span class="line">        --disable-doc \</span><br><span class="line">        --disable-symver \</span><br><span class="line">        --disable-x86asm \</span><br><span class="line">        --disable-asm \</span><br><span class="line">        --target-os=linux \</span><br><span class="line">        --extra-cflags=&quot;-I$&#123;install_dir&#125;/include&quot; \</span><br><span class="line">        --extra-ldflags=&quot;-L$&#123;install_dir&#125;/lib&quot;</span><br><span class="line"></span><br><span class="line">make -j$&#123;num_cores&#125;</span><br><span class="line">make -j$&#123;num_cores&#125; install</span><br></pre></td></tr></table></figure>
+
+<h2 id="指令："><a href="#指令：" class="headerlink" title="指令："></a>指令：</h2><h3 id="查看摄像头支持的输出的编码"><a href="#查看摄像头支持的输出的编码" class="headerlink" title="查看摄像头支持的输出的编码"></a>查看摄像头支持的输出的编码</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ffmpeg -hide_banner -f v4l2 -list_formats all -i /dev/video1</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       :     yuyv422 :           YUYV 4:2:2 : 1280x520</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       :     uyvy422 :           UYVY 4:2:2 : 1280x520</span><br><span class="line">[video4linux2,v4l2 @ 0x7bb9caf280] Raw       : Unsupported : 59555956-0000-0010-8000-00aa003 : 1280x520</span><br><span class="line">/dev/video1: Immediate exit requested</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">sudo apt install -y v4l-utils (v4l2的工具)</span></span><br><span class="line">v4l2-ctl --list-formats-ext -d /dev/video1</span><br><span class="line">ioctl: VIDIOC_ENUM_FMT</span><br><span class="line">        Type: Video Capture</span><br><span class="line"></span><br><span class="line">        [0]: &#x27;YUYV&#x27; (YUYV 4:2:2)</span><br><span class="line">                Size: Discrete 1280x520</span><br><span class="line">                        Interval: Discrete 0.033s (30.000 fps)</span><br><span class="line">        [1]: &#x27;UYVY&#x27; (UYVY 4:2:2)</span><br><span class="line">                Size: Discrete 1280x520</span><br><span class="line">                        Interval: Discrete 0.033s (30.000 fps)</span><br><span class="line">        [2]: &#x27;&#x27; (59555956-0000-0010-8000-00aa003)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="场景1：打开摄像头并取一帧数据"><a href="#场景1：打开摄像头并取一帧数据" class="headerlink" title="场景1：打开摄像头并取一帧数据"></a>场景1：打开摄像头并取一帧数据</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavdevice/avdevice.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	video_device	<span class="string">&quot;/dev/video1&quot;</span></span></span><br><span class="line"><span class="type">int</span> videoStreamIndex = <span class="number">-1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WIDTH 640</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HEIGHT 512</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">av_log_set_level</span>(AV_LOG_DEBUG); <span class="comment">// 开启ffmpeg日志</span></span><br><span class="line"><span class="built_in">avdevice_register_all</span>(); <span class="comment">// 注册 FFmpeg 设备	【ffmpeg5之后可以不用进行声明初始化，但是实测有些摄像头不声明就无法打开摄像头】</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建输入格式</span></span><br><span class="line"><span class="type">const</span> AVInputFormat *ifmt_ctx = <span class="built_in">av_find_input_format</span>(<span class="string">&quot;video4linux2&quot;</span>);	<span class="comment">// 可以简写为v4l2</span></span><br><span class="line"><span class="keyword">if</span> (!ifmt_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法找到 V4L2 输入格式&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVDictionary *options = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="built_in">av_dict_set</span>(&amp;options, <span class="string">&quot;input_format&quot;</span>, <span class="string">&quot;uyvy422&quot;</span>, <span class="number">0</span>);	<span class="comment">// 配置摄像头帧格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 打开摄像头</span></span><br><span class="line">AVFormatContext *fmt_ctx = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avformat_open_input</span>(&amp;fmt_ctx, video_device, ifmt_ctx, &amp;options) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开摄像头&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 查找视频流</span></span><br><span class="line">AVCodecParameters *codecParams = <span class="literal">nullptr</span>;	<span class="comment">//包含了与音频或视频流相关的编码参数（如编码类型、分辨率、帧率等）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; fmt_ctx-&gt;nb_streams; i++)</span><br><span class="line">&#123;	<span class="comment">//循环遍历 fmt_ctx中的所有流（视频流、音频流、字幕流等）,fmt_ctx-&gt;nb_streams 表示流的总数</span></span><br><span class="line">    <span class="keyword">if</span> (fmt_ctx-&gt;streams[i]-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO)	<span class="comment">//检查当前流是否是视频流,codecpar 是该流的编码参数（AVCodecParameters）。codec_type 是编码参数的一个字段，用于表示流的类型（视频、音频、字幕等）。AVMEDIA_TYPE_VIDEO 是一个常量，表示视频流类型。</span></span><br><span class="line">    &#123;</span><br><span class="line">        videoStreamIndex = i;	<span class="comment">//记录视频流的索引位置</span></span><br><span class="line">        codecParams = fmt_ctx-&gt;streams[i]-&gt;codecpar;	<span class="comment">//记录该视频流的详细编码信息，例如分辨率、像素格式</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 没找到就退出</span></span><br><span class="line"><span class="keyword">if</span> (videoStreamIndex == <span class="number">-1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;未找到视频流&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查找解码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *decoder = <span class="built_in">avcodec_find_decoder</span>(codecParams-&gt;codec_id);</span><br><span class="line"><span class="keyword">if</span> (!decoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 创建解码器上下文</span></span><br><span class="line">AVCodecContext *decode_ctx = <span class="built_in">avcodec_alloc_context3</span>(decoder);</span><br><span class="line"><span class="built_in">avcodec_parameters_to_context</span>(decode_ctx, codecParams);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(decode_ctx, decoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVPacket *packet = <span class="built_in">av_packet_alloc</span>(); <span class="comment">//用于存储压缩后的数据（编码数据），例如压缩的视频帧或音频帧。</span></span><br><span class="line">AVFrame *frame = <span class="built_in">av_frame_alloc</span>();	  <span class="comment">//用于存储解压缩后的数据（原始数据），例如解码后的像素数据（视频）或音频数据。</span></span><br><span class="line"></span><br><span class="line">frame-&gt;width=WIDTH	<span class="comment">// 设置帧的宽高</span></span><br><span class="line">frame-&gt;heightHEIGHT</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">av_read_frame</span>(fmt_ctx, packet) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(packet-&gt;stream_index == videoStreamIndex)&#123;</span><br><span class="line">        <span class="built_in">avcodec_send_packet</span>(decode_ctx, packet);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">avcodec_receive_frame</span>(decodeCtx, frame) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;packet size：%d&quot;</span>,packet-&gt;size);</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;frame-&gt;width ：%d,frame-&gt;height ：%d&quot;</span>,frame-&gt;width,frame-&gt;height);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 释放ffmpeg资源</span></span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;packet);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;decodeCtx);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line"><span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景2：从摄像头取流，并保存为h264的文件"><a href="#场景2：从摄像头取流，并保存为h264的文件" class="headerlink" title="场景2：从摄像头取流，并保存为h264的文件"></a>场景2：从摄像头取流，并保存为h264的文件</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavdevice/avdevice.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	video_device	<span class="string">&quot;/dev/video1&quot;</span></span></span><br><span class="line"><span class="type">int</span> videoStreamIndex = <span class="number">-1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WIDTH 640</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HEIGHT 512</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> EnCoderName     <span class="string">&quot;libx264&quot;</span></span></span><br><span class="line"><span class="comment">// 7. 打开 H.264 输出文件</span></span><br><span class="line"><span class="function">std::ofstream <span class="title">outFile</span><span class="params">(<span class="string">&quot;out.h264&quot;</span>, std::ios::binary)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">const</span> AVPixelFormat OUT_PIX_FMT = AV_PIX_FMT_NV12;</span><br><span class="line"><span class="type">const</span> AVPixelFormat IN_PIX_FMT = AV_PIX_FMT_UYVY422;</span><br><span class="line"></span><br><span class="line"><span class="built_in">av_log_set_level</span>(AV_LOG_DEBUG); <span class="comment">// 开启ffmpeg日志</span></span><br><span class="line"><span class="built_in">avdevice_register_all</span>(); <span class="comment">// 注册 FFmpeg 设备	【ffmpeg5之后可以不用进行声明初始化，但是实测有些摄像头不声明就无法打开摄像头】</span></span><br><span class="line"><span class="built_in">avformat_network_init</span>(); <span class="comment">// 初始化 RTSP 网络</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建输入格式</span></span><br><span class="line"><span class="type">const</span> AVInputFormat *ifmt_ctx = <span class="built_in">av_find_input_format</span>(<span class="string">&quot;video4linux2&quot;</span>);	<span class="comment">// 可以简写为v4l2</span></span><br><span class="line"><span class="keyword">if</span> (!ifmt_ctx)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法找到 V4L2 输入格式&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">AVDictionary *options = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="built_in">av_dict_set</span>(&amp;options, <span class="string">&quot;input_format&quot;</span>, <span class="string">&quot;uyvy422&quot;</span>, <span class="number">0</span>);	<span class="comment">// 配置摄像头帧格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 打开摄像头</span></span><br><span class="line">AVFormatContext *fmt_ctx = <span class="literal">nullptr</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avformat_open_input</span>(&amp;fmt_ctx, video_device, ifmt_ctx, &amp;options) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开摄像头&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 查找视频流</span></span><br><span class="line">AVCodecParameters *codecParams = <span class="literal">nullptr</span>;	<span class="comment">//包含了与音频或视频流相关的编码参数（如编码类型、分辨率、帧率等）</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">unsigned</span> <span class="type">int</span> i = <span class="number">0</span>; i &lt; fmt_ctx-&gt;nb_streams; i++)</span><br><span class="line">&#123;	<span class="comment">//循环遍历 fmt_ctx中的所有流（视频流、音频流、字幕流等）,fmt_ctx-&gt;nb_streams 表示流的总数</span></span><br><span class="line">    <span class="keyword">if</span> (fmt_ctx-&gt;streams[i]-&gt;codecpar-&gt;codec_type == AVMEDIA_TYPE_VIDEO)	<span class="comment">//检查当前流是否是视频流,codecpar 是该流的编码参数（AVCodecParameters）。codec_type 是编码参数的一个字段，用于表示流的类型（视频、音频、字幕等）。AVMEDIA_TYPE_VIDEO 是一个常量，表示视频流类型。</span></span><br><span class="line">    &#123;</span><br><span class="line">        videoStreamIndex = i;	<span class="comment">//记录视频流的索引位置</span></span><br><span class="line">        codecParams = fmt_ctx-&gt;streams[i]-&gt;codecpar;	<span class="comment">//记录该视频流的详细编码信息，例如分辨率、像素格式</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 没找到就退出</span></span><br><span class="line"><span class="keyword">if</span> (videoStreamIndex == <span class="number">-1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;未找到视频流&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 查找解码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *decoder = <span class="built_in">avcodec_find_decoder</span>(codecParams-&gt;codec_id);</span><br><span class="line"><span class="keyword">if</span> (!decoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 创建解码器上下文</span></span><br><span class="line">AVCodecContext *decode_ctx = <span class="built_in">avcodec_alloc_context3</span>(decoder);</span><br><span class="line"><span class="built_in">avcodec_parameters_to_context</span>(decode_ctx, codecParams);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(decode_ctx, decoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开解码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line">    <span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 查找 H.264 编码器</span></span><br><span class="line"><span class="type">const</span> AVCodec *encoder = <span class="built_in">avcodec_find_encoder_by_name</span>(EnCoderName);</span><br><span class="line"><span class="keyword">if</span> (!encoder)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;找不到 H.264 编码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建编码器</span></span><br><span class="line">AVCodecContext *codec_ctx = <span class="built_in">avcodec_alloc_context3</span>(encoder);</span><br><span class="line">codec_ctx-&gt;bit_rate = <span class="number">100000</span>; <span class="comment">// 码率</span></span><br><span class="line">codec_ctx-&gt;width = WIDTH;</span><br><span class="line">codec_ctx-&gt;height = HEIGHT;</span><br><span class="line">codec_ctx-&gt;time_base = &#123;<span class="number">1</span>, FPS&#125;; <span class="comment">//时间基准</span></span><br><span class="line">codec_ctx-&gt;framerate = &#123;FPS, <span class="number">1</span>&#125;;</span><br><span class="line">codec_ctx-&gt;gop_size = FPS * <span class="number">2</span>; <span class="comment">// I帧间隔</span></span><br><span class="line">codec_ctx-&gt;max_b_frames = <span class="number">0</span>;</span><br><span class="line">codec_ctx-&gt;pix_fmt = OUT_PIX_FMT;</span><br><span class="line"></span><br><span class="line"><span class="built_in">av_opt_set</span>(codec_ctx-&gt;priv_data, <span class="string">&quot;preset&quot;</span>, <span class="string">&quot;fast&quot;</span>, <span class="number">0</span>);    <span class="comment">// 更快编码速度</span></span><br><span class="line"><span class="built_in">av_opt_set</span>(codec_ctx-&gt;priv_data, <span class="string">&quot;tune&quot;</span>, <span class="string">&quot;zerolatency&quot;</span>, <span class="number">0</span>); <span class="comment">// 低延迟模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 打开编码器</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">avcodec_open2</span>(codec_ctx, encoder, <span class="literal">nullptr</span>) &lt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cerr &lt;&lt; <span class="string">&quot;无法打开 H.264 编码器&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7 初始化格式转换上下文</span></span><br><span class="line">SwsContext* sws_ctx = <span class="built_in">sws_getContext</span>(</span><br><span class="line">    WIDTH, HEIGHT, IN_PIX_FMT, </span><br><span class="line">    WIDTH, HEIGHT, OUT_PIX_FMT,</span><br><span class="line">    SWS_BILINEAR, <span class="literal">nullptr</span>, <span class="literal">nullptr</span>, <span class="literal">nullptr</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">AVPacket *src_packet = <span class="built_in">av_packet_alloc</span>(); 	<span class="comment">//用于存储压缩后的数据（编码数据），例如压缩的视频帧或音频帧。</span></span><br><span class="line">AVFrame *src_frame = <span class="built_in">av_frame_alloc</span>();		<span class="comment">//用于存储解压缩后的数据（原始数据），例如解码后的像素数据（视频）或音频数据。</span></span><br><span class="line">AVFrame* dist_frame = <span class="built_in">av_frame_alloc</span>();		<span class="comment">//分配转换后的帧</span></span><br><span class="line">AVPacket *dist_packet = <span class="built_in">av_packet_alloc</span>();	<span class="comment">//分配转换后的paket</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置帧参数</span></span><br><span class="line">src_frame-&gt;format = OUT_PIX_FMT;</span><br><span class="line">src_frame-&gt;width = WIDTH;</span><br><span class="line">src_frame-&gt;height = HEIGHT;</span><br><span class="line"><span class="built_in">av_frame_get_buffer</span>(src_frame, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">dist_frame-&gt;format = OUT_PIX_FMT;</span><br><span class="line">dist_frame-&gt;width = WIDTH;</span><br><span class="line">dist_frame-&gt;height = HEIGHT;</span><br><span class="line"><span class="built_in">av_frame_get_buffer</span>(dist_frame, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> frameIndex = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">av_read_frame</span>(fmt_ctx, src_packet) &gt;= <span class="number">0</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(packet-&gt;stream_index == videoStreamIndex)&#123;</span><br><span class="line">        <span class="built_in">avcodec_send_packet</span>(decode_ctx, src_packet);</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">avcodec_receive_frame</span>(decode_ctx, src_frame) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 转换UYVY422 → NV12</span></span><br><span class="line">            <span class="built_in">sws_scale</span>(sws_ctx,src_frame-&gt;data, src_frame-&gt;linesize,<span class="number">0</span>, HEIGHT,dist_frame-&gt;data, dist_frame-&gt;linesize);</span><br><span class="line">            <span class="comment">// 编码</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">avcodec_send_frame</span>(codec_ctx, src_frame) == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="built_in">av_init_packet</span>(dist_packet);</span><br><span class="line">                dist_packet-&gt;data = <span class="literal">nullptr</span>;</span><br><span class="line">                dist_packet-&gt;size = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">while</span> (<span class="built_in">avcodec_receive_packet</span>(codec_ctx, dist_packet) == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="built_in">printf</span>(<span class="string">&quot;写入文件大小为：size：%d\n&quot;</span>,dist_packet-&gt;size);</span><br><span class="line">                    outFile.<span class="built_in">write</span>((<span class="type">char</span>*)dist_packet-&gt;data, dist_packet-&gt;size);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="built_in">av_packet_unref</span>(src_packet);</span><br><span class="line">	<span class="built_in">av_packet_unref</span>(dist_packet);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 12. 释放资源</span></span><br><span class="line">outFile.<span class="built_in">close</span>();</span><br><span class="line"><span class="built_in">sws_freeContext</span>(sws_ctx);</span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;src_frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;src_packet);</span><br><span class="line"><span class="built_in">av_frame_free</span>(&amp;dist_frame);</span><br><span class="line"><span class="built_in">av_packet_free</span>(&amp;dist_packet);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;decode_ctx);</span><br><span class="line"><span class="built_in">avcodec_free_context</span>(&amp;codec_ctx);</span><br><span class="line"><span class="built_in">avformat_close_input</span>(&amp;fmt_ctx);</span><br></pre></td></tr></table></figure>
+
+<h2 id="场景3：推流yuv视频文件到rtsp流媒体服务"><a href="#场景3：推流yuv视频文件到rtsp流媒体服务" class="headerlink" title="场景3：推流yuv视频文件到rtsp流媒体服务"></a>场景3：推流yuv视频文件到rtsp流媒体服务</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavcodec/avcodec.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/imgutils.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libswscale/swscale.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/opt.h&gt;</span></span></span><br><span class="line">    <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;libavutil/error.h&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> WIDTH = <span class="number">1920</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> HEIGHT = <span class="number">1080</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> FPS = <span class="number">25</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *YUV_FILE = <span class="string">&quot;timer25fps.yuv&quot;</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">char</span>* RTSP_URL = <span class="string">&quot;rtsp://172.16.19.220:8554/stream&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>ffmpeg</category>
+      </categories>
+      <tags>
+        <tag>ffmpeg</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ATM小项目</title>
     <url>/hexo/2021/10/28/aiot/</url>
     <content><![CDATA[<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><ul>
@@ -38,9 +63,9 @@
         <category>c</category>
       </categories>
       <tags>
+        <tag>linux</tag>
         <tag>c</tag>
         <tag>bootloader</tag>
-        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -644,7 +669,7 @@
 </ol>
 <h3 id="提交到-阿里云容器仓库"><a href="#提交到-阿里云容器仓库" class="headerlink" title="提交到 阿里云容器仓库"></a>提交到 阿里云容器仓库</h3><ol>
 <li><p>登陆阿里云</p>
-<style>.bjinaxlejkhh{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="bjinaxlejkhh" alt="image-20220420142030709">
+<style>.xgktwivjhzrm{zoom:50%;}</style><img src="/hexo/2021/11/14/docker/image-20220420142030709.png" class="xgktwivjhzrm" alt="image-20220420142030709">
 </li>
 <li><p>找到容器镜像服务 并创建 容器镜像服务，个人版本好像是免费的</p>
 <img src="/hexo/2021/11/14/docker/image-20220420142516275.png" class title="image-20220420142516275">
@@ -850,6 +875,123 @@
       </tags>
   </entry>
   <entry>
+    <title>常用linux指令</title>
+    <url>/hexo/2025/02/11/em-tool-code/</url>
+    <content><![CDATA[<h1 id="指令类"><a href="#指令类" class="headerlink" title="指令类"></a>指令类</h1><h2 id="pkill"><a href="#pkill" class="headerlink" title="pkill"></a>pkill</h2><ul>
+<li>用于杀死进程和 kill 指令不同的是它可以直接通过进程的名字，而不需要进程的pid</li>
+<li>pkill appName</li>
+</ul>
+<h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><ul>
+<li><p>它的作用是定期执行并显示另一个命令或脚本的输出变化，例如：它可以用于持续监控系统的负载情况。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">watch [-tnv] command [seconds]</span><br><span class="line"></span><br><span class="line">command：要执行的命令或脚本。</span><br><span class="line">-t, --no-title：不显示标题（默认每执行一屏会有一个 &quot;Every 2.0s: ....&quot; 的提示）。</span><br><span class="line">-n, --interval seconds：设置更新之间的时间间隔，单位为秒。默认值是 2秒</span><br><span class="line">-v 或 --differences：突出显示变化的部分，默认不 highlighting 变化的字符串</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>举例</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">watch -n 1 uptime    # 每秒检查一次 sysload</span><br><span class="line">watch -n 5 service httpd restart   # 每五秒重启httpd服务并显示重启信息</span><br><span class="line">watch -nv &quot;ps aux | grep mysqld&quot;    # 连续刷新运行mysqld进程的状态，并以粗体形式高亮显示变化位置</span><br><span class="line"></span><br><span class="line">需要适当设置更新频率：“watch” 的使用非常频繁地运行命令会消耗系统资源，应谨慎使用。</span><br><span class="line">可以与 less 结合使用以更好地查看滚动内容并暂停监控：</span><br><span class="line">watch -n 5 &quot;command | less&quot;</span><br><span class="line"></span><br><span class="line">监控udp端口是否有数据</span><br><span class="line">watch -n 1 &quot;ss -u -l sport = :56001&quot;</span><br><span class="line">watch -n 1 &quot;netstat -anu | grep 56001&quot;</span><br><span class="line"></span><br><span class="line">监控tcp端口是否有数据</span><br><span class="line">watch -n 1 &quot;ss -t -l dport = :56001&quot;</span><br><span class="line">watch -n 1 &quot;netstat -an | grep &quot;:56001 &quot; | grep ESTABLISHED&quot;  </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="iptabels"><a href="#iptabels" class="headerlink" title="iptabels"></a>iptabels</h2><ul>
+<li>iptables 是Linux内核中自带的防火墙，用于在网络数据包层 4（传输控制协议 TCP 和用户 datagram 协议 UDP）级别进行过滤和 NAT 等网络配置和管理。它提供了一种高度灵活、模块化且功能强大的方式来设置系统级别的防火墙规则</li>
+</ul>
+<h3 id="转发端口"><a href="#转发端口" class="headerlink" title="转发端口"></a>转发端口</h3><ul>
+<li>有一个ip摄像头（192.168.8.243）连接在一块开发板上并接入了内网（172.16.19.146）,摄像头有一个80的web后台服务。内网无法直接访问到摄像头的地址，现在需要通过 iptables 配置端口转发将相机的后台服务转发到内网的80端口上，我们就能通过 172.16.19.146:80 对开发板中相机服务进行访问</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">DEVICEIP：本地网卡eth0ip地址</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">CAMERAIP：相机ip地址（设备内部某个服务的ip）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">VPNIP：设备VPNIP(设备能ping通的内网ip)</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">浏览器输入vpn地址就能访问相机了</span></span><br><span class="line"></span><br><span class="line">iptables -F</span><br><span class="line">iptables -t nat -F</span><br><span class="line">export INNETMASK=&quot;192.168.8.0/24&quot;</span><br><span class="line">export DEVICEIP=&quot;192.168.8.2&quot;</span><br><span class="line">export CAMERAIP=&quot;192.168.8.243&quot;</span><br><span class="line">export VPNIP=&quot;172.16.19.146&quot;</span><br><span class="line">iptables -t nat -A POSTROUTING -s $INNETMASK -j MASQUERADE</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 80 -j DNAT --to-destination $CAMERAIP:80		// 映射80</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 9000 -j DNAT --to-destination $CAMERAIP:9000	// 映射9000</span><br><span class="line">iptables -t nat -A PREROUTING -d $VPNIP -p tcp --dport 554 -j DNAT --to-destination $CAMERAIP:554	// 映射554</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这段代码在所有发出去的数据包的目标地址是 CAMERAIP 时，会做一次目的网络地址变换（SNAT），使其显示为从 DEVICEIP 出去的数据。这里主要是为了解决潜在的安全问题如 IP 数据包重放攻击等</span></span><br><span class="line">iptables -t nat -A POSTROUTING -d $CAMERAIP -j SNAT --to $DEVICEIP</span><br></pre></td></tr></table></figure>
+
+<h2 id="tcpdump"><a href="#tcpdump" class="headerlink" title="tcpdump"></a>tcpdump</h2><ul>
+<li>是一个广泛使用的网络协议分析工具（也称为数据包捕获工具），可以用来捕获并显示计算机在局域网上传输的数据包。它通常用于故障排除、网络分析或安全监测等活动</li>
+</ul>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p>  基本的 <code>tcpdump</code> 调用格式如下：</p>
+  <SH>
+
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump &lt;options&gt; &lt;expression&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;options&gt;</code>: 一些可选参数，可以用来过滤特定的数据包或设置输出格式。</li>
+<li><code>&lt;expression&gt;</code>: 数据包捕获过滤条件，用于选择要查看或者记录的数据包。</li>
+</ul>
+<h3 id="常用选项"><a href="#常用选项" class="headerlink" title="常用选项"></a>常用选项</h3><ol>
+<li><p><strong>-i</strong>: 指定监听某个网络接口。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-n</strong>: 不将 IP 地址和端口号转换为名字，直接显示数字形式。</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -n -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-c</strong>: 指定要捕获的数据包数量。例如，以下命令将仅捕获前10个数据包：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -c 10 -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>-w</strong>: 将结果写入文件以便后续分析。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -i eth0 -w output.pcap</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>tcpdump</code> 可以将捕获的数据包保存到 <code>.pcap 或 .cap</code> 文件，之后可以用专门的数据包分析工具如 Wireshark 进行深入分析。</p>
+</SH></li>
+<li><p><strong>-r</strong>: 从文件中读取数据包进行解析和显示。例如：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -r output.pcap</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>v</strong>, <strong>vv</strong>, <strong>vvv</strong>: 可以增加输出的详细级别，<code>tcpdump</code> 默认处于 <code>v</code> 级别。</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -i eth0 -v</span><br></pre></td></tr></table></figure>
+
+<p>数字越大表示输出的调试信息越详细。</p>
+</SH></li>
+</ol>
+<h3 id="捕获过滤条件示例"><a href="#捕获过滤条件示例" class="headerlink" title="捕获过滤条件示例"></a>捕获过滤条件示例</h3><p>  以下是一些常用的捕获过滤条件：</p>
+<ol>
+<li><p><strong>抓取所有发往特定端口的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump dst portno 80</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取指定源 IP 和端口的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump src ipno 192.168.0.1 and src portno 554</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取 HTTP 请求的数据包</strong>（TCP 端口为 80）：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump &#x27;tcp[((tcp[12:1] &amp; 0xf0) &gt;&gt; 2):4] = 47414c2f&#x27;</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取 HTTPS 请求的数据包</strong>（TCP 端口为 443）：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump &#x27;port 443&#x27; -i eth0</span><br></pre></td></tr></table></figure>
+</SH></li>
+<li><p><strong>抓取特定 IP 范围内的数据包</strong>：</p>
+<SH>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump net 192.168.0.0/16</span><br></pre></td></tr></table></figure></SH></li>
+</ol>
+<h3 id="实际应用示例"><a href="#实际应用示例" class="headerlink" title="实际应用示例"></a>实际应用示例</h3><p>  假设你想抓取所有发往外网（即目标 IP 不在本机网络中）并且使用端口 80 的 HTTP 数据包，可以这样做：</p>
+  <SH>
+
+  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tcpdump -i eth0 and not dst net 192.168.0.0/24 and port 80</span><br></pre></td></tr></table></figure>
+
+<p>  在这个命令中：</p>
+<ul>
+<li><code>-i eth0</code>: 监听 <code>eth0</code> 网络接口。</li>
+<li><code>and not dst net 192.168.0.0/24</code>: 过滤掉目标 IP 落在 <code>192.168.0.0/24</code> 网段的数据包，即不抓取发往本机的流量。</li>
+<li><code>and port 80</code>: 只抓取端口为 80 (HTTP) 的数据包。</li>
+</ul>
+<p>  通过结合使用选项和过滤条件，你可以灵活地捕获和分析网络中的各种感兴趣的数据包。</p>
+<h1 id="软件类"><a href="#软件类" class="headerlink" title="软件类"></a>软件类</h1><h2 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h2></SH></SH>]]></content>
+      <categories>
+        <category>linux command</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JavaScript 常用函数</title>
     <url>/hexo/2023/02/17/js-han-shu/</url>
     <content><![CDATA[<h2 id="JavaScript-下拉加载防抖节流函数"><a href="#JavaScript-下拉加载防抖节流函数" class="headerlink" title="JavaScript 下拉加载防抖节流函数"></a>JavaScript 下拉加载防抖节流函数</h2><h2 id="防抖函数"><a href="#防抖函数" class="headerlink" title="防抖函数"></a>防抖函数</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="title function_">debounce</span>(<span class="params">fn, delay</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">const</span> context = <span class="variable language_">this</span>;</span><br><span class="line">        <span class="keyword">const</span> args = <span class="variable language_">arguments</span>;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            fn.<span class="title function_">apply</span>(context, args);</span><br><span class="line">        &#125;, delay);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
@@ -960,6 +1102,72 @@
       <tags>
         <tag>Markdown</tag>
         <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vnc</title>
+    <url>/hexo/2025/03/19/linux-vnc/</url>
+    <content><![CDATA[<h1 id="配置Linux-VNC远程桌面"><a href="#配置Linux-VNC远程桌面" class="headerlink" title="配置Linux VNC远程桌面"></a>配置Linux VNC远程桌面</h1><h2 id="Xfce桌面"><a href="#Xfce桌面" class="headerlink" title="Xfce桌面"></a>Xfce桌面</h2><p>安装 xfce 桌面</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install xfce4 xfce4-goodies</span><br></pre></td></tr></table></figure>
+
+<h3 id="TightVNC"><a href="#TightVNC" class="headerlink" title="TightVNC"></a>TightVNC</h3><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>TightVNC服务器</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install tightvncserver</span><br></pre></td></tr></table></figure>
+
+<p>安装dbus-x11依赖项以确保与您的VNC服务器建立适当的连接</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install dbus-x11</span><br></pre></td></tr></table></figure>
+
+<h3 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h3><p>安装完成后，需要使用VNC服务器初始化配置,接下来将出现一个提示，要求输入和验证远程访问您的机器所需的密码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line">You will require a password to access your desktops.</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">密码必须由六到八个字符组成。超过八个字符的密码会被自动截断</span></span><br><span class="line">Password:</span><br><span class="line">Verify:</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置VNC服务器"><a href="#配置VNC服务器" class="headerlink" title="配置VNC服务器"></a>配置VNC服务器</h3><p>VNC服务器在启动时需要知道要执行的命令。具体来说，VNC需要知道要连接到哪个图形桌面。这些命令位于家目录下的 <code>~/.vnc</code> 文件夹中名为<code>xstartup</code> 的配置文件中。在上一步中运行vncserver命令时，启动脚本就已经创建好了，但是你将会自己创建一个来启动Xfce桌面。</p>
+<p>当 VNC 第一次设置时，它会在端口5901上启动一个默认的服务器实例。这个端口被称为显示端口，并且在 VNC 中被称为:1。VNC 可以在其他显示端口上启动多个实例，例如:2、:3等等。</p>
+<p>因为您要更改VNC服务器的配置方式，请先使用以下命令停止运行在端口5901上的VNC服务器实例：</p>
+<h4 id="销毁-VncServer-进程"><a href="#销毁-VncServer-进程" class="headerlink" title="销毁 VncServer 进程"></a>销毁 VncServer 进程</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver -kill :1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">以下是与您的服务器环境特定的PID相关的输出结果：</span></span><br><span class="line">Output</span><br><span class="line">Killing Xtightvnc process ID 17648</span><br></pre></td></tr></table></figure>
+
+<h4 id="备份xstartup文件"><a href="#备份xstartup文件" class="headerlink" title="备份xstartup文件"></a>备份xstartup文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv ~/.vnc/xstartup ~/.vnc/xstartup.bak</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-xstartup-文件"><a href="#修改-xstartup-文件" class="headerlink" title="修改 xstartup 文件"></a>修改 xstartup 文件</h4><ul>
+<li><code>nano ~/.vnc/xstartup</code></li>
+<li>每当您启动或重新启动VNC服务器时，该文件中的命令会自动执行。如果您的桌面环境尚未启动，您需要使用VNC来启动它。请将以下命令添加到该文件中</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个命令用于读取用户主目录下的 .Xresources 文件。.Xresources 文件包含一些图形桌面环境的配置，比如终端颜色、光标主题、字体渲染等设置。xrdb 是一个管理 X 资源数据库的命令，通常用来应用这些设置。</span></span><br><span class="line">xrdb $HOME/.Xresources</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个命令用于启动 Xfce 图形桌面环境，&amp; 表示将该命令放在后台执行。Xfce 是一个轻量级的桌面环境，适合资源较为有限的服务器或虚拟机使用。通过这个命令，用户可以进入一个完整的图形界面环境，用来方便地管理服务器或执行其他图形化操作</span></span><br><span class="line">startxfce4 &amp;</span><br></pre></td></tr></table></figure>
+
+<h4 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chmod +x ~/.vnc/xstartup</span><br></pre></td></tr></table></figure>
+
+<h4 id="重新启动-vncserver"><a href="#重新启动-vncserver" class="headerlink" title="重新启动 vncserver"></a>重新启动 vncserver</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">输出</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Output</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">New <span class="string">&#x27;X&#x27;</span> desktop is your_hostname:1</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Starting applications specified <span class="keyword">in</span> /home/sammy/.vnc/xstartup</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Log file is /home/sammy/.vnc/your_hostname:1.<span class="built_in">log</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="连接VNC"><a href="#连接VNC" class="headerlink" title="连接VNC"></a>连接VNC</h4><ul>
+<li>SSH 隧道转发<ul>
+<li>在您的本地计算机上创建一个SSH连接，安全地将其转发到VNC的localhost连接</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh -L 5901:127.0.0.1:5901 -C -N -l sammy your_server_ip</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>systemd 创建自启动(推荐)</p>
+<ul>
+<li><p>创建service</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/systemd/system/vncserver@.service</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写vncserver@.service</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=Start TightVNC server at startup</span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">User=sammy</span><br><span class="line">Group=sammy</span><br><span class="line">WorkingDirectory=/home/sammy</span><br><span class="line"></span><br><span class="line">PIDFile=/home/sammy/.vnc/%H:%i.pid</span><br><span class="line">ExecStartPre=-/usr/bin/vncserver -kill :%i &gt; /dev/null 2&gt;&amp;1</span><br><span class="line">ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 :%i</span><br><span class="line">ExecStop=/usr/bin/vncserver -kill :%i</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动vnc@service</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>设置自启动@符号后面的1表示服务应该出现在哪个显示屏上，在这种情况下，默认为:1</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable vncserver@1.service</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="GNOME桌面"><a href="#GNOME桌面" class="headerlink" title="GNOME桌面"></a>GNOME桌面</h2><h3 id="待整理"><a href="#待整理" class="headerlink" title="待整理"></a>待整理</h3>]]></content>
+      <categories>
+        <category>远程桌面</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>vnc</tag>
       </tags>
   </entry>
   <entry>
@@ -5598,8 +5806,8 @@ fi
         <category>c</category>
       </categories>
       <tags>
-        <tag>c</tag>
         <tag>linux</tag>
+        <tag>c</tag>
         <tag>tcp/udp</tag>
       </tags>
   </entry>
@@ -5738,34 +5946,6 @@ fi
       </tags>
   </entry>
   <entry>
-    <title>齐次坐标系</title>
-    <url>/hexo/2024/04/08/qi-ci-zuo-biao-xi/</url>
-    <content><![CDATA[<p><code>推荐阅读</code>: [<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>](<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>)</p>
-<h1 id="笛卡尔坐标系"><a href="#笛卡尔坐标系" class="headerlink" title="笛卡尔坐标系"></a>笛卡尔坐标系</h1><h2 id="平面直角坐标系"><a href="#平面直角坐标系" class="headerlink" title="平面直角坐标系"></a>平面直角坐标系</h2><h3 id="（略）"><a href="#（略）" class="headerlink" title="（略）"></a>（略）</h3><h1 id="齐次坐标系"><a href="#齐次坐标系" class="headerlink" title="齐次坐标系"></a>齐次坐标系</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
-<li><p>齐次坐标是由 August Ferdinand Möbius 引入的，使其在投影空间中进行图形和几何计算成为可能。</p>
-<ul>
-<li>齐次坐标就是用N+1维来代表N维坐标</li>
-</ul>
-</li>
-<li><p>我们可以在一个2D笛卡尔坐标末尾加上一个额外的变量w来形成 2D齐次坐标。因此，一个在笛卡尔坐标系下的点$(X, Y)$在齐次坐标里面变成了 (x,y,w) ，并且有</p>
-  <figure class="highlight latex"><table><tr><td class="code"><pre><span class="line">X = x/w</span><br><span class="line">X = y/w</span><br></pre></td></tr></table></figure>
-
-<p>  例如，笛卡尔坐标系下 (1,2) 齐次坐标可以表示为 (1,2,1) ，如果点 (1,2) 移动到无限远处，在笛卡尔坐标下它变为 (∞,∞) ，然后它的齐次坐标表示为 (1,2,0) ，因为 (1&#x2F;0,2&#x2F;0)&#x3D;(∞,∞) 。 注意这样的话，我们可以不用 ” ∞ “ 来表示一个无穷远处的点了。</p>
-</li>
-</ul>
-<h2 id="坐标转化方法"><a href="#坐标转化方法" class="headerlink" title="坐标转化方法"></a>坐标转化方法</h2><ul>
-<li>如前面所述，我们<strong>把齐次坐标转化为笛卡尔坐标的方法是前面n-1个坐标分量分别除以最后一个分量即可</strong>。</li>
-</ul>
-<p><img src="/hexo/v2-da28eed57fda0fc6a06b7122be5f2a1d_720w.webp" alt="img"></p>
-]]></content>
-      <categories>
-        <category>线性代数</category>
-      </categories>
-      <tags>
-        <tag>线性代数</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>位运算</title>
     <url>/hexo/2024/04/09/wei-yun-suan/</url>
     <content><![CDATA[<ul>
@@ -5849,8 +6029,8 @@ fi
         <category>c</category>
       </categories>
       <tags>
-        <tag>c</tag>
         <tag>linux</tag>
+        <tag>c</tag>
       </tags>
   </entry>
   <entry>
@@ -6557,8 +6737,37 @@ fi
         <category>c</category>
       </categories>
       <tags>
-        <tag>c</tag>
         <tag>linux</tag>
+        <tag>c</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>齐次坐标系</title>
+    <url>/hexo/2024/04/08/qi-ci-zuo-biao-xi/</url>
+    <content><![CDATA[<p><code>推荐阅读</code>: [<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>](<a href="https://zhuanlan.zhihu.com/p/373969867">什么是齐次坐标系?为什么要用齐次坐标系？ - 知乎 (zhihu.com)</a>)</p>
+<h1 id="笛卡尔坐标系"><a href="#笛卡尔坐标系" class="headerlink" title="笛卡尔坐标系"></a>笛卡尔坐标系</h1><h2 id="平面直角坐标系"><a href="#平面直角坐标系" class="headerlink" title="平面直角坐标系"></a>平面直角坐标系</h2><h3 id="（略）"><a href="#（略）" class="headerlink" title="（略）"></a>（略）</h3><h1 id="齐次坐标系"><a href="#齐次坐标系" class="headerlink" title="齐次坐标系"></a>齐次坐标系</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li><p>齐次坐标是由 August Ferdinand Möbius 引入的，使其在投影空间中进行图形和几何计算成为可能。</p>
+<ul>
+<li>齐次坐标就是用N+1维来代表N维坐标</li>
+</ul>
+</li>
+<li><p>我们可以在一个2D笛卡尔坐标末尾加上一个额外的变量w来形成 2D齐次坐标。因此，一个在笛卡尔坐标系下的点$(X, Y)$在齐次坐标里面变成了 (x,y,w) ，并且有</p>
+  <figure class="highlight latex"><table><tr><td class="code"><pre><span class="line">X = x/w</span><br><span class="line">X = y/w</span><br></pre></td></tr></table></figure>
+
+<p>  例如，笛卡尔坐标系下 (1,2) 齐次坐标可以表示为 (1,2,1) ，如果点 (1,2) 移动到无限远处，在笛卡尔坐标下它变为 (∞,∞) ，然后它的齐次坐标表示为 (1,2,0) ，因为 (1&#x2F;0,2&#x2F;0)&#x3D;(∞,∞) 。 注意这样的话，我们可以不用 ” ∞ “ 来表示一个无穷远处的点了。</p>
+</li>
+</ul>
+<h2 id="坐标转化方法"><a href="#坐标转化方法" class="headerlink" title="坐标转化方法"></a>坐标转化方法</h2><ul>
+<li>如前面所述，我们<strong>把齐次坐标转化为笛卡尔坐标的方法是前面n-1个坐标分量分别除以最后一个分量即可</strong>。</li>
+</ul>
+<img src="/hexo/2024/04/08/qi-ci-zuo-biao-xi/v2-da28eed57fda0fc6a06b7122be5f2a1d_720w.webp" class title="img">
+
+<img src="/hexo/2024/04/08/qi-ci-zuo-biao-xi/v2-9425e06cea51bc90729b8f2d74e4fe4f_720w.webp" class title="img">]]></content>
+      <categories>
+        <category>线性代数</category>
+      </categories>
+      <tags>
+        <tag>线性代数</tag>
       </tags>
   </entry>
 </search>
